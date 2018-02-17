@@ -1,6 +1,7 @@
 package com.example.osamakhalid.schoolsystem.Activites;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -112,6 +113,7 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.help_item_icon, menu);
+        getMenuInflater().inflate(R.menu.menu_item, menu);
         MenuItem item = menu.findItem(R.id.help_item);
         item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
@@ -123,8 +125,21 @@ public class DashboardActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-
         return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id==R.id.logout_menu){
+            SharedPreferences mPrefs = getSharedPreferences("UserData",0);
+            mPrefs.edit().remove("UserObject").apply();
+            Intent i = new Intent(DashboardActivity.this,MainActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

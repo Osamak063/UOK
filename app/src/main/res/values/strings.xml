@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">S.E.E</string>
+    <string name="logout">Logout</string>
     <string name="register"><u>Register</u></string>
     <string name="forgotpass"><u>Forgot your password?</u></string>
     <string name="feesandinvoice">Fees &amp; Invoice</string>
