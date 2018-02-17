@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.osamakhalid.schoolsystem.Activites.AboutClass">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:gravity="top"
+        android:padding="5dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:src="@drawable/see_logo"/>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/abouteTag"
+            android:text="Contact us"
+            android:textSize="25sp"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email: xyz@abc.com"
+            android:textStyle="normal"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textSize="15dp"
+            android:textColor="#000"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Contact : +92xx-xxxxxxx"
+            android:textStyle="normal"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textSize="15dp"
+            android:textColor="#000"/>
+
+
+    </LinearLayout>
+
+
+
+
+
+
+</RelativeLayout>
