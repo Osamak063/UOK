@@ -74,7 +74,7 @@ public class LoginResponse {
     @SerializedName("password")
     @Expose
     private String password;
-    @SerializedName("usertype")
+    @SerializedName("usertype")  // attendance type
     @Expose
     private String usertype;
     @SerializedName("modify_date")
