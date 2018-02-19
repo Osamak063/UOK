@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText userName, password;
     private String username = "user1", pass = "userpass";
     private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(MainActivity.this,"Sorry something went wrong.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Sorry something went wrong.", Toast.LENGTH_SHORT).show();
             }
         });
     }
