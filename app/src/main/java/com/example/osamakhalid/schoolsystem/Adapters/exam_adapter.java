@@ -7,9 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.osamakhalid.schoolsystem.Model.ExamResult_Model;
+import com.example.osamakhalid.schoolsystem.Model.ExamResult_Data;
 import com.example.osamakhalid.schoolsystem.R;
 
 import java.util.List;
@@ -20,11 +19,11 @@ import java.util.List;
 
 public class exam_adapter extends RecyclerView.Adapter<exam_adapter.ViewHolder> {
 
-    public List<ExamResult_Model> listItems;
+    public List<ExamResult_Data> listItems;
     Context context;
 
 
-    public exam_adapter(List<ExamResult_Model> listItems, Context context) {
+    public exam_adapter(List<ExamResult_Data> listItems, Context context) {
         this.listItems = listItems;
         this.context = context;
     }
@@ -41,18 +40,20 @@ public class exam_adapter extends RecyclerView.Adapter<exam_adapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        final ExamResult_Model e_model = listItems.get(position);
+        final ExamResult_Data e_model = listItems.get(position);
 
-        holder.subject.setText(e_model.getSubject());
-        holder.marks.setText(e_model.getMarks());
-        holder.date.setText(e_model.getDate());
+        holder.subject.setText("Subject: "+e_model.getSubject());
+        holder.obt_marks.setText("Marks Obtain: "+e_model.getMarks());
+        holder.total_marks.setText("Total Marks: "+e_model.getHighestMark());
+        holder.points.setText("Points: "+e_model.getPoint());
+        holder.grade.setText("Grade: "+e_model.getGrade());
 
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, e_model.getSubject(), Toast.LENGTH_LONG).show();
-            }
-        });
+//        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(context, e_model.getSubject(), Toast.LENGTH_LONG).show();
+//            }
+//        });
 
     }
 
@@ -64,7 +65,7 @@ public class exam_adapter extends RecyclerView.Adapter<exam_adapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView subject, marks, date;
+        public TextView subject,total_marks,obt_marks,points,grade;
         public LinearLayout linearLayout;
 
         public ViewHolder(View itemView) {
@@ -72,8 +73,10 @@ public class exam_adapter extends RecyclerView.Adapter<exam_adapter.ViewHolder> 
 
             //binding views of cardviews
             subject = itemView.findViewById(R.id.subject);
-            marks = itemView.findViewById(R.id.sub_marks);
-            date = itemView.findViewById(R.id.date);
+            obt_marks = itemView.findViewById(R.id.sub_obtmarks);
+            total_marks = itemView.findViewById(R.id.sub_totalmarks);
+            points = itemView.findViewById(R.id.point);
+            grade = itemView.findViewById(R.id.grade);
             linearLayout = itemView.findViewById(R.id.examLayout);
         }
     }

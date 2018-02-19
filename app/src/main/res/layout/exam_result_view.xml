@@ -22,22 +22,36 @@
           <TextView
               android:id="@+id/subject"
               android:textColor="#000"
-              android:text="SUBJECT : Computer"
+              android:text="Subject : Compter"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               />
 
             <TextView
-                android:id="@+id/sub_marks"
+                android:id="@+id/sub_totalmarks"
                 android:textColor="#000"
-                android:text="MARKS : 10/10"
+                android:text="Highest Marks : 10/10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/date"
+                android:id="@+id/sub_obtmarks"
                 android:textColor="#000"
-                android:text="DATE: 15/01/17"
+                android:text="Marks Obtained : 10/10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/point"
+                android:textColor="#000"
+                android:text="Points: 15/01/17"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/grade"
+                android:textColor="#000"
+                android:text="Grade: A"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

@@ -39,8 +39,8 @@ public class HomeWork_Adapter extends RecyclerView.Adapter<HomeWork_Adapter.View
 
         Homework_Model homework_model = alertModel.get(position);
         holder.subject.setText(homework_model.getCourse());
-        holder.assign_no.setText(homework_model.getAssign());
-        holder.due_date.setText(homework_model.getDate());
+//        holder.assign_no.setText(homework_model.getAssign());
+//        holder.due_date.setText(homework_model.getDate());
 
     }
 
@@ -61,7 +61,7 @@ public class HomeWork_Adapter extends RecyclerView.Adapter<HomeWork_Adapter.View
 
             //binding views of cardviews
             subject = itemView.findViewById(R.id.subject);
-            assign_no = itemView.findViewById(R.id.sub_marks);
+         //   assign_no = itemView.findViewById(R.id.sub_marks);
             due_date = itemView.findViewById(R.id.date);
             linearLayout = itemView.findViewById(R.id.hlineview);
         }
