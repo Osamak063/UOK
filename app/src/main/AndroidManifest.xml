@@ -61,7 +61,8 @@
         <activity android:name=".Activites.TeacherProfile" />
         <activity android:name=".Activites.Chart_Attendence" />
         <activity android:name=".Activites.HomeWork" />
-        <activity android:name=".Activites.AboutClass"></activity>
+        <activity android:name=".Activites.AboutClass" />
+        <activity android:name=".Activites.ExamResult_Category"></activity>
     </application>
 
 </manifest>

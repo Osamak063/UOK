@@ -48,7 +48,7 @@ public class DashboardActivity extends AppCompatActivity {
         results.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(DashboardActivity.this, Exam_Result.class));
+                startActivity(new Intent(DashboardActivity.this, ExamResult_Category.class));
             }
         });
         noticeBoard.setOnClickListener(new View.OnClickListener() {

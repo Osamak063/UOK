@@ -6,9 +6,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.osamakhalid.schoolsystem.Adapters.alert_adapter;
-import com.example.osamakhalid.schoolsystem.Adapters.exam_adapter;
 import com.example.osamakhalid.schoolsystem.Model.Alert_Model;
-import com.example.osamakhalid.schoolsystem.Model.ExamResult_Model;
+import com.example.osamakhalid.schoolsystem.Model.ExamResult_Data;
 import com.example.osamakhalid.schoolsystem.R;
 
 import java.util.ArrayList;
@@ -19,9 +18,9 @@ public class Fees extends AppCompatActivity {
     public RecyclerView recyclerView_dues,recyclerView_history;
     public RecyclerView.Adapter adapter;
     public List<Alert_Model> listItems;
-    public List<ExamResult_Model>ItemsList;
+    public List<ExamResult_Data>ItemsList;
     Alert_Model alert;
-    ExamResult_Model history_alert;
+    ExamResult_Data history_alert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +62,10 @@ public class Fees extends AppCompatActivity {
         //for Dummy Data
         for (int i=0; i<10 ; i++){
 
-            history_alert = new ExamResult_Model();
+            history_alert = new ExamResult_Data();
             history_alert.setSubject("Receipt #: 100"+i);
             history_alert.setMarks("Amount : 5000 PKR ");
-            history_alert.setDate(" Date : 5/"+(i+1)+"/17");
+            history_alert.setPoint(" Date : 5/"+(i+1)+"/17");
             ItemsList.add(history_alert);
 
         }
@@ -76,7 +75,7 @@ public class Fees extends AppCompatActivity {
         recyclerView_history.setHasFixedSize(true);
         recyclerView_history.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new exam_adapter(ItemsList,getApplicationContext());
+     //   adapter = new exam_adapter(ItemsList,getApplicationContext());
         recyclerView_history.setAdapter(adapter);
 
     }

@@ -5,5 +5,10 @@ package com.example.osamakhalid.schoolsystem.APIs;
  */
 
 public class ConnectionURLS {
+
     public static final String BASE_URL = "http://demo.simsportal.com/api/";  //Base URL
+    public static final String LOGIN_URL = "login/user/";
+    public static final String EXAMRESULT_URL = "student/results/type/Student/username/student01/lang/english";
+
+
 }

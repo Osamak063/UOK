@@ -1,36 +1,38 @@
 package com.example.osamakhalid.schoolsystem.Model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 /**
  * Created by HAMI on 17/01/2018.
  */
 
 public class ExamResult_Model {
 
-    private String subject;
-    private String marks;
-    private String date;
+    @SerializedName("exam_name")
+    @Expose
+    private String examName;
+    @SerializedName("data")
+    @Expose
+    private List<ExamResult_Data> data = null;
 
-    public String getSubject() {
-        return subject;
+    public String getExamName() {
+        return examName;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public void setExamName(String examName) {
+        this.examName = examName;
     }
 
-    public String getMarks() {
-        return marks;
+    public List<ExamResult_Data> getData() {
+        return data;
     }
 
-    public void setMarks(String marks) {
-        this.marks = marks;
+    public void setData(List<ExamResult_Data> data) {
+        this.data = data;
     }
 
-    public String getDate() {
-        return date;
-    }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
 }

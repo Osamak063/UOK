@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.osamakhalid.schoolsystem.Activites.ExamResult_Category">
+
+    <LinearLayout
+        android:id="@+id/init"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center">
+
+
+            <Button
+                android:id="@+id/first_term_exam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1st-Term Exam"/>
+
+
+            <Button
+                android:id="@+id/second_term_exam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2nd-Term Exam"/>
+
+
+
+            <Button
+                android:id="@+id/final_exam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Final-Term Exam"/>
+
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -2,14 +2,12 @@ package com.example.osamakhalid.schoolsystem.Activites;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
@@ -17,8 +15,8 @@ import com.example.osamakhalid.schoolsystem.ConnectionInterface.ClientAPIs;
 import com.example.osamakhalid.schoolsystem.Consts.Values;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.R;
-import com.google.gson.Gson;
 
+import GlobalCalls.CommonCalls;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -69,13 +67,14 @@ public class MainActivity extends AppCompatActivity {
                     if (loginResponse.getStatus() == 1) {
                         progressDialog.dismiss();
                         Toast.makeText(MainActivity.this, "Successfully logged in.", Toast.LENGTH_SHORT).show();
-                        saveUserData(loginResponse);
+                        CommonCalls.saveUserData(loginResponse,MainActivity.this);
                         Intent i = new Intent(MainActivity.this, TrackingActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
                         finish();
                     }
                 } else {
+                    progressDialog.dismiss();
                     Toast.makeText(MainActivity.this, "Wrong username or password.", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -88,25 +87,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void saveUserData(LoginResponse loginResponse) {
-        SharedPreferences mPrefs = getSharedPreferences("UserData", 0);
-        SharedPreferences.Editor prefsEditor = mPrefs.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(loginResponse);
-        prefsEditor.putString("UserObject", json);
-        prefsEditor.commit();
-    }
-
-    public LoginResponse getUserData() {
-        SharedPreferences mPrefs = getSharedPreferences("UserData", 0);
-        Gson gson = new Gson();
-        String json = mPrefs.getString("UserObject", "");
-        LoginResponse userData = gson.fromJson(json, LoginResponse.class);
-        return userData;
-    }
-
     public boolean checkUserAlreadyLoggedIn() {
-        if (getUserData() != null) {
+        if (CommonCalls.getUserData(MainActivity.this) != null) {
             return true;
         } else {
             return false;
