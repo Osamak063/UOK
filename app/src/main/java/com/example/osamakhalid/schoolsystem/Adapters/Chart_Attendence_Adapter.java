@@ -42,7 +42,7 @@ public class Chart_Attendence_Adapter extends RecyclerView.Adapter<Chart_Attende
     public void onBindViewHolder(Chart_Attendence_Adapter.ViewHolder holder, int position) {
 
         final Alert_Model teacher_model = teachermodels.get(position);
-        holder.name.setText(teacher_model.getNotification());
+        holder.name.setText(teacher_model.getNotice());
     }
 
     @Override
@@ -73,7 +73,7 @@ public class Chart_Attendence_Adapter extends RecyclerView.Adapter<Chart_Attende
             Log.e("Adapter Click: ","here");
             if (itemClickListener != null) {
                 Alert_Model teacher_model = teachermodels.get(getAdapterPosition());
-                itemClickListener.onClick(view, teacher_model.getNotification());
+                itemClickListener.onClick(view, teacher_model.getNotice());
             }
         }
     }
