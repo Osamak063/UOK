@@ -1,9 +1,9 @@
 package com.example.osamakhalid.schoolsystem.ConnectionInterface;
 
 import com.example.osamakhalid.schoolsystem.APIs.ConnectionURLS;
+import com.example.osamakhalid.schoolsystem.Model.AlertResponse_Model;
 import com.example.osamakhalid.schoolsystem.Model.Exam_Model;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
-import com.example.osamakhalid.schoolsystem.Model.NewsAndEventsResponse;
 import com.example.osamakhalid.schoolsystem.Model.NewsAndEventsResponseList;
 
 import retrofit2.Call;
@@ -26,6 +26,9 @@ public interface ClientAPIs {
 
     @GET(ConnectionURLS.NEWS_AND_EVENTS_URL)
     Call<NewsAndEventsResponseList> getNewsAndEvents(@Header("Authorization") String authHeader);
+
+    @GET(ConnectionURLS.NOTICE_BOARD_URL)
+    Call<AlertResponse_Model> getNoticeData(@Header("Authorization") String authHeader);
 
 }
 

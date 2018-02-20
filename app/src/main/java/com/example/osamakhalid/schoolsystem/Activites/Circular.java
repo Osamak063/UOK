@@ -4,35 +4,28 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.example.osamakhalid.schoolsystem.Adapters.alert_adapter;
 import com.example.osamakhalid.schoolsystem.Model.Alert_Model;
 import com.example.osamakhalid.schoolsystem.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Circular extends AppCompatActivity {
 
     public RecyclerView recyclerView;
     public RecyclerView.Adapter adapter;
-    public List<Alert_Model> listItems;
-    Alert_Model alert;
+    public static List<Alert_Model> listItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_circular);
 
-        listItems = new ArrayList<>();
-
-        //for Dummy Data
-        for (int i=0; i<20 ; i++){
-
-            alert = new Alert_Model();
-            alert.setNotification("Start New Session on 01 January, 2018");
-            listItems.add(alert);
-
+        listItems = DashboardActivity.alert_model;
+        if(listItems == null){
+            Toast.makeText(Circular.this,"empty",Toast.LENGTH_SHORT).show();
         }
 
         //setting up recyclerview
