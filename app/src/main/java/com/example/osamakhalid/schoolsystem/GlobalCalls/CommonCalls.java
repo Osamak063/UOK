@@ -1,4 +1,4 @@
-package GlobalCalls;
+package com.example.osamakhalid.schoolsystem.GlobalCalls;
 
 import android.content.Context;
 import android.content.SharedPreferences;
