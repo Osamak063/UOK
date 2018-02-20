@@ -17,7 +17,6 @@ import com.example.osamakhalid.schoolsystem.Model.HolidayResponseList;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -40,6 +39,12 @@ public class Alert extends AppCompatActivity {
         setContentView(R.layout.activity_alert);
         listItems = new ArrayList<>();
         recyclerView = findViewById(R.id.alert);
+
+
+
+
+        //setting up recyclerview
+        recyclerView =  findViewById(R.id.alert);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         userData = CommonCalls.getUserData(Alert.this);

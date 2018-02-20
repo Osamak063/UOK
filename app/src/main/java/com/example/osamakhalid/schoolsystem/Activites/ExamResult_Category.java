@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
 import com.example.osamakhalid.schoolsystem.ConnectionInterface.ClientAPIs;
+import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
 import com.example.osamakhalid.schoolsystem.Model.ExamResult_Data;
 import com.example.osamakhalid.schoolsystem.Model.ExamResult_Model;
 import com.example.osamakhalid.schoolsystem.Model.Exam_Model;
@@ -17,6 +18,7 @@ import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.R;
 
 import java.util.List;
+
 
 import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
 import retrofit2.Call;
