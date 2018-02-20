@@ -37,7 +37,9 @@ public class alert_adapter extends RecyclerView.Adapter<alert_adapter.ViewHolder
     public void onBindViewHolder(alert_adapter.ViewHolder holder, int position) {
 
         final  Alert_Model a_model =  alertModel.get(position);
-        holder.notification.setText(a_model.getNotification());
+        holder.title.setText(a_model.getTitle());
+        holder.notification.setText(a_model.getNotice());
+        holder.due_date.setText(a_model.getDate());
 
 
     }
@@ -51,13 +53,14 @@ public class alert_adapter extends RecyclerView.Adapter<alert_adapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView notification;
+        TextView notification,title,due_date;
         LinearLayout linearLayout;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
-
+            due_date = itemView.findViewById(R.id.notice_date);
+            title = itemView.findViewById(R.id.notice_name);
             notification = itemView.findViewById(R.id.notification);
             linearLayout = itemView.findViewById(R.id.alertLayout);
 

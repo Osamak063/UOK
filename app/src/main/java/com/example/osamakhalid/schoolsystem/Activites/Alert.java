@@ -9,7 +9,6 @@ import com.example.osamakhalid.schoolsystem.Adapters.alert_adapter;
 import com.example.osamakhalid.schoolsystem.Model.Alert_Model;
 import com.example.osamakhalid.schoolsystem.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Alert extends AppCompatActivity {
@@ -24,15 +23,7 @@ public class Alert extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alert);
 
-        listItems = new ArrayList<>();
 
-        //for Dummy Data
-        for (int i=0; i<10 ; i++){
-
-            alert = new Alert_Model();
-            alert.setNotification("Session will be end from 01/02/2018 to 10/02/2018");
-            listItems.add(alert);
-        }
 
         //setting up recyclerview
         recyclerView =  findViewById(R.id.alert);
