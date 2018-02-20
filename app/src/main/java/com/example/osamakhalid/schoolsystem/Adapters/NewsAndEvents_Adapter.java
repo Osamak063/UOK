@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.osamakhalid.schoolsystem.Model.HolidayResponse;
 import com.example.osamakhalid.schoolsystem.Model.NewsAndEventsResponse;
 import com.example.osamakhalid.schoolsystem.Model.News_Model;
 import com.example.osamakhalid.schoolsystem.R;
@@ -22,10 +23,18 @@ import java.util.List;
 public class NewsAndEvents_Adapter extends RecyclerView.Adapter<NewsAndEvents_Adapter.ViewHolder> {
     Context context;
     List<NewsAndEventsResponse> newsModels;
+    List<HolidayResponse> holidayModels;
+    String type = "news";
 
     public NewsAndEvents_Adapter(List<NewsAndEventsResponse> transportmodel, Context context) {
         this.context = context;
         this.newsModels = transportmodel;
+    }
+
+    public NewsAndEvents_Adapter(List<HolidayResponse> holidayModels, Context context, String type) {
+        this.context = context;
+        this.holidayModels = holidayModels;
+        this.type = type;
     }
 
     @Override
@@ -36,17 +45,28 @@ public class NewsAndEvents_Adapter extends RecyclerView.Adapter<NewsAndEvents_Ad
 
     @Override
     public void onBindViewHolder(NewsAndEvents_Adapter.ViewHolder holder, int position) {
-
-        final NewsAndEventsResponse news_model = newsModels.get(position);
-        holder.title.setText("News Title: " +news_model.getTitle());
-        holder.fromDate.setText("From: "+news_model.getFromDate());
-        holder.toDate.setText("To: "+news_model.getToDate());
-        holder.details.setText("Details: "+news_model.getDetails());
+        if (type.equals("holiday")) {
+            HolidayResponse model = holidayModels.get(position);
+            holder.title.setText("Title: " + model.getTitle());
+            holder.fromDate.setText("From: " + model.getFromDate());
+            holder.toDate.setText("To: " + model.getToDate());
+            holder.details.setText("Details: " + model.getDetails());
+        } else {
+            NewsAndEventsResponse model = newsModels.get(position);
+            holder.title.setText("News Title: " + model.getTitle());
+            holder.fromDate.setText("From: " + model.getFromDate());
+            holder.toDate.setText("To: " + model.getToDate());
+            holder.details.setText("Details: " + model.getDetails());
+        }
     }
 
     @Override
     public int getItemCount() {
-        return newsModels.size();
+        if (type.equals("holiday")) {
+            return holidayModels.size();
+        } else {
+            return newsModels.size();
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
