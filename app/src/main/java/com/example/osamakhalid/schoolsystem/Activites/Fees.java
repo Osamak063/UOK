@@ -42,7 +42,7 @@ public class Fees extends AppCompatActivity {
 
         //Dummy Data
             alert = new Alert_Model();
-            alert.setNotification("Your Fees PKR 5000 is due on 4 December, 2017 ");
+            alert.setNotice("Your Fees PKR 5000 is due on 4 December, 2017 ");
             listItems.add(alert);
 
         //setting up recyclerview
