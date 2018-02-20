@@ -11,6 +11,9 @@ public class ConnectionURLS {
     public static final String LOGIN_URL = "login/user/";
     public static final String EXAMRESULT_URL = "student/results/type/Student/username/student01/lang/english";
     public static final String NEWS_AND_EVENTS_URL = "student/news_and_events/";
+
+    public static final String HOLIDAY_URL = "student/holiday/type/Student/lang/english";
     public static final String NOTICE_BOARD_URL = "student/notice_board";
+
 
 }

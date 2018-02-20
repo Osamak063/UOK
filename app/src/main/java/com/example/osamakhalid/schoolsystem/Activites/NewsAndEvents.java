@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
+import android.widget.Toast;
 
 import com.example.osamakhalid.schoolsystem.Adapters.NewsAndEvents_Adapter;
 import com.example.osamakhalid.schoolsystem.Adapters.Transport_Adapter;
 import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
 import com.example.osamakhalid.schoolsystem.ConnectionInterface.ClientAPIs;
 import com.example.osamakhalid.schoolsystem.Consts.Values;
+import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.NewsAndEventsResponse;
 import com.example.osamakhalid.schoolsystem.Model.NewsAndEventsResponseList;
@@ -45,13 +47,7 @@ public class NewsAndEvents extends AppCompatActivity {
         recyclerView = findViewById(R.id.news_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        mPrefs = getSharedPreferences("UserData", 0);
-//        gson = new Gson();
-//        String json = mPrefs.getString("UserObject", "");
-//        LoginResponse userData = gson.fromJson(json, LoginResponse.class);
-        LoginResponse userData = getUserData();
-        retrofit = RetrofitInitialize.getApiClient();
-        clientAPIs = retrofit.create(ClientAPIs.class);
+        LoginResponse userData = CommonCalls.getUserData(NewsAndEvents.this);
         String base = userData.getUsername() + ":" + userData.getPassword();
         String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
         getData(authHeader);
@@ -60,6 +56,8 @@ public class NewsAndEvents extends AppCompatActivity {
     }
 
     public void getData(String authHeader) {
+        retrofit = RetrofitInitialize.getApiClient();
+        clientAPIs = retrofit.create(ClientAPIs.class);
         Call<NewsAndEventsResponseList> call = clientAPIs.getNewsAndEvents(authHeader);
         call.enqueue(new Callback<NewsAndEventsResponseList>() {
             @Override
@@ -73,16 +71,10 @@ public class NewsAndEvents extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<NewsAndEventsResponseList> call, Throwable t) {
-
+                Toast.makeText(NewsAndEvents.this, "Sorry something went wrong.", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    public LoginResponse getUserData() {
-        SharedPreferences mPrefs = getSharedPreferences("UserData", 0);
-        Gson gson = new Gson();
-        String json = mPrefs.getString("UserObject", "");
-        LoginResponse userData = gson.fromJson(json, LoginResponse.class);
-        return userData;
-    }
+
 }
