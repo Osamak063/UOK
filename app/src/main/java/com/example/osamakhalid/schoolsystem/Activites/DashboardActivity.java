@@ -17,6 +17,8 @@ import com.example.osamakhalid.schoolsystem.ConnectionInterface.ClientAPIs;
 import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
 import com.example.osamakhalid.schoolsystem.Model.AlertResponse_Model;
 import com.example.osamakhalid.schoolsystem.Model.Alert_Model;
+import com.example.osamakhalid.schoolsystem.Model.Homework_Data_Model;
+import com.example.osamakhalid.schoolsystem.Model.Homework_Model;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.R;
 
@@ -31,7 +33,9 @@ public class DashboardActivity extends AppCompatActivity {
     private LinearLayout attendance, syllabus, results, noticeBoard, transport, messages, library, photoGallery, newsAndEvents,
             teacherDetails, fees, holidayAlert, homework, subjects;
     public AlertResponse_Model alert_response_model;
+    public static String Currentdate;
     public static List<Alert_Model> alert_model;
+    public static List<Homework_Data_Model> homework_data_models;
 
 
     @Override
@@ -55,7 +59,7 @@ public class DashboardActivity extends AppCompatActivity {
         homework.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(DashboardActivity.this, HomeWork.class));
+                getHomeWork();
             }
         });
 
@@ -171,6 +175,7 @@ public class DashboardActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //Notice Board function
     public void getNoticeData() {
 
         Retrofit retrofit = RetrofitInitialize.getApiClient();
@@ -203,6 +208,41 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<AlertResponse_Model> call, Throwable t) {
                 Toast.makeText(DashboardActivity.this, "Server Error!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    public void getHomeWork(){
+
+        Retrofit retrofit = RetrofitInitialize.getApiClient();
+        ClientAPIs clientAPIs = retrofit.create(ClientAPIs.class);
+        LoginResponse loginResponse = CommonCalls.getUserData(DashboardActivity.this);
+        String base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+        String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+        String date = CommonCalls.getCurrentDate();
+        Log.e("current date: ",date);
+        Call<Homework_Model> call = clientAPIs.getHomeWOrk("2018-02-14",authHeader);
+        call.enqueue(new Callback<Homework_Model>() {
+            @Override
+            public void onResponse(Call<Homework_Model> call, Response<Homework_Model> response) {
+                Log.e("Server hit: ","Successful");
+                if(response.isSuccessful()){
+                    Log.e("Response hit: ","Successful");
+                    Homework_Model homework_model = response.body();
+                    if(homework_model != null){
+                        Log.e("Object hit: ","Successful");
+                        Currentdate = homework_model.getHomeworkDateData().get(0).getDate();
+                        homework_data_models = homework_model.getHomeworkDateData();
+                        startActivity(new Intent(DashboardActivity.this, HomeWork.class));
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Homework_Model> call, Throwable t) {
+                Toast.makeText(DashboardActivity.this,"Server Error!",Toast.LENGTH_SHORT).show();
             }
         });
 

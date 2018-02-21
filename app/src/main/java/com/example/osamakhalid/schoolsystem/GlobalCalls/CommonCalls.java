@@ -7,6 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by HAMI on 19/02/2018.
  */
@@ -28,6 +32,15 @@ public class CommonCalls extends AppCompatActivity {
         String json = mPrefs.getString("UserObject", "");
         LoginResponse userData = gson.fromJson(json, LoginResponse.class);
         return userData;
+    }
+
+    public static String getCurrentDate(){
+        Date now = new Date();
+        Date alsoNow = Calendar.getInstance().getTime();
+        String nowAsString = new SimpleDateFormat("yyyy-MM-dd").format(now);
+
+    return nowAsString;
+
     }
 
 

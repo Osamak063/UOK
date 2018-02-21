@@ -12,7 +12,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:padding="3dp"
         android:id="@+id/hlineview">
+
+        <TextView
+            android:id="@+id/date_section"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:background="@color/colorPrimary"
+            android:textColor="#fff"
+            android:textStyle="bold"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/homeworkview"
