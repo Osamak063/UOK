@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.osamakhalid.schoolsystem.Model.Homework_Model;
+import com.example.osamakhalid.schoolsystem.Model.Homework_Data_Model;
 import com.example.osamakhalid.schoolsystem.R;
 
 import java.util.List;
@@ -17,42 +17,43 @@ import java.util.List;
  * Created by HAMI on 16/02/2018.
  */
 
-public class HomeWork_Adapter extends RecyclerView.Adapter<HomeWork_Adapter.ViewHolder>  {
+public class HomeWork_Adapter extends RecyclerView.Adapter<HomeWork_Adapter.ViewHolder> {
 
 
     Context context;
-    List<Homework_Model> alertModel;
+    List<Homework_Data_Model> homework_data_models;
 
-    public HomeWork_Adapter(List<Homework_Model> alertModel, Context context) {
+    public HomeWork_Adapter(List<Homework_Data_Model> alertModel, Context context) {
         this.context = context;
-        this.alertModel = alertModel;
+        this.homework_data_models = alertModel;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.exam_result_view,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.homework_view_layout, parent, false);
         return new HomeWork_Adapter.ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        Homework_Model homework_model = alertModel.get(position);
-        holder.subject.setText(homework_model.getCourse());
-//        holder.assign_no.setText(homework_model.getAssign());
-//        holder.due_date.setText(homework_model.getDate());
+        Homework_Data_Model homework_model = homework_data_models.get(position);
+//        holder.date.setText("Date: "+homework_model.getDate());
+        holder.section.setText("Section: "+homework_model.getSection());
+        holder.subject.setText(homework_model.getSubject());
+        holder.description.setText(homework_model.getDesc());
 
     }
 
     @Override
     public int getItemCount() {
-       return alertModel.size();
+        return homework_data_models.size();
     }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView subject,assign_no,due_date;
+        TextView date, section, subject, description;
         LinearLayout linearLayout;
 
         public ViewHolder(View itemView) {
@@ -60,10 +61,11 @@ public class HomeWork_Adapter extends RecyclerView.Adapter<HomeWork_Adapter.View
 
 
             //binding views of cardviews
-            subject = itemView.findViewById(R.id.subject);
-         //   assign_no = itemView.findViewById(R.id.sub_marks);
-            due_date = itemView.findViewById(R.id.date);
-            linearLayout = itemView.findViewById(R.id.hlineview);
+        //    date = itemView.findViewById(R.id.date_view);
+            section = itemView.findViewById(R.id.section_view);
+            subject = itemView.findViewById(R.id.subject_view);
+            description = itemView.findViewById(R.id.desciption_view);
+            linearLayout = itemView.findViewById(R.id.homeworkView);
         }
 
 
