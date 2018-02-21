@@ -15,5 +15,7 @@ public class ConnectionURLS {
     public static final String HOLIDAY_URL = "student/holiday/type/Student/lang/english";
     public static final String NOTICE_BOARD_URL = "student/notice_board";
 
+    public static final String HOMEWORK_URL = "http://demo.simsportal.com/api/student/homework_by_date/";
+
 
 }
