@@ -31,7 +31,7 @@ import retrofit2.Retrofit;
 
 public class DashboardActivity extends AppCompatActivity {
     private LinearLayout attendance, syllabus, results, noticeBoard, transport, messages, library, photoGallery, newsAndEvents,
-            teacherDetails, fees, holidayAlert, homework;
+            teacherDetails, fees, holidayAlert, homework, subjects;
     public AlertResponse_Model alert_response_model;
     public static String Currentdate;
     public static List<Alert_Model> alert_model;
@@ -52,6 +52,7 @@ public class DashboardActivity extends AppCompatActivity {
         photoGallery = findViewById(R.id.gallery);
         newsAndEvents = findViewById(R.id.news_and_events);
         teacherDetails = findViewById(R.id.teacher_details);
+        subjects = findViewById(R.id.subjects);
         fees = findViewById(R.id.fees);
         holidayAlert = findViewById(R.id.holiday_alert);
 
@@ -131,6 +132,13 @@ public class DashboardActivity extends AppCompatActivity {
 
             }
         });
+        subjects.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(DashboardActivity.this, Subjects.class));
+
+            }
+        });
     }
 
 
@@ -179,21 +187,21 @@ public class DashboardActivity extends AppCompatActivity {
         call.enqueue(new Callback<AlertResponse_Model>() {
             @Override
             public void onResponse(Call<AlertResponse_Model> call, Response<AlertResponse_Model> response) {
-                Log.e("Server hit: ","Successful");
+                Log.e("Server hit: ", "Successful");
                 if (response.isSuccessful()) {
-                    Log.e("Server Response: ","Successful");
+                    Log.e("Server Response: ", "Successful");
 
                     alert_response_model = response.body();
-                   if (alert_response_model != null ) {
-                       alert_model  = alert_response_model.getNoticeData();
-                       startActivity(new Intent(DashboardActivity.this, Circular.class));
-                   }else{
-                       Toast.makeText(DashboardActivity.this, "No Notice!", Toast.LENGTH_SHORT).show();
+                    if (alert_response_model != null) {
+                        alert_model = alert_response_model.getNoticeData();
+                        startActivity(new Intent(DashboardActivity.this, Circular.class));
+                    } else {
+                        Toast.makeText(DashboardActivity.this, "No Notice!", Toast.LENGTH_SHORT).show();
 
-                   }
+                    }
 
 
-               }
+                }
 
             }
 

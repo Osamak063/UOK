@@ -34,7 +34,7 @@
             android:layout_margin="3dp"
             >
         <ImageView
-            android:layout_height="80dp"
+            android:layout_height="60dp"
             android:layout_width="80dp"
             android:src="@drawable/attendence"
             android:background="#4C000000"
@@ -59,8 +59,8 @@
                 android:layout_margin="3dp"
                 >
                 <ImageView
-                    android:layout_height="80dp"
-                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_width="80dp"
                     android:layout_gravity="center"
                     android:background="#4C000000"
                     android:src="@drawable/monthly_syllabus"
@@ -84,7 +84,7 @@
                 android:layout_margin="3dp"
                 >
                 <ImageView
-                    android:layout_height="80dp"
+                    android:layout_height="60dp"
                     android:layout_width="80dp"
                     android:src="@drawable/results"
                     android:background="#4C000000"
@@ -108,7 +108,7 @@
                 android:layout_margin="3dp"
                 >
                 <ImageView
-                    android:layout_height="80dp"
+                    android:layout_height="60dp"
                     android:layout_width="80dp"
                     android:background="#4C000000"
                     android:src="@drawable/notice_board"
@@ -139,7 +139,7 @@
                 android:layout_margin="3dp"
                 >
                 <ImageView
-                    android:layout_height="80dp"
+                    android:layout_height="60dp"
                     android:layout_width="80dp"
                     android:background="#4C000000"
                     android:src="@drawable/transport"
@@ -164,8 +164,8 @@
                 android:layout_margin="3dp"
                 >
                 <ImageView
-                    android:layout_height="80dp"
-                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_width="80dp"
                     android:layout_gravity="center"
                     android:src="@drawable/messages"
                     android:background="#4C000000"
@@ -189,7 +189,7 @@
                 android:layout_margin="3dp"
                 >
                 <ImageView
-                    android:layout_height="80dp"
+                    android:layout_height="60dp"
                     android:layout_width="80dp"
                     android:background="#4C000000"
                     android:src="@drawable/homework"
@@ -213,7 +213,7 @@
                 android:layout_margin="3dp"
                 >
                 <ImageView
-                    android:layout_height="80dp"
+                    android:layout_height="60dp"
                     android:layout_width="80dp"
                     android:background="#4C000000"
                     android:src="@drawable/photo_gallery"
@@ -246,7 +246,7 @@
 
                 <ImageView
                     android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_height="60dp"
                     android:background="#4C000000"
                     android:scaleType="centerInside"
                     android:src="@drawable/calender" />
@@ -269,8 +269,8 @@
                 android:layout_margin="3dp"
                 >
                 <ImageView
-                    android:layout_height="80dp"
-                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_width="80dp"
                     android:layout_gravity="center"
                     android:background="#4C000000"
                     android:src="@drawable/teacher_details"
@@ -294,7 +294,7 @@
                 android:layout_weight="1"
                 >
                 <ImageView
-                    android:layout_height="80dp"
+                    android:layout_height="60dp"
                     android:layout_width="80dp"
                     android:background="#4C000000"
                     android:src="@drawable/fees_invoice"
@@ -318,7 +318,7 @@
                 android:layout_weight="1"
                 >
                 <ImageView
-                    android:layout_height="80dp"
+                    android:layout_height="60dp"
                     android:layout_width="80dp"
                     android:background="#4C000000"
                     android:src="@drawable/notice_board"
@@ -333,6 +333,38 @@
                     android:layout_gravity="center"
                     />
             </LinearLayout>
+        </TableRow>
+
+
+        <TableRow
+            android:id="@+id/row4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/subjects"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="3dp"
+                >
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="60dp"
+                    android:background="#4C000000"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/subjects" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Subjects"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    />
+            </LinearLayout>
+
+
         </TableRow>
     </TableLayout>
 
