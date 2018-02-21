@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public class NewsAndEventsResponseList {
-    @SerializedName("data")
+    @SerializedName("event_data")
     private List<NewsAndEventsResponse> newsAndEventsList;
 
     public List<NewsAndEventsResponse> getNewsAndEventsLists() {
