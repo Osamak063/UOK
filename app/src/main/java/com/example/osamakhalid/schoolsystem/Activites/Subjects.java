@@ -60,9 +60,9 @@ public class Subjects extends AppCompatActivity {
             @Override
             public void onResponse(Call<SubjectResponseList> call, Response<SubjectResponseList> response) {
                 if (response.isSuccessful()) {
-                    SubjectResponseList holidayList = response.body();
+                    SubjectResponseList subjectList = response.body();
                     if (holidayList != null) {
-                        listItems.addAll(holidayList.getSubjectData());
+                        listItems.addAll(subjectList.getSubjectData());
                         adapter.notifyDataSetChanged();
                     }
                 }
