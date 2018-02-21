@@ -64,8 +64,10 @@ public class NewsAndEvents extends AppCompatActivity {
             public void onResponse(Call<NewsAndEventsResponseList> call, Response<NewsAndEventsResponseList> response) {
                 if (response.isSuccessful()) {
                     NewsAndEventsResponseList newsAndEvents = response.body();
-                    listItems.addAll(newsAndEvents.getNewsAndEventsLists());
-                    adapter.notifyDataSetChanged();
+                    if (newsAndEvents != null && newsAndEvents.getNewsAndEventsLists()!=null) {
+                        listItems.addAll(newsAndEvents.getNewsAndEventsLists());
+                        adapter.notifyDataSetChanged();
+                    }
                 }
             }
 
