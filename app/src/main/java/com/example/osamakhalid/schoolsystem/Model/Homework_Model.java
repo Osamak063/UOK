@@ -1,45 +1,25 @@
 package com.example.osamakhalid.schoolsystem.Model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 /**
  * Created by HAMI on 16/02/2018.
  */
 
 public class Homework_Model  {
 
-    private String course,assign,date;
+    @SerializedName("homework_date_data")
+    @Expose
+    private List<Homework_Data_Model> homeworkDateData = null;
 
-    public Homework_Model(){
-
+    public List<Homework_Data_Model> getHomeworkDateData() {
+        return homeworkDateData;
     }
 
-    public Homework_Model(String Course,String assign,String date){
-
-        this.course = Course;
-        this.assign = assign;
-        this.date = date;
-    }
-
-    public String getCourse() {
-        return course;
-    }
-
-    public void setCourse(String course) {
-        this.course = course;
-    }
-
-    public String getAssign() {
-        return assign;
-    }
-
-    public void setAssign(String assign) {
-        this.assign = assign;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
+    public void setHomeworkDateData(List<Homework_Data_Model> homeworkDateData) {
+        this.homeworkDateData = homeworkDateData;
     }
 }
