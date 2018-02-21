@@ -7,6 +7,7 @@ import com.example.osamakhalid.schoolsystem.Model.HolidayResponse;
 import com.example.osamakhalid.schoolsystem.Model.HolidayResponseList;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.NewsAndEventsResponseList;
+import com.example.osamakhalid.schoolsystem.Model.SubjectResponseList;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -32,8 +33,11 @@ public interface ClientAPIs {
 
     @GET(ConnectionURLS.HOLIDAY_URL)
     Call<HolidayResponseList> getHolidays(@Query("type") String type, @Query("lang") String lang, @Header("Authorization") String authHeader);
+
     @GET(ConnectionURLS.NOTICE_BOARD_URL)
     Call<AlertResponse_Model> getNoticeData(@Header("Authorization") String authHeader);
 
+    @GET(ConnectionURLS.SUBJECTS_URL)
+    Call<SubjectResponseList> getSubjects(@Query("type") String type, @Query("username") String username, @Header("Authorization") String authHeader);
 }
 
