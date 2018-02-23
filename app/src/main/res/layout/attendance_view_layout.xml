@@ -27,7 +27,7 @@
                 android:text="Fri,Sep 01 2017"
                 android:layout_marginTop="15dp"
                 android:textColor="#000"
-                android:textSize="15dp" />
+                android:textSize="@dimen/attendance_text_size" />
 
             <Button
                 android:id="@+id/attendance_present"
