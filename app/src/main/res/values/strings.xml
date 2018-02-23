@@ -7,7 +7,20 @@
     <string name="newsandevents">News &amp; Events</string>
     <string name="title_activity_my_location">Map</string>
     <string name="title_activity_student_location">Map</string>
-
+    <array name="months">
+        <item>January</item>
+        <item>Feburary</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_library">Library</string>
