@@ -1,5 +1,6 @@
 package com.example.osamakhalid.schoolsystem.Activites;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
 import com.example.osamakhalid.schoolsystem.ConnectionInterface.ClientAPIs;
+import com.example.osamakhalid.schoolsystem.Consts.Values;
 import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
 import com.example.osamakhalid.schoolsystem.Model.ExamResult_Data;
 import com.example.osamakhalid.schoolsystem.Model.ExamResult_Model;
@@ -19,8 +21,6 @@ import com.example.osamakhalid.schoolsystem.R;
 
 import java.util.List;
 
-
-import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,13 +31,12 @@ public class ExamResult_Category extends AppCompatActivity implements View.OnCli
     Button first_term, second_term, final_term;
     public static String exam_name;
     public static List<ExamResult_Data> final_exam, first_exam, second_exam;
-
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exam_result__category);
-
         first_term = findViewById(R.id.first_term_exam);
         second_term = findViewById(R.id.second_term_exam);
         final_term = findViewById(R.id.final_exam);
@@ -52,6 +51,7 @@ public class ExamResult_Category extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View view) {
+        progressDialog = CommonCalls.createDialouge(this,"", Values.DIALOGUE_MSG);
 
         switch (view.getId()) {
 
@@ -109,17 +109,20 @@ public class ExamResult_Category extends AppCompatActivity implements View.OnCli
                             if (examResultModel.get(0).getExamName().equals(exam__name)) {
                                 exam_name = examResultModel.get(0).getExamName();
                                 final_exam = examResultModel.get(0).getData();
+                                progressDialog.dismiss();
                                 Intent i = new Intent(ExamResult_Category.this, Exam_Result.class);
                                 startActivity(i);
                             } else if (examResultModel.get(1).getExamName().contains(exam__name)) {
 
                                 exam_name = examResultModel.get(1).getExamName();
                                 first_exam = examResultModel.get(1).getData();
+                                progressDialog.dismiss();
                                 Intent i = new Intent(ExamResult_Category.this, Exam_Result.class);
                                 startActivity(i);
                             } else if (examResultModel.get(2).getExamName().contains(exam__name)) {
                                 exam_name = examResultModel.get(2).getExamName();
                                 second_exam = examResultModel.get(2).getData();
+                                progressDialog.dismiss();
                                 Intent i = new Intent(ExamResult_Category.this, Exam_Result.class);
                                 startActivity(i);
 
@@ -132,7 +135,8 @@ public class ExamResult_Category extends AppCompatActivity implements View.OnCli
 
             @Override
             public void onFailure(Call<Exam_Model> call, Throwable t) {
-                Toast.makeText(ExamResult_Category.this, "Server Error!", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+                Toast.makeText(ExamResult_Category.this, Values.SERVER_ERROR, Toast.LENGTH_SHORT).show();
 
             }
         });

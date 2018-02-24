@@ -1,5 +1,6 @@
 package com.example.osamakhalid.schoolsystem.Activites;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,13 +20,13 @@ public class Exam_Result extends AppCompatActivity {
     public static List<ExamResult_Data> listItems;
     String exam_name;
     TextView examview_name;
+    private ProgressDialog progressDialog;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exam__result);
-
         examview_name = findViewById(R.id.examtext);
         exam_name = ExamResult_Category.exam_name;
 

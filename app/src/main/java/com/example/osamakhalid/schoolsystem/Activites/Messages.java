@@ -12,14 +12,14 @@ import android.widget.SearchView;
 
 import com.example.osamakhalid.schoolsystem.Adapters.Teachers_Adapter;
 import com.example.osamakhalid.schoolsystem.Model.ItemClickListener;
-import com.example.osamakhalid.schoolsystem.Model.Teacher_Model;
+import com.example.osamakhalid.schoolsystem.Model.TeacherData_Model;
 import com.example.osamakhalid.schoolsystem.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Messages extends AppCompatActivity implements ItemClickListener {
-    List<Teacher_Model> teacher_modelList;
+    List<TeacherData_Model> teacher_modelList;
     RecyclerView recyclerView;
     public Teachers_Adapter adapter;
 
@@ -29,11 +29,11 @@ public class Messages extends AppCompatActivity implements ItemClickListener {
         setContentView(R.layout.activity_messages);
         teacher_modelList = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.messages_recycler_view);
-        teacher_modelList.add(new Teacher_Model("Asim Ali", "Courses: Science,Maths"));
-        teacher_modelList.add(new Teacher_Model("Muhammad Saeed", "Courses: Islamiat,Urdu"));
-        teacher_modelList.add(new Teacher_Model("Madiha Khurram", "Courses: English"));
-        teacher_modelList.add(new Teacher_Model("Shaista Raees", "Courses: Physics,Chemistry"));
-        teacher_modelList.add(new Teacher_Model("Sadiq Ali Khan", "Courses: Computer Science"));
+//        teacher_modelList.add(new Teacher_Model("Asim Ali", "Courses: Science,Maths"));
+//        teacher_modelList.add(new Teacher_Model("Muhammad Saeed", "Courses: Islamiat,Urdu"));
+//        teacher_modelList.add(new Teacher_Model("Madiha Khurram", "Courses: English"));
+//        teacher_modelList.add(new Teacher_Model("Shaista Raees", "Courses: Physics,Chemistry"));
+//        teacher_modelList.add(new Teacher_Model("Sadiq Ali Khan", "Courses: Computer Science"));
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new Teachers_Adapter(teacher_modelList, getApplicationContext());

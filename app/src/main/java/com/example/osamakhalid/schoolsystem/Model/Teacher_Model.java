@@ -1,31 +1,27 @@
 package com.example.osamakhalid.schoolsystem.Model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 /**
  * Created by Osama Khalid on 2/3/2018.
  */
 
 public class Teacher_Model {
-    String name;
-    String courses;
-    public Teacher_Model(){}
-    public Teacher_Model(String name,String courses){
-        this.name=name;
-        this.courses=courses;
+
+    @SerializedName("teacher_data")
+    @Expose
+    private List<TeacherData_Model> teacherData = null;
+
+    public List<TeacherData_Model> getTeacherData() {
+        return teacherData;
     }
 
-    public String getName() {
-        return name;
+    public void setTeacherData(List<TeacherData_Model> teacherData) {
+        this.teacherData = teacherData;
     }
 
-    public String getCourses() {
-        return courses;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setCourses(String courses) {
-        this.courses = courses;
-    }
 }

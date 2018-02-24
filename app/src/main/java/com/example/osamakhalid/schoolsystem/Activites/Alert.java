@@ -1,5 +1,6 @@
 package com.example.osamakhalid.schoolsystem.Activites;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +11,8 @@ import android.widget.Toast;
 import com.example.osamakhalid.schoolsystem.Adapters.NewsAndEvents_Adapter;
 import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
 import com.example.osamakhalid.schoolsystem.ConnectionInterface.ClientAPIs;
+import com.example.osamakhalid.schoolsystem.Consts.Values;
 import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
-import com.example.osamakhalid.schoolsystem.Model.Alert_Model;
 import com.example.osamakhalid.schoolsystem.Model.HolidayResponse;
 import com.example.osamakhalid.schoolsystem.Model.HolidayResponseList;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
@@ -33,6 +34,7 @@ public class Alert extends AppCompatActivity {
     private Retrofit retrofit;
     private ClientAPIs clientAPIs;
     LoginResponse userData;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,7 @@ public class Alert extends AppCompatActivity {
         setContentView(R.layout.activity_alert);
         listItems = new ArrayList<>();
         recyclerView = findViewById(R.id.alert);
-
+        progressDialog =CommonCalls.createDialouge(this,"",Values.DIALOGUE_MSG);
 
         //setting up recyclerview
         recyclerView = findViewById(R.id.alert);
@@ -64,9 +66,11 @@ public class Alert extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     HolidayResponseList holidayList = response.body();
                     if (holidayList != null && holidayList.getHolidayList() != null) {
+                        progressDialog.dismiss();
                         listItems.addAll(holidayList.getHolidayList());
                         adapter.notifyDataSetChanged();
                     } else {
+                        progressDialog.dismiss();
                         Toast.makeText(Alert.this, "Holiday alert not available yet.", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -74,7 +78,8 @@ public class Alert extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<HolidayResponseList> call, Throwable t) {
-                Toast.makeText(Alert.this, "Sorry something went wrong.", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+                Toast.makeText(Alert.this, Values.DIALOGUE_MSG, Toast.LENGTH_SHORT).show();
             }
         });
     }

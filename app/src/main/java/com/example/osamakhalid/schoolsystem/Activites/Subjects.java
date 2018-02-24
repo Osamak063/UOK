@@ -1,19 +1,18 @@
 package com.example.osamakhalid.schoolsystem.Activites;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.widget.Toast;
 
-import com.example.osamakhalid.schoolsystem.Adapters.NewsAndEvents_Adapter;
 import com.example.osamakhalid.schoolsystem.Adapters.SubjectsAdapter;
 import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
 import com.example.osamakhalid.schoolsystem.ConnectionInterface.ClientAPIs;
+import com.example.osamakhalid.schoolsystem.Consts.Values;
 import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
-import com.example.osamakhalid.schoolsystem.Model.HolidayResponse;
-import com.example.osamakhalid.schoolsystem.Model.HolidayResponseList;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.SubjectResponse;
 import com.example.osamakhalid.schoolsystem.Model.SubjectResponseList;
@@ -34,6 +33,7 @@ public class Subjects extends AppCompatActivity {
     private Retrofit retrofit;
     private ClientAPIs clientAPIs;
     LoginResponse userData;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +41,7 @@ public class Subjects extends AppCompatActivity {
         setContentView(R.layout.activity_subjects);
         //setting up recyclerview
         listItems = new ArrayList<>();
+        progressDialog = CommonCalls.createDialouge(this,"", Values.DIALOGUE_MSG);
         recyclerView = findViewById(R.id.subjects_recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -62,9 +63,11 @@ public class Subjects extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     SubjectResponseList subjectList = response.body();
                     if (subjectList != null && subjectList.getSubjectData() != null) {
+                        progressDialog.dismiss();
                         listItems.addAll(subjectList.getSubjectData());
                         adapter.notifyDataSetChanged();
                     } else {
+                        progressDialog.dismiss();
                         Toast.makeText(Subjects.this, "Subjects not available yet.", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -72,6 +75,7 @@ public class Subjects extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<SubjectResponseList> call, Throwable t) {
+                progressDialog.dismiss();
                 Toast.makeText(Subjects.this, "Sorry something went wrong.", Toast.LENGTH_SHORT).show();
             }
         });

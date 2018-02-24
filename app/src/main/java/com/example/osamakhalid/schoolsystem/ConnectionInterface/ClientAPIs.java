@@ -10,6 +10,8 @@ import com.example.osamakhalid.schoolsystem.Model.Homework_Model;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.NewsAndEventsResponseList;
 import com.example.osamakhalid.schoolsystem.Model.SubjectResponseList;
+import com.example.osamakhalid.schoolsystem.Model.TeacherPersonalProfile;
+import com.example.osamakhalid.schoolsystem.Model.Teacher_Model;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -23,7 +25,6 @@ import retrofit2.http.Query;
 public interface ClientAPIs {
 
     @FormUrlEncoded
-
     @POST(ConnectionURLS.LOGIN_URL)
     Call<LoginResponse> loginUser(@Field("username") String userName, @Field("password") String password, @Header("Authorization") String authHeader);
 
@@ -50,5 +51,13 @@ public interface ClientAPIs {
 
     @GET(ConnectionURLS.EXAM_SCHEDULE_URL)
     Call<ExamScheduleResponseList> getExamSchedule(@Query("username") String username, @Query("type") String type, @Header("Authorization") String authHeader);
+
+    @GET(ConnectionURLS.TEACHER_DETAILS_URL)
+    Call<Teacher_Model> getCourseTeacherData(@Query("username") String username, @Query("type") String user_type, @Header("Authorization") String authHeader);
+
+    @GET(ConnectionURLS.TEACHER_PERSONAL_PROFILE)
+    Call<TeacherPersonalProfile> getPersonalProfile(@Query("id") String id, @Header("Authorization") String authHeader);
+
+
 }
 
