@@ -8,7 +8,7 @@
     tools:context="com.example.osamakhalid.schoolsystem.Activites.TeacherProfile">
 
     <TextView
-        android:id="@+id/examtext"
+        android:id="@+id/profile_view_text"
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:background="@color/colorPrimary"
@@ -23,15 +23,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/examtext">
+        android:padding="6dp"
+        android:layout_below="@+id/profile_view_text">
 
         <ImageView
-            android:id="@+id/profilepic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/teacher_profile_pic"
+            android:layout_width="@dimen/teacher_profile_width"
+            android:layout_height="@dimen/teacher_profile_height"
             android:layout_gravity="center"
-            android:background="@drawable/profile_pic" />
+          />
 
     </LinearLayout>
 
@@ -41,10 +41,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@+id/picLayout"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp">
 
         <TextView
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Teacher ID : "
@@ -54,9 +55,10 @@
             />
 
         <TextView
+            android:id="@+id/teacher_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="01110001"
+            android:text=""
             android:layout_alignParentRight="true"
             android:paddingRight="8dp"
             android:textColor="#000"
@@ -71,13 +73,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@+id/t1"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Teacher Name : "
+            android:text="Name : "
             android:paddingLeft="8dp"
             android:textColor="#000"
             android:textSize="15sp"
@@ -87,7 +89,7 @@
             android:id="@+id/profile_teacher_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Asim Ali"
+            android:text=""
             android:layout_alignParentRight="true"
             android:paddingRight="8dp"
             android:textColor="#000"
@@ -103,13 +105,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@+id/t2"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="GR No # : "
+            android:text="Desigination : "
             android:paddingLeft="8dp"
             android:textColor="#000"
             android:textSize="15sp"
@@ -118,11 +120,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="S-5456"
+            android:text=""
             android:layout_alignParentRight="true"
             android:paddingRight="8dp"
             android:textColor="#000"
             android:textSize="15sp"
+            android:id="@+id/teacher_desigination"
             />
 
     </RelativeLayout>
@@ -133,13 +136,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@+id/t3"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Class : "
+            android:text="Sex : "
             android:paddingLeft="8dp"
             android:textColor="#000"
             android:textSize="15sp"
@@ -148,11 +151,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="X-A"
+            android:text=""
             android:layout_alignParentRight="true"
             android:paddingRight="8dp"
             android:textColor="#000"
             android:textSize="15sp"
+            android:id="@+id/teacher_gender"
             />
 
     </RelativeLayout>
@@ -163,8 +167,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@+id/t4"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -178,10 +182,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1/1/1992"
+            android:text=""
             android:layout_alignParentRight="true"
             android:paddingRight="8dp"
             android:textColor="#000"
+            android:id="@+id/teacher_DOB"
             android:textSize="15sp"
             />
 
@@ -194,8 +199,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@+id/t5"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -209,14 +214,141 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="xyz@gmail.com"
+            android:text=""
             android:layout_alignParentRight="true"
             android:paddingRight="8dp"
             android:textColor="#000"
             android:textSize="15sp"
+            android:id="@+id/teacher_email"
             />
 
     </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/t10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/t6"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Phone : "
+            android:paddingLeft="8dp"
+            android:textColor="#000"
+            android:textSize="15sp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_alignParentRight="true"
+            android:paddingRight="8dp"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:id="@+id/teacher_phone"
+            />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/t7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/t10"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Religon: "
+            android:paddingLeft="8dp"
+            android:textColor="#000"
+            android:textSize="15sp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_alignParentRight="true"
+            android:paddingRight="8dp"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:id="@+id/teacher_religon"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/t8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/t7"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Address: "
+            android:paddingLeft="8dp"
+            android:textColor="#000"
+            android:textSize="15sp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_alignParentRight="true"
+            android:paddingRight="8dp"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:id="@+id/teacher_address"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/t9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/t8"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Joining Date: "
+            android:paddingLeft="8dp"
+            android:textColor="#000"
+            android:textSize="15sp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_alignParentRight="true"
+            android:paddingRight="8dp"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:id="@+id/teacher_joining"
+            />
+
+    </RelativeLayout>
+
 
     <TextView
         android:layout_width="match_parent"

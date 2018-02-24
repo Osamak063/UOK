@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,12 +13,14 @@ import android.widget.Toast;
 
 import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
 import com.example.osamakhalid.schoolsystem.ConnectionInterface.ClientAPIs;
+import com.example.osamakhalid.schoolsystem.Consts.Values;
 import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
 import com.example.osamakhalid.schoolsystem.Model.AlertResponse_Model;
 import com.example.osamakhalid.schoolsystem.Model.Alert_Model;
 import com.example.osamakhalid.schoolsystem.Model.Homework_Data_Model;
-import com.example.osamakhalid.schoolsystem.Model.Homework_Model;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
+import com.example.osamakhalid.schoolsystem.Model.TeacherData_Model;
+import com.example.osamakhalid.schoolsystem.Model.Teacher_Model;
 import com.example.osamakhalid.schoolsystem.R;
 
 import java.util.List;
@@ -31,11 +32,15 @@ import retrofit2.Retrofit;
 
 public class DashboardActivity extends AppCompatActivity {
     private LinearLayout attendance, syllabus, results, noticeBoard, transport, messages, library, photoGallery, newsAndEvents,
-            teacherDetails, fees, holidayAlert, homework, subjects, examSchedule;
+            examSchedule, teacherDetails, fees, holidayAlert, homework, subjects;
+    ;
     public AlertResponse_Model alert_response_model;
     public static String Currentdate;
     public static List<Alert_Model> alert_model;
     public static List<Homework_Data_Model> homework_data_models;
+
+
+    public static List<TeacherData_Model> teacherData_models;
 
 
     @Override
@@ -59,7 +64,7 @@ public class DashboardActivity extends AppCompatActivity {
         homework.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getHomeWork();
+                startActivity(new Intent(DashboardActivity.this, HomeWork.class));
             }
         });
 
@@ -78,7 +83,7 @@ public class DashboardActivity extends AppCompatActivity {
         noticeBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getNoticeData();
+                startActivity(new Intent(DashboardActivity.this, Circular.class));
 
             }
         });
@@ -115,7 +120,7 @@ public class DashboardActivity extends AppCompatActivity {
         teacherDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(DashboardActivity.this, Profile.class));
+                getTeacherData();
 
             }
         });
@@ -160,7 +165,6 @@ public class DashboardActivity extends AppCompatActivity {
 
                 Intent i = new Intent(DashboardActivity.this, AboutClass.class);
                 startActivity(i);
-
                 return true;
             }
         });
@@ -182,76 +186,43 @@ public class DashboardActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //Notice Board function
-    public void getNoticeData() {
+    public void getTeacherData() {
 
         Retrofit retrofit = RetrofitInitialize.getApiClient();
         ClientAPIs clientAPIs = retrofit.create(ClientAPIs.class);
         final LoginResponse loginResponse = CommonCalls.getUserData(DashboardActivity.this);
         String base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
         String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
-        Call<AlertResponse_Model> call = clientAPIs.getNoticeData(authHeader);
-        call.enqueue(new Callback<AlertResponse_Model>() {
+        Call<Teacher_Model> call = clientAPIs.getCourseTeacherData
+                (loginResponse.getUsername(), loginResponse.getUsertype(), authHeader);
+        call.enqueue(new Callback<Teacher_Model>() {
             @Override
-            public void onResponse(Call<AlertResponse_Model> call, Response<AlertResponse_Model> response) {
-                Log.e("Server hit: ", "Successful");
-                if (response.isSuccessful()) {
-                    Log.e("Server Response: ", "Successful");
+            public void onResponse(Call<Teacher_Model> call, Response<Teacher_Model> response) {
 
-                    alert_response_model = response.body();
-                    if (alert_response_model != null) {
-                        alert_model = alert_response_model.getNoticeData();
-                        startActivity(new Intent(DashboardActivity.this, Circular.class));
-                    } else {
-                        Toast.makeText(DashboardActivity.this, "No Notice!", Toast.LENGTH_SHORT).show();
+                if (response.isSuccessful()) {
+
+                    Teacher_Model teacher_model = response.body();
+                    if (teacher_model != null) {
+
+                        teacherData_models = teacher_model.getTeacherData();
+                        startActivity(new Intent(DashboardActivity.this, Profile.class));
 
                     }
-
 
                 }
 
             }
 
             @Override
-            public void onFailure(Call<AlertResponse_Model> call, Throwable t) {
-                Toast.makeText(DashboardActivity.this, "Server Error!", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<Teacher_Model> call, Throwable t) {
+
+                Toast.makeText(DashboardActivity.this, Values.SERVER_ERROR, Toast.LENGTH_SHORT).show();
+
             }
         });
-
     }
 
-    public void getHomeWork() {
 
-        Retrofit retrofit = RetrofitInitialize.getApiClient();
-        ClientAPIs clientAPIs = retrofit.create(ClientAPIs.class);
-        LoginResponse loginResponse = CommonCalls.getUserData(DashboardActivity.this);
-        String base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
-        String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
-        String date = CommonCalls.getCurrentDate();
-        Log.e("current date: ", date);
-        Call<Homework_Model> call = clientAPIs.getHomeWOrk("2018-02-14", authHeader);
-        call.enqueue(new Callback<Homework_Model>() {
-            @Override
-            public void onResponse(Call<Homework_Model> call, Response<Homework_Model> response) {
-                Log.e("Server hit: ", "Successful");
-                if (response.isSuccessful()) {
-                    Log.e("Response hit: ", "Successful");
-                    Homework_Model homework_model = response.body();
-                    if (homework_model != null) {
-                        Log.e("Object hit: ", "Successful");
-                        Currentdate = homework_model.getHomeworkDateData().get(0).getDate();
-                        homework_data_models = homework_model.getHomeworkDateData();
-                        startActivity(new Intent(DashboardActivity.this, HomeWork.class));
+        }
 
-                    }
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Homework_Model> call, Throwable t) {
-                Toast.makeText(DashboardActivity.this, "Server Error!", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
-}

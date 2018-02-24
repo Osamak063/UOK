@@ -1,12 +1,18 @@
 package com.example.osamakhalid.schoolsystem.GlobalCalls;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.google.gson.Gson;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -41,6 +47,31 @@ public class CommonCalls extends AppCompatActivity {
 
     return nowAsString;
 
+    }
+
+
+    public static ProgressDialog createDialouge(Context context,String title,String msg){
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setTitle(title);
+        progressDialog.setMessage(msg);
+        progressDialog.show();
+        return progressDialog;
+    }
+
+    public static Bitmap getImage(String urlString){
+        URL url = null;
+        Bitmap bmp = null;
+        try {
+            url = new URL(urlString);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        try {
+             bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bmp;
     }
 
 

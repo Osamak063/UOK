@@ -1,8 +1,9 @@
 package com.example.osamakhalid.schoolsystem.Activites;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import com.example.osamakhalid.schoolsystem.Adapters.Attendance_Adapter;
 import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
 import com.example.osamakhalid.schoolsystem.ConnectionInterface.ClientAPIs;
+import com.example.osamakhalid.schoolsystem.Consts.Values;
 import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
 import com.example.osamakhalid.schoolsystem.Model.AttendanceResponse;
 import com.example.osamakhalid.schoolsystem.Model.AttendanceValuesResponse;
@@ -40,6 +42,7 @@ public class Attendance extends AppCompatActivity {
     int index = 0;
     Calendar calendar;
     TextView heading;
+    private ProgressDialog progressDialouge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,7 @@ public class Attendance extends AppCompatActivity {
         setContentView(R.layout.activity_attendance);
         listItems = new ArrayList<>();
         MonthNameListItems = new ArrayList<>();
+        progressDialouge = CommonCalls.createDialouge(this,"", Values.DIALOGUE_MSG);
         MonthNameListItems.addAll(Arrays.asList(getResources().getStringArray(R.array.months)));
         Intent i = getIntent();
         if (i != null) {
@@ -84,9 +88,11 @@ public class Attendance extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     AttendanceResponse attendanceResponseList = response.body();
                     if (attendanceResponseList != null && attendanceResponseList.getData() != null) {
+                        progressDialouge.dismiss();
                         listItems.addAll(attendanceResponseList.getData().getAttendance());
                         adapter.notifyDataSetChanged();
                     } else {
+                        progressDialouge.dismiss();
                         Toast.makeText(Attendance.this, "Attendance not available yet.", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -94,7 +100,8 @@ public class Attendance extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<AttendanceResponse> call, Throwable t) {
-                Toast.makeText(Attendance.this, "Sorry something went wrong.", Toast.LENGTH_SHORT).show();
+                progressDialouge.dismiss();
+                Toast.makeText(Attendance.this, Values.SERVER_ERROR, Toast.LENGTH_SHORT).show();
             }
         });
     }

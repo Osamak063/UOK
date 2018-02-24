@@ -1,5 +1,6 @@
 package com.example.osamakhalid.schoolsystem.Activites;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,33 +12,41 @@ import android.view.View;
 import android.widget.SearchView;
 
 import com.example.osamakhalid.schoolsystem.Adapters.Teachers_Adapter;
+import com.example.osamakhalid.schoolsystem.Consts.Values;
+import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
 import com.example.osamakhalid.schoolsystem.Model.ItemClickListener;
-import com.example.osamakhalid.schoolsystem.Model.Teacher_Model;
+import com.example.osamakhalid.schoolsystem.Model.TeacherData_Model;
 import com.example.osamakhalid.schoolsystem.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Profile extends AppCompatActivity implements ItemClickListener {
-    List<Teacher_Model> teacher_modelList;
     RecyclerView recyclerView;
     public Teachers_Adapter adapter;
+    public static String teacher_id ;
+    public static List<TeacherData_Model> teacher_list;
+    ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        teacher_modelList = new ArrayList<>();
-        recyclerView = (RecyclerView) findViewById(R.id.profile_recycler_view);
-        teacher_modelList.add(new Teacher_Model("Asim Ali", "Courses: Science,Maths"));
-        teacher_modelList.add(new Teacher_Model("Muhammad Saeed", "Courses: Islamiat,Urdu"));
-        teacher_modelList.add(new Teacher_Model("Madiha Khurram", "Courses: English"));
-        teacher_modelList.add(new Teacher_Model("Shaista Raees", "Courses: Physics,Chemistry"));
-        teacher_modelList.add(new Teacher_Model("Sadiq Ali Khan", "Courses: Computer Science"));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new Teachers_Adapter(teacher_modelList, getApplicationContext());
-        adapter.setItemClickListener(this);
-        recyclerView.setAdapter(adapter);
+        recyclerView = findViewById(R.id.profile_recycler_view);
+         progressDialog = CommonCalls.createDialouge(this,"", Values.DIALOGUE_MSG);
+
+        //getTeacherData();
+        teacher_list = DashboardActivity.teacherData_models;
+        teacher_id = teacher_list.get(0).getTeacherId();
+        if(teacher_list!= null){
+            progressDialog.dismiss();
+
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+            adapter = new Teachers_Adapter(teacher_list, getApplicationContext());
+            adapter.setItemClickListener(this);
+            recyclerView.setAdapter(adapter);
+
+        }
 
     }
 
@@ -47,8 +56,6 @@ public class Profile extends AppCompatActivity implements ItemClickListener {
         i.putExtra("name", name);
         startActivity(i);
     }
-
-
 
 
     @Override
@@ -71,4 +78,6 @@ public class Profile extends AppCompatActivity implements ItemClickListener {
         });
         return true;
     }
+
+
 }

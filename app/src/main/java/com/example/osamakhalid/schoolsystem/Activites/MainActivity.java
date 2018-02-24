@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressDialog.setMessage("Please wait...");
+                progressDialog.setMessage(Values.WAIT_MSG);
                 progressDialog.show();
                 loginUser();
             }
@@ -62,12 +62,12 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                LoginResponse loginResponse1 = response.body();
+            //    LoginResponse loginResponse1 = response.body();
                 if (response.isSuccessful()) {
                     LoginResponse loginResponse = response.body();
                     if (loginResponse.getStatus() == 1) {
                         progressDialog.dismiss();
-                        Toast.makeText(MainActivity.this, "Successfully logged in.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Successfully logged in..", Toast.LENGTH_SHORT).show();
                         CommonCalls.saveUserData(loginResponse,MainActivity.this);
                         Intent i = new Intent(MainActivity.this, TrackingActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);

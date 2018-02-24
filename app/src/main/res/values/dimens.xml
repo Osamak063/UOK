@@ -5,4 +5,6 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="attendance_text_size">12dp</dimen>
+    <dimen name="teacher_profile_width">150dp</dimen>
+    <dimen name="teacher_profile_height">150dp</dimen>
 </resources>

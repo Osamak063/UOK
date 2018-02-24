@@ -1,15 +1,15 @@
 package com.example.osamakhalid.schoolsystem.Activites;
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.widget.Toast;
 
 import com.example.osamakhalid.schoolsystem.Adapters.NewsAndEvents_Adapter;
-import com.example.osamakhalid.schoolsystem.Adapters.Transport_Adapter;
 import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
 import com.example.osamakhalid.schoolsystem.ConnectionInterface.ClientAPIs;
 import com.example.osamakhalid.schoolsystem.Consts.Values;
@@ -17,8 +17,6 @@ import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.NewsAndEventsResponse;
 import com.example.osamakhalid.schoolsystem.Model.NewsAndEventsResponseList;
-import com.example.osamakhalid.schoolsystem.Model.News_Model;
-import com.example.osamakhalid.schoolsystem.Model.Transport_Model;
 import com.example.osamakhalid.schoolsystem.R;
 import com.google.gson.Gson;
 
@@ -38,12 +36,14 @@ public class NewsAndEvents extends AppCompatActivity {
     private Gson gson;
     private Retrofit retrofit;
     private ClientAPIs clientAPIs;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_and_events);
         listItems = new ArrayList<>();
+        progressDialog = CommonCalls.createDialouge(this,"", Values.DIALOGUE_MSG);
         recyclerView = findViewById(R.id.news_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -65,10 +65,12 @@ public class NewsAndEvents extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     NewsAndEventsResponseList newsAndEvents = response.body();
                     if (newsAndEvents != null && newsAndEvents.getNewsAndEventsLists()!=null) {
+                        progressDialog.dismiss();
                         listItems.addAll(newsAndEvents.getNewsAndEventsLists());
                         adapter.notifyDataSetChanged();
                     }
                     else {
+                        progressDialog.dismiss();
                         Toast.makeText(NewsAndEvents.this, "News and events not available yet.", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -76,6 +78,7 @@ public class NewsAndEvents extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<NewsAndEventsResponseList> call, Throwable t) {
+                progressDialog.dismiss();
                 Toast.makeText(NewsAndEvents.this, "Sorry something went wrong.", Toast.LENGTH_SHORT).show();
             }
         });

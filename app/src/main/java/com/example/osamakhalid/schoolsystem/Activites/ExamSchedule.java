@@ -1,21 +1,20 @@
 package com.example.osamakhalid.schoolsystem.Activites;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.widget.Toast;
 
 import com.example.osamakhalid.schoolsystem.Adapters.ExamScheduleAdapter;
-import com.example.osamakhalid.schoolsystem.Adapters.NewsAndEvents_Adapter;
 import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
 import com.example.osamakhalid.schoolsystem.ConnectionInterface.ClientAPIs;
+import com.example.osamakhalid.schoolsystem.Consts.Values;
 import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
 import com.example.osamakhalid.schoolsystem.Model.ExamScheduleResponse;
 import com.example.osamakhalid.schoolsystem.Model.ExamScheduleResponseList;
-import com.example.osamakhalid.schoolsystem.Model.HolidayResponse;
-import com.example.osamakhalid.schoolsystem.Model.HolidayResponseList;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.R;
 
@@ -34,13 +33,15 @@ public class ExamSchedule extends AppCompatActivity {
     private Retrofit retrofit;
     private ClientAPIs clientAPIs;
     LoginResponse userData;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exam_schedule);
         recyclerView = findViewById(R.id.exam_schedule_recycler_view);
-        listItems = new ArrayList<ExamScheduleResponse>();
+        listItems = new ArrayList<>();
+        progressDialog = CommonCalls.createDialouge(this,"", Values.DIALOGUE_MSG);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         userData = CommonCalls.getUserData(ExamSchedule.this);
@@ -61,9 +62,11 @@ public class ExamSchedule extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     ExamScheduleResponseList examScheduleList = response.body();
                     if (examScheduleList != null && examScheduleList.getExamsScheduleData() != null) {
+                        progressDialog.dismiss();
                         listItems.addAll(examScheduleList.getExamsScheduleData());
                         adapter.notifyDataSetChanged();
                     } else {
+                        progressDialog.dismiss();
                         Toast.makeText(ExamSchedule.this, "Schedule not available yet.", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -71,6 +74,7 @@ public class ExamSchedule extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ExamScheduleResponseList> call, Throwable t) {
+                progressDialog.dismiss();
                 Toast.makeText(ExamSchedule.this, "Sorry something went wrong.", Toast.LENGTH_SHORT).show();
             }
         });

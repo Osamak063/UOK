@@ -10,7 +10,7 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.example.osamakhalid.schoolsystem.Model.ItemClickListener;
-import com.example.osamakhalid.schoolsystem.Model.Teacher_Model;
+import com.example.osamakhalid.schoolsystem.Model.TeacherData_Model;
 import com.example.osamakhalid.schoolsystem.R;
 
 import java.util.ArrayList;
@@ -19,11 +19,11 @@ import java.util.List;
 
 public class Teachers_Adapter extends RecyclerView.Adapter<Teachers_Adapter.ViewHolder> implements Filterable {
     Context context;
-    List<Teacher_Model> teachermodels;
-    private final List<Teacher_Model> BackupTeachers;
+    List<TeacherData_Model> teachermodels;
+    private final List<TeacherData_Model> BackupTeachers;
     private ItemClickListener itemClickListener;
 
-    public Teachers_Adapter(List<Teacher_Model> teachermodels, Context context) {
+    public Teachers_Adapter(List<TeacherData_Model> teachermodels, Context context) {
         this.context = context;
         this.teachermodels = teachermodels;
         this.BackupTeachers = teachermodels;
@@ -38,9 +38,10 @@ public class Teachers_Adapter extends RecyclerView.Adapter<Teachers_Adapter.View
     @Override
     public void onBindViewHolder(Teachers_Adapter.ViewHolder holder, int position) {
 
-        final Teacher_Model teacher_model = teachermodels.get(position);
-        holder.name.setText(teacher_model.getName());
-        holder.courses.setText(teacher_model.getCourses());
+        final TeacherData_Model teacher_model = teachermodels.get(position);
+        holder.name.setText("Name:"+teacher_model.getName());
+        holder.courses.setText("Courses: "+teacher_model.getSubject());
+
     }
 
     @Override
@@ -61,8 +62,8 @@ public class Teachers_Adapter extends RecyclerView.Adapter<Teachers_Adapter.View
                 if (charString.isEmpty()) {
                     teachermodels = BackupTeachers;
                 } else {
-                    List<Teacher_Model> filteredList = new ArrayList<>();
-                    for (Teacher_Model row : BackupTeachers) {
+                    List<TeacherData_Model> filteredList = new ArrayList<>();
+                    for (TeacherData_Model row : BackupTeachers) {
                         if (row.getName().toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row);
                         }
@@ -78,7 +79,7 @@ public class Teachers_Adapter extends RecyclerView.Adapter<Teachers_Adapter.View
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                teachermodels = (ArrayList<Teacher_Model>) filterResults.values;
+                teachermodels = (ArrayList<TeacherData_Model>) filterResults.values;
                 notifyDataSetChanged();
             }
         };
@@ -99,8 +100,8 @@ public class Teachers_Adapter extends RecyclerView.Adapter<Teachers_Adapter.View
         @Override
         public void onClick(View view) {
             if (itemClickListener != null) {
-                Teacher_Model teacher_model = teachermodels.get(getAdapterPosition());
-                itemClickListener.onClick(view, teacher_model.getName());
+                TeacherData_Model teacher_model = teachermodels.get(getAdapterPosition());
+                itemClickListener.onClick(view, teacher_model.getTeacherId());
             }
         }
     }
