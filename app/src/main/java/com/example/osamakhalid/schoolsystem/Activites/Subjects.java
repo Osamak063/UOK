@@ -61,9 +61,11 @@ public class Subjects extends AppCompatActivity {
             public void onResponse(Call<SubjectResponseList> call, Response<SubjectResponseList> response) {
                 if (response.isSuccessful()) {
                     SubjectResponseList subjectList = response.body();
-                    if (subjectList != null) {
+                    if (subjectList != null && subjectList.getSubjectData() != null) {
                         listItems.addAll(subjectList.getSubjectData());
                         adapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(Subjects.this, "Subjects not available yet.", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
