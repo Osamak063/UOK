@@ -46,6 +46,7 @@
              android:text="Attendance"
              android:textSize="12dp"
              android:textStyle="bold"
+             android:textColor="@color/dashboard_text_color"
              android:layout_gravity="center"
              />
         </LinearLayout>
@@ -71,6 +72,7 @@
                     android:layout_height="wrap_content"
                     android:text="Time Table"
                     android:textSize="12dp"
+                    android:textColor="@color/dashboard_text_color"
                     android:textStyle="bold"
                     android:layout_gravity="center"
                     />
@@ -95,6 +97,7 @@
                     android:layout_height="wrap_content"
                     android:text="Results"
                     android:textSize="12dp"
+                    android:textColor="@color/dashboard_text_color"
                     android:textStyle="bold"
                     android:layout_gravity="center"
                     />
@@ -120,6 +123,7 @@
                     android:text="Notice Board"
                     android:textSize="12dp"
                     android:textStyle="bold"
+                    android:textColor="@color/dashboard_text_color"
                     android:layout_gravity="center"
                     />
             </LinearLayout>
@@ -150,6 +154,7 @@
                     android:layout_height="wrap_content"
                     android:text="Transport"
                     android:textSize="12dp"
+                    android:textColor="@color/dashboard_text_color"
                     android:textStyle="bold"
                     android:layout_gravity="center"
                     />
@@ -176,6 +181,7 @@
                     android:layout_height="wrap_content"
                     android:text="Messages"
                     android:textSize="12dp"
+                    android:textColor="@color/dashboard_text_color"
                     android:textStyle="bold"
                     android:layout_gravity="center"
                     />
@@ -200,6 +206,7 @@
                     android:layout_height="wrap_content"
                     android:text="Homework"
                     android:textSize="12dp"
+                    android:textColor="@color/dashboard_text_color"
                     android:textStyle="bold"
                     android:layout_gravity="center"
                     />
@@ -224,6 +231,7 @@
                     android:layout_height="wrap_content"
                     android:text="Photo Gallery"
                     android:textSize="12dp"
+                    android:textColor="@color/dashboard_text_color"
                     android:textStyle="bold"
                     android:layout_gravity="center"
                     />
@@ -255,6 +263,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/newsandevents"
                     android:textSize="12dp"
+                    android:textColor="@color/dashboard_text_color"
                     android:textStyle="bold"
                     android:layout_gravity="center"
                     />
@@ -282,6 +291,7 @@
                     android:text="Teacher Details"
                     android:textSize="12dp"
                     android:textStyle="bold"
+                    android:textColor="@color/dashboard_text_color"
                     android:layout_gravity="center"
                     />
             </LinearLayout>
@@ -304,6 +314,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/feesandinvoice"
+                    android:textColor="@color/dashboard_text_color"
                     android:textSize="12dp"
                     android:textStyle="bold"
                     android:layout_gravity="center"
@@ -329,6 +340,7 @@
                     android:layout_height="wrap_content"
                     android:text="Holiday Alert"
                     android:textSize="12dp"
+                    android:textColor="@color/dashboard_text_color"
                     android:textStyle="bold"
                     android:layout_gravity="center"
                     />
@@ -339,7 +351,8 @@
         <TableRow
             android:id="@+id/row4"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
             <LinearLayout
                 android:id="@+id/subjects"
                 android:layout_width="wrap_content"
@@ -358,12 +371,37 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Subjects"
+                    android:textColor="@color/dashboard_text_color"
                     android:textSize="12dp"
                     android:textStyle="bold"
                     android:layout_gravity="center"
                     />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/exam_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="3dp"
+                >
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="60dp"
+                    android:background="#4C000000"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/exam_schedule_two" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Exam Schedule"
+                    android:textSize="12dp"
+                    android:textColor="@color/dashboard_text_color"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    />
+            </LinearLayout>
 
         </TableRow>
     </TableLayout>
