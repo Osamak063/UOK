@@ -68,6 +68,9 @@ public class NewsAndEvents extends AppCompatActivity {
                         listItems.addAll(newsAndEvents.getNewsAndEventsLists());
                         adapter.notifyDataSetChanged();
                     }
+                    else {
+                        Toast.makeText(NewsAndEvents.this, "News and events not available yet.", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
