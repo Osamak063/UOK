@@ -7,16 +7,16 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.widget.Toast;
 
+import com.example.osamakhalid.schoolsystem.Adapters.ExamScheduleAdapter;
 import com.example.osamakhalid.schoolsystem.Adapters.NewsAndEvents_Adapter;
-import com.example.osamakhalid.schoolsystem.Adapters.SubjectsAdapter;
 import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
 import com.example.osamakhalid.schoolsystem.ConnectionInterface.ClientAPIs;
 import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
+import com.example.osamakhalid.schoolsystem.Model.ExamScheduleResponse;
+import com.example.osamakhalid.schoolsystem.Model.ExamScheduleResponseList;
 import com.example.osamakhalid.schoolsystem.Model.HolidayResponse;
 import com.example.osamakhalid.schoolsystem.Model.HolidayResponseList;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
-import com.example.osamakhalid.schoolsystem.Model.SubjectResponse;
-import com.example.osamakhalid.schoolsystem.Model.SubjectResponseList;
 import com.example.osamakhalid.schoolsystem.R;
 
 import java.util.ArrayList;
@@ -27,10 +27,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class Subjects extends AppCompatActivity {
+public class ExamSchedule extends AppCompatActivity {
     public RecyclerView recyclerView;
     public RecyclerView.Adapter adapter;
-    public List<SubjectResponse> listItems;
+    public List<ExamScheduleResponse> listItems;
     private Retrofit retrofit;
     private ClientAPIs clientAPIs;
     LoginResponse userData;
@@ -38,41 +38,40 @@ public class Subjects extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_subjects);
-        //setting up recyclerview
-        listItems = new ArrayList<>();
-        recyclerView = findViewById(R.id.subjects_recyclerview);
+        setContentView(R.layout.activity_exam_schedule);
+        recyclerView = findViewById(R.id.exam_schedule_recycler_view);
+        listItems = new ArrayList<ExamScheduleResponse>();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        userData = CommonCalls.getUserData(Subjects.this);
+        userData = CommonCalls.getUserData(ExamSchedule.this);
         String base = userData.getUsername() + ":" + userData.getPassword();
         String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
         getData(authHeader);
-        adapter = new SubjectsAdapter(listItems, getApplicationContext());
+        adapter = new ExamScheduleAdapter(listItems, getApplicationContext());
         recyclerView.setAdapter(adapter);
     }
 
     public void getData(String authHeader) {
         retrofit = RetrofitInitialize.getApiClient();
         clientAPIs = retrofit.create(ClientAPIs.class);
-        Call<SubjectResponseList> call = clientAPIs.getSubjects(userData.getUsertype(), userData.getUsername(), authHeader);
-        call.enqueue(new Callback<SubjectResponseList>() {
+        Call<ExamScheduleResponseList> call = clientAPIs.getExamSchedule(userData.getUsername(), userData.getUsertype(), authHeader);
+        call.enqueue(new Callback<ExamScheduleResponseList>() {
             @Override
-            public void onResponse(Call<SubjectResponseList> call, Response<SubjectResponseList> response) {
+            public void onResponse(Call<ExamScheduleResponseList> call, Response<ExamScheduleResponseList> response) {
                 if (response.isSuccessful()) {
-                    SubjectResponseList subjectList = response.body();
-                    if (subjectList != null && subjectList.getSubjectData() != null) {
-                        listItems.addAll(subjectList.getSubjectData());
+                    ExamScheduleResponseList examScheduleList = response.body();
+                    if (examScheduleList != null && examScheduleList.getExamsScheduleData() != null) {
+                        listItems.addAll(examScheduleList.getExamsScheduleData());
                         adapter.notifyDataSetChanged();
                     } else {
-                        Toast.makeText(Subjects.this, "Subjects not available yet.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ExamSchedule.this, "Schedule not available yet.", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<SubjectResponseList> call, Throwable t) {
-                Toast.makeText(Subjects.this, "Sorry something went wrong.", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<ExamScheduleResponseList> call, Throwable t) {
+                Toast.makeText(ExamSchedule.this, "Sorry something went wrong.", Toast.LENGTH_SHORT).show();
             }
         });
     }

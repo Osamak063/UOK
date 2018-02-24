@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.osamakhalid.schoolsystem.Adapters.Attendance_Adapter;
@@ -38,6 +39,7 @@ public class Attendance extends AppCompatActivity {
     String monthName;
     int index = 0;
     Calendar calendar;
+    TextView heading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class Attendance extends AppCompatActivity {
             monthName = i.getStringExtra("name");
         }
         recyclerView = findViewById(R.id.attendance_recycler_view);
+        heading = findViewById(R.id.attendance_header);
         calendar = Calendar.getInstance();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -67,6 +70,7 @@ public class Attendance extends AppCompatActivity {
         retrofit = RetrofitInitialize.getApiClient();
         clientAPIs = retrofit.create(ClientAPIs.class);
         int year = calendar.get(Calendar.YEAR);
+        heading.setText("Attendance - " + year);
         String monthyear;
         if (index > 9) {
             monthyear = (index + 1) + "-" + year;
@@ -79,8 +83,12 @@ public class Attendance extends AppCompatActivity {
             public void onResponse(Call<AttendanceResponse> call, Response<AttendanceResponse> response) {
                 if (response.isSuccessful()) {
                     AttendanceResponse attendanceResponseList = response.body();
-                    listItems.addAll(attendanceResponseList.getData().getAttendance());
-                    adapter.notifyDataSetChanged();
+                    if (attendanceResponseList != null && attendanceResponseList.getData() != null) {
+                        listItems.addAll(attendanceResponseList.getData().getAttendance());
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(Attendance.this, "Attendance not available yet.", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 

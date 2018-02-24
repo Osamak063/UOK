@@ -42,10 +42,8 @@ public class Alert extends AppCompatActivity {
         recyclerView = findViewById(R.id.alert);
 
 
-
-
         //setting up recyclerview
-        recyclerView =  findViewById(R.id.alert);
+        recyclerView = findViewById(R.id.alert);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         userData = CommonCalls.getUserData(Alert.this);
@@ -65,8 +63,12 @@ public class Alert extends AppCompatActivity {
             public void onResponse(Call<HolidayResponseList> call, Response<HolidayResponseList> response) {
                 if (response.isSuccessful()) {
                     HolidayResponseList holidayList = response.body();
-                    listItems.addAll(holidayList.getHolidayList());
-                    adapter.notifyDataSetChanged();
+                    if (holidayList != null && holidayList.getHolidayList() != null) {
+                        listItems.addAll(holidayList.getHolidayList());
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(Alert.this, "Holiday alert not available yet.", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 

@@ -3,6 +3,7 @@ package com.example.osamakhalid.schoolsystem.ConnectionInterface;
 import com.example.osamakhalid.schoolsystem.APIs.ConnectionURLS;
 import com.example.osamakhalid.schoolsystem.Model.AlertResponse_Model;
 import com.example.osamakhalid.schoolsystem.Model.AttendanceResponse;
+import com.example.osamakhalid.schoolsystem.Model.ExamScheduleResponseList;
 import com.example.osamakhalid.schoolsystem.Model.Exam_Model;
 import com.example.osamakhalid.schoolsystem.Model.HolidayResponseList;
 import com.example.osamakhalid.schoolsystem.Model.Homework_Model;
@@ -46,5 +47,8 @@ public interface ClientAPIs {
 
     @GET(ConnectionURLS.ATTENDANCE_URL)
     Call<AttendanceResponse> getAttendance(@Query("id") String id, @Query("type") String type, @Query("username") String username, @Query("lang") String lang, @Query("monthyear") String monthYear, @Header("Authorization") String authHeader);
+
+    @GET(ConnectionURLS.EXAM_SCHEDULE_URL)
+    Call<ExamScheduleResponseList> getExamSchedule(@Query("username") String username, @Query("type") String type, @Header("Authorization") String authHeader);
 }
 

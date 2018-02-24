@@ -1,33 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.osamakhalid.schoolsystem.Activites.Attendance">
-
+    tools:context="com.example.osamakhalid.schoolsystem.Activites.Alert">
 
     <TextView
-        android:id="@+id/attendance_header"
+        android:id="@+id/examtext"
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:background="@color/colorPrimary"
         android:textColor="#ffff"
-        android:text="Attendance"
+        android:text="Exam Schedule"
         android:textSize="20sp"
         android:gravity="center"/>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/attendance_recycler_view"
+        android:id="@+id/exam_schedule_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_above="@id/copyrights_text"
-        android:layout_below="@+id/attendance_header" />
+        android:layout_below="@+id/examtext" />
 
     <TextView
-        android:id="@+id/copyrights_text"
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:layout_alignParentBottom="true"
@@ -38,4 +34,3 @@
         android:textColor="#fff" />
 
 </RelativeLayout>
-

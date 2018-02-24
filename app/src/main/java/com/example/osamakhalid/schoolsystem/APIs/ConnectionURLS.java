@@ -19,4 +19,5 @@ public class ConnectionURLS {
     public static final String HOMEWORK_URL = "http://demo.simsportal.com/api/student/homework_by_date/";
     public static final String SUBJECTS_URL = "student/subjects/username/student01/type/Student";
     public static final String ATTENDANCE_URL = "student/student_attendence/id/1/type/Student/username/student01/lang/english";
+    public static final String EXAM_SCHEDULE_URL= "student/exams_schedule/username/student01/type/Student";
 }
