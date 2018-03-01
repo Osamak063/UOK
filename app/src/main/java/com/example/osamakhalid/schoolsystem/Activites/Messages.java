@@ -48,9 +48,19 @@ public class Messages extends AppCompatActivity implements ItemClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messages);
+
+        teacher_modelList = new ArrayList<>();
+        recyclerView = findViewById(R.id.messages_recycler_view);
+//        teacher_modelList.add(new Teacher_Model("Asim Ali", "Courses: Science,Maths"));
+//        teacher_modelList.add(new Teacher_Model("Muhammad Saeed", "Courses: Islamiat,Urdu"));
+//        teacher_modelList.add(new Teacher_Model("Madiha Khurram", "Courses: English"));
+//        teacher_modelList.add(new Teacher_Model("Shaista Raees", "Courses: Physics,Chemistry"));
+//        teacher_modelList.add(new Teacher_Model("Sadiq Ali Khan", "Courses: Computer Science"));
+
         listItems = new ArrayList<>();
         progressDialog = CommonCalls.createDialouge(this, "", Values.DIALOGUE_MSG);
         recyclerView = findViewById(R.id.messages_recycler_view);
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         userData = CommonCalls.getUserData(Messages.this);

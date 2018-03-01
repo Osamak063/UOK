@@ -5,14 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.osamakhalid.schoolsystem.Model.Alert_Model;
 import com.example.osamakhalid.schoolsystem.Model.Transport_Model;
 import com.example.osamakhalid.schoolsystem.R;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -23,11 +19,14 @@ import java.util.List;
 public class Transport_Adapter extends RecyclerView.Adapter<Transport_Adapter.ViewHolder> {
     Context context;
     List<Transport_Model> transportmodel;
+    Transport_Model transportModel;
 
     public Transport_Adapter(List<Transport_Model> transportmodel, Context context) {
         this.context = context;
         this.transportmodel = transportmodel;
     }
+
+
 
     @Override
     public Transport_Adapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -39,8 +38,12 @@ public class Transport_Adapter extends RecyclerView.Adapter<Transport_Adapter.Vi
     public void onBindViewHolder(Transport_Adapter.ViewHolder holder, int position) {
 
         final Transport_Model trans_model = transportmodel.get(position);
-        holder.vanNum.setText(trans_model.getVanNum());
-        holder.route.setText(trans_model.getRoute());
+        holder.transportID.setText("Transport ID: "+trans_model.getTransportID());
+        holder.route.setText("Route: "+trans_model.getRoute());
+        holder.vehicle.setText("Vehicle: "+trans_model.getVehicle());
+        holder.fare.setText("Fare "+trans_model.getFare());
+        holder.note.setText("Note: "+trans_model.getNote());
+
 
     }
 
@@ -51,13 +54,17 @@ public class Transport_Adapter extends RecyclerView.Adapter<Transport_Adapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView vanNum;
-        TextView route;
+        TextView transportID,route,vehicle,fare,note;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
-            vanNum = itemView.findViewById(R.id.van_num);
-            route = itemView.findViewById(R.id.route);
+
+            transportID = itemView.findViewById(R.id.transport_id);
+            route =itemView.findViewById(R.id.route_view);
+            vehicle= itemView.findViewById(R.id.vehicle_view);
+            fare = itemView.findViewById(R.id.fare_charges_view);
+            note = itemView.findViewById(R.id.notice_View);
         }
     }
 }

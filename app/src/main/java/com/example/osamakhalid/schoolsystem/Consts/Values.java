@@ -10,4 +10,6 @@ public class Values {
     public static final String DIALOGUE_MSG = "Loading...";
     public static final String SERVER_ERROR = "Server Error!";
     public static final String WAIT_MSG = "Please wait...";
+    public static final String LANGUAGE = "english";
+    public static final String Error = "Error while Loding..";
 }

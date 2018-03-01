@@ -5,7 +5,11 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="5dp">
+
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginLeft="5dp">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -20,22 +24,40 @@
             android:padding="8dp">
 
             <TextView
-                android:id="@+id/van_num"
+                android:id="@+id/transport_id"
                 android:textColor="#000"
-                android:text="Van #1"
+                android:text="Transport ID:"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 />
 
             <TextView
-                android:id="@+id/route"
+                android:id="@+id/route_view"
                 android:textColor="#000"
                 android:text="Route: Gulshan to North Karachi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <TextView
+                android:id="@+id/vehicle_view"
+                android:textColor="#000"
+                android:text="Route: Gulshan to North Karachi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
+            <TextView
+                android:id="@+id/fare_charges_view"
+                android:textColor="#000"
+                android:text="Route: Gulshan to North Karachi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
+            <TextView
+                android:id="@+id/notice_View"
+                android:textColor="#000"
+                android:text="Route: Gulshan to North Karachi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
 
         </LinearLayout>

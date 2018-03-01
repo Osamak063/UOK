@@ -18,6 +18,8 @@ import com.example.osamakhalid.schoolsystem.Model.NewsAndEventsResponseList;
 import com.example.osamakhalid.schoolsystem.Model.SubjectResponseList;
 import com.example.osamakhalid.schoolsystem.Model.TeacherPersonalProfile;
 import com.example.osamakhalid.schoolsystem.Model.Teacher_Model;
+import com.example.osamakhalid.schoolsystem.Model.TransportResponse_Model;
+import com.example.osamakhalid.schoolsystem.Model.Transport_Model;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -64,6 +66,16 @@ public interface ClientAPIs {
     @GET(ConnectionURLS.TEACHER_PERSONAL_PROFILE)
     Call<TeacherPersonalProfile> getPersonalProfile(@Query("id") String id, @Header("Authorization") String authHeader);
 
+
+//    @GET(ConnectionURLS.SYLLABUS_URL)
+//    Call<Syllabus_Model> getSyllabus(@Query("type") String type,@Query("username") String username,@Query("lang") String lang,@Query("monthyear") String monthyear,@Header("Authorization") String authHeader);
+
+    @GET(ConnectionURLS.TRANSPORT_ALL)
+    Call<TransportResponse_Model> getTranportData(@Query("type") String type, @Header("Authorization") String authHeader);
+
+    @GET(ConnectionURLS.TRANSPORT_PERSONAL)
+    Call<Transport_Model> getPersonalTranportData(@Query("studentID") String studentID, @Header("Authorization") String authHeade);
+=======
     @GET(ConnectionURLS.MESSAGE_INBOX_URL)
     Call<MessagesInboxResponseList> getMessagesInbox(@Query("username") String username, @Query("type") String type, @Header("Authorization") String authHeader);
 
@@ -78,6 +90,7 @@ public interface ClientAPIs {
 
     @GET(ConnectionURLS.MESSAGE_CHAT_URL)
     Call<ChatResponse> getChat(@Query("messageid") String messageId, @Query("userid") String userId, @Query("type") String type, @Header("Authorization") String authHeader);
+
 
 }
 

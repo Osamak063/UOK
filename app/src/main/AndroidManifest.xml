@@ -67,10 +67,14 @@
         <activity android:name=".Activites.ExamResult_Category" />
         <activity android:name=".Activites.Subjects" />
         <activity android:name=".Activites.ExamSchedule" />
+
+        <activity android:name=".Activites.Syllabus"></activity>
+
         <activity
             android:name=".Activites.AllMessages"
             android:label="@string/title_activity_all_messages"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
     </application>
 
 </manifest>

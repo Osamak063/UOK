@@ -16,6 +16,7 @@
         android:textColor="#ffff"
         android:text="Teachers"
         android:textSize="20sp"
+        android:padding="5dp"
         android:gravity="center"/>
 
     <android.support.v7.widget.RecyclerView
