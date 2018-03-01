@@ -52,7 +52,7 @@
         </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/syllabus"
+                android:id="@+id/timeTable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -396,6 +396,32 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Exam Schedule"
+                    android:textSize="12dp"
+                    android:textColor="@color/dashboard_text_color"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/syllabus_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="3dp"
+                >
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="60dp"
+                    android:background="#4C000000"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/syllabus" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Syllabus"
                     android:textSize="12dp"
                     android:textColor="@color/dashboard_text_color"
                     android:textStyle="bold"

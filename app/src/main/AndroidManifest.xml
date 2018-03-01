@@ -8,11 +8,11 @@
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@drawable/see_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:hardwareAccelerated="false"
         android:largeHeap="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Activites.MainActivity">
@@ -66,7 +66,8 @@
         <activity android:name=".Activites.AboutClass" />
         <activity android:name=".Activites.ExamResult_Category" />
         <activity android:name=".Activites.Subjects" />
-        <activity android:name=".Activites.ExamSchedule"></activity>
+        <activity android:name=".Activites.ExamSchedule" />
+        <activity android:name=".Activites.Syllabus"></activity>
     </application>
 
 </manifest>

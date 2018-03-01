@@ -32,7 +32,7 @@ import retrofit2.Retrofit;
 
 public class DashboardActivity extends AppCompatActivity {
     private LinearLayout attendance, syllabus, results, noticeBoard, transport, messages, library, photoGallery, newsAndEvents,
-            examSchedule, teacherDetails, fees, holidayAlert, homework, subjects;
+            examSchedule, teacherDetails, fees, holidayAlert, homework, subjects,timeTable;
     ;
     public AlertResponse_Model alert_response_model;
     public static String Currentdate;
@@ -48,7 +48,8 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         attendance = findViewById(R.id.attendance);
-        syllabus = findViewById(R.id.syllabus);
+        syllabus = findViewById(R.id.syllabus_view);
+        timeTable = findViewById(R.id.timeTable);
         results = findViewById(R.id.results);
         noticeBoard = findViewById(R.id.notice_board);
         transport = findViewById(R.id.transport);
@@ -61,6 +62,7 @@ public class DashboardActivity extends AppCompatActivity {
         fees = findViewById(R.id.fees);
         holidayAlert = findViewById(R.id.holiday_alert);
         examSchedule = findViewById(R.id.exam_schedule);
+
         homework.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,6 +71,13 @@ public class DashboardActivity extends AppCompatActivity {
         });
 
         syllabus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+         //     startActivity(new Intent(DashboardActivity.this,Syllabus.class));
+            }
+        });
+
+        timeTable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(DashboardActivity.this, TimeTable.class));

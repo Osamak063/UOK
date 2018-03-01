@@ -28,7 +28,7 @@ public class Messages extends AppCompatActivity implements ItemClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messages);
         teacher_modelList = new ArrayList<>();
-        recyclerView = (RecyclerView) findViewById(R.id.messages_recycler_view);
+        recyclerView = findViewById(R.id.messages_recycler_view);
 //        teacher_modelList.add(new Teacher_Model("Asim Ali", "Courses: Science,Maths"));
 //        teacher_modelList.add(new Teacher_Model("Muhammad Saeed", "Courses: Islamiat,Urdu"));
 //        teacher_modelList.add(new Teacher_Model("Madiha Khurram", "Courses: English"));

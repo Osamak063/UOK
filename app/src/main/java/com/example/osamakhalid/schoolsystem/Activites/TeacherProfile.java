@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,7 +65,6 @@ public class TeacherProfile extends AppCompatActivity {
             public void onResponse(Call<TeacherPersonalProfile> call, Response<TeacherPersonalProfile> response) {
                 if(response.isSuccessful()){
                     progressDialog.dismiss();
-                    Log.e("Server ","successful");
                     TeacherPersonalProfile teacherPersonalProfile = response.body();
                     activity_view_text.setText(teacherPersonalProfile.getName());
                     teacher_ID.setText(teacherPersonalProfile.getTeacherID());
