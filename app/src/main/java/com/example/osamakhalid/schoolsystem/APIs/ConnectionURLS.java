@@ -18,8 +18,8 @@ public class ConnectionURLS {
     public static final String HOMEWORK_URL = "student/homework_by_date/";
 
     public static final String ATTENDANCE_URL = "student/student_attendence/id/1/type/Student/username/student01/lang/english";
-    public static final String EXAM_SCHEDULE_URL= "student/exams_schedule/username/student01/type/Student";
-    public static final String SUBJECTS_URL="student/subjects/username/student01/type/Student";
+    public static final String EXAM_SCHEDULE_URL = "student/exams_schedule/username/student01/type/Student";
+    public static final String SUBJECTS_URL = "student/subjects/username/student01/type/Student";
 
     public static final String TEACHER_DETAILS_URL = "student/teachers/";
 
@@ -30,4 +30,9 @@ public class ConnectionURLS {
     public static final String TRANSPORT_ALL = "student/transport/";
     public static final String TRANSPORT_PERSONAL = "student/transport_single/";
 
+    public static final String MESSAGE_INBOX_URL = "student/message_inbox/";
+    public static final String MESSAGE_SENT_URL = "student/message_sent/";
+    public static final String MESSAGE_FAV_URL = "student/fav_message/";
+    public static final String MESSAGE_TRASH_URL = "student/trash_message/";
+    public static final String MESSAGE_CHAT_URL = "student/message_view/";
 }
