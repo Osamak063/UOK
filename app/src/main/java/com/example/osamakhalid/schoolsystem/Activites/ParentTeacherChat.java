@@ -47,7 +47,7 @@ public class ParentTeacherChat extends AppCompatActivity {
         dateFormat = new SimpleDateFormat("hh:mm:ss aa");
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new Chat_Adapter(chatModelList, getApplicationContext());
+      //  adapter = new Chat_Adapter(chatModelList, getApplicationContext());
         recyclerView.setAdapter(adapter);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override

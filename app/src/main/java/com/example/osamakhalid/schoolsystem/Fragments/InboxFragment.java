@@ -1,18 +1,27 @@
-package com.example.osamakhalid.schoolsystem.Activites;
+package com.example.osamakhalid.schoolsystem.Fragments;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.example.osamakhalid.schoolsystem.Activites.Messages;
+import com.example.osamakhalid.schoolsystem.Activites.ParentTeacherChat;
+import com.example.osamakhalid.schoolsystem.Adapters.MessagesAdapter;
 import com.example.osamakhalid.schoolsystem.Adapters.Teachers_Adapter;
 import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
 import com.example.osamakhalid.schoolsystem.ConnectionInterface.ClientAPIs;
@@ -22,10 +31,7 @@ import com.example.osamakhalid.schoolsystem.Model.ItemClickListener;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.MessagesInboxResponse;
 import com.example.osamakhalid.schoolsystem.Model.MessagesInboxResponseList;
-import com.example.osamakhalid.schoolsystem.Model.NewsAndEventsResponseList;
-import com.example.osamakhalid.schoolsystem.Model.TeacherData_Model;
 import com.example.osamakhalid.schoolsystem.R;
-import com.google.android.gms.wearable.MessageApi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,31 +41,39 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class Messages extends AppCompatActivity implements ItemClickListener {
+public class InboxFragment extends Fragment implements ItemClickListener {
     List<MessagesInboxResponse> listItems;
     RecyclerView recyclerView;
-    public Teachers_Adapter adapter;
+    public MessagesAdapter adapter;
     private Retrofit retrofit;
     private ClientAPIs clientAPIs;
     ProgressDialog progressDialog;
     LoginResponse userData;
 
+    private OnInboxFragmentInteractionListener mListener;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_messages);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        if (container != null) {
+            container.removeAllViews();
+        }
+        View view = inflater.inflate(R.layout.fragment_inbox, container, false);
+        setHasOptionsMenu(true);
         listItems = new ArrayList<>();
-        progressDialog = CommonCalls.createDialouge(this, "", Values.DIALOGUE_MSG);
-        recyclerView = findViewById(R.id.messages_recycler_view);
+        progressDialog = CommonCalls.createDialouge(getActivity(), "", Values.DIALOGUE_MSG);
+        recyclerView = view.findViewById(R.id.messages_recycler_view);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        userData = CommonCalls.getUserData(Messages.this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
+        userData = CommonCalls.getUserData(getActivity().getBaseContext());
         String base = userData.getUsername() + ":" + userData.getPassword();
         String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
         getData(authHeader);
-        // adapter = new Teachers_Adapter(listItems, getApplicationContext());
+        adapter = new MessagesAdapter(listItems, getActivity().getApplicationContext());
         recyclerView.setAdapter(adapter);
         adapter.setItemClickListener(this);
+        return view;
     }
 
     public void getData(String authHeader) {
@@ -77,7 +91,7 @@ public class Messages extends AppCompatActivity implements ItemClickListener {
                         adapter.notifyDataSetChanged();
                     } else {
                         progressDialog.dismiss();
-                        Toast.makeText(Messages.this, "Inbox not available yet.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Inbox not available yet.", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -85,21 +99,19 @@ public class Messages extends AppCompatActivity implements ItemClickListener {
             @Override
             public void onFailure(Call<MessagesInboxResponseList> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(Messages.this, "Sorry something went wrong.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Sorry something went wrong.", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     @Override
-    public void onClick(View view, String name) {
-        Intent i = new Intent(this, ParentTeacherChat.class);
-        i.putExtra("name", name);
-        startActivity(i);
+    public void onClick(View view, String messageId) {
+        mListener.onFragmentInteraction(messageId);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_item_menu, menu);
+    public void onCreateOptionsMenu(Menu menu, MenuInflater Inflater) {
+        getActivity().getMenuInflater().inflate(R.menu.search_item_menu, menu);
         MenuItem item = menu.findItem(R.id.search_item);
         SearchView searchView = (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -115,6 +127,27 @@ public class Messages extends AppCompatActivity implements ItemClickListener {
                 return false;
             }
         });
-        return true;
+        super.onCreateOptionsMenu(menu, Inflater);
+    }
+
+    public interface OnInboxFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(String messageId);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mListener = (OnInboxFragmentInteractionListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnHeadlineSelectedListener");
+        }
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 }
