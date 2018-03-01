@@ -1,109 +1,106 @@
 package com.example.osamakhalid.schoolsystem.Fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.osamakhalid.schoolsystem.Adapters.MessagesAdapter;
+import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
+import com.example.osamakhalid.schoolsystem.ConnectionInterface.ClientAPIs;
+import com.example.osamakhalid.schoolsystem.Consts.Values;
+import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
+import com.example.osamakhalid.schoolsystem.Model.ItemClickListener;
+import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
+import com.example.osamakhalid.schoolsystem.Model.MessagesFavResponse;
+import com.example.osamakhalid.schoolsystem.Model.MessagesFavResponseList;
+import com.example.osamakhalid.schoolsystem.Model.MessagesTrashResponse;
+import com.example.osamakhalid.schoolsystem.Model.MessagesTrashResponseList;
 import com.example.osamakhalid.schoolsystem.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link TrashMessagesFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link TrashMessagesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class TrashMessagesFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import java.util.ArrayList;
+import java.util.List;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
-    private OnFragmentInteractionListener mListener;
-
-    public TrashMessagesFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TrashMessagesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static TrashMessagesFragment newInstance(String param1, String param2) {
-        TrashMessagesFragment fragment = new TrashMessagesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+public class TrashMessagesFragment extends Fragment implements ItemClickListener {
+    List<MessagesTrashResponse> listItems;
+    RecyclerView recyclerView;
+    public MessagesAdapter adapter;
+    private Retrofit retrofit;
+    private ClientAPIs clientAPIs;
+    ProgressDialog progressDialog;
+    LoginResponse userData;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_trash_messages, container, false);
+        if (container != null) {
+            container.removeAllViews();
+        }
+        View view = inflater.inflate(R.layout.fragment_trash_messages, container, false);
+        setHasOptionsMenu(true);
+        listItems = new ArrayList<>();
+        progressDialog = CommonCalls.createDialouge(getActivity(), "", Values.DIALOGUE_MSG);
+        recyclerView = view.findViewById(R.id.trashmessages_recycler_view);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
+        userData = CommonCalls.getUserData(getActivity().getBaseContext());
+        String base = userData.getUsername() + ":" + userData.getPassword();
+        String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+        getData(authHeader);
+        adapter = new MessagesAdapter(getActivity().getApplicationContext(), listItems,"trash" );
+        recyclerView.setAdapter(adapter);
+        adapter.setItemClickListener(this);
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    public void getData(String authHeader) {
+        retrofit = RetrofitInitialize.getApiClient();
+        clientAPIs = retrofit.create(ClientAPIs.class);
+        Call<MessagesTrashResponseList> call = clientAPIs.getMessageTrash(userData.getUsername(), authHeader);
+        call.enqueue(new Callback<MessagesTrashResponseList>() {
+            @Override
+            public void onResponse(Call<MessagesTrashResponseList> call, Response<MessagesTrashResponseList> response) {
+                if (response.isSuccessful()) {
+                    MessagesTrashResponseList messageTrashResponseList = response.body();
+                    if (messageTrashResponseList != null && messageTrashResponseList.getMessageData() != null) {
+                        progressDialog.dismiss();
+                        listItems.addAll(messageTrashResponseList.getMessageData());
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        progressDialog.dismiss();
+                        Toast.makeText(getActivity(), "Favorite messages not available yet.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MessagesTrashResponseList> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(getActivity(), "Sorry something went wrong.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+    public void onClick(View view, String name) {
+        //   Intent i = new Intent(this, ParentTeacherChat.class);
+        //   i.putExtra("name", name);
+        //   startActivity(i);
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }
