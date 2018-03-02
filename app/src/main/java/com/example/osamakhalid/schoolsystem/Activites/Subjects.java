@@ -56,7 +56,7 @@ public class Subjects extends AppCompatActivity {
     public void getData(String authHeader) {
         retrofit = RetrofitInitialize.getApiClient();
         clientAPIs = retrofit.create(ClientAPIs.class);
-        Call<SubjectResponseList> call = clientAPIs.getSubjects(userData.getUsertype(), userData.getUsername(), authHeader);
+        Call<SubjectResponseList> call = clientAPIs.getSubjects( userData.getUsername(), authHeader);
         call.enqueue(new Callback<SubjectResponseList>() {
             @Override
             public void onResponse(Call<SubjectResponseList> call, Response<SubjectResponseList> response) {
