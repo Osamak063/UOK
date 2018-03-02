@@ -70,7 +70,7 @@ public class FavoriteMessagesFragment extends Fragment implements ItemClickListe
     public void getData(String authHeader) {
         retrofit = RetrofitInitialize.getApiClient();
         clientAPIs = retrofit.create(ClientAPIs.class);
-        Call<MessagesFavResponseList> call = clientAPIs.getMessagesFav(userData.getUsername(), userData.getUsertype(), authHeader);
+        Call<MessagesFavResponseList> call = clientAPIs.getMessagesFav(userData.getUsername(), authHeader);
         call.enqueue(new Callback<MessagesFavResponseList>() {
             @Override
             public void onResponse(Call<MessagesFavResponseList> call, Response<MessagesFavResponseList> response) {
