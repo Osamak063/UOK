@@ -46,7 +46,7 @@ public interface ClientAPIs {
     Call<HolidayResponseList> getHolidays(@Query("lang") String lang, @Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.HOMEWORK_URL)
-    Call<Homework_Model> getHomeWOrk(@Query("date") String userName, @Header("Authorization") String authHeader);
+    Call<Homework_Model> getHomeWOrk(@Query("date") String date,@Query("username") String username,@Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.NOTICE_BOARD_URL)
     Call<AlertResponse_Model> getNoticeData(@Header("Authorization") String authHeader);

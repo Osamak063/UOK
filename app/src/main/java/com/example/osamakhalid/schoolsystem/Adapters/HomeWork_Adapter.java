@@ -21,7 +21,7 @@ public class HomeWork_Adapter extends RecyclerView.Adapter<HomeWork_Adapter.View
 
 
     Context context;
-    List<Homework_Data_Model> homework_data_models;
+    public  List<Homework_Data_Model> homework_data_models;
 
     public HomeWork_Adapter(List<Homework_Data_Model> alertModel, Context context) {
         this.context = context;
@@ -47,7 +47,10 @@ public class HomeWork_Adapter extends RecyclerView.Adapter<HomeWork_Adapter.View
 
     @Override
     public int getItemCount() {
-        return homework_data_models.size();
+        if(homework_data_models!= null){
+            return homework_data_models.size();
+        }
+        return 0;
     }
 
 
