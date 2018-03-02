@@ -42,7 +42,7 @@ public class Alert extends AppCompatActivity {
         setContentView(R.layout.activity_alert);
         listItems = new ArrayList<>();
         recyclerView = findViewById(R.id.alert);
-        progressDialog =CommonCalls.createDialouge(this,"",Values.DIALOGUE_MSG);
+        progressDialog = CommonCalls.createDialouge(this, "", Values.DIALOGUE_MSG);
 
         //setting up recyclerview
         recyclerView = findViewById(R.id.alert);
@@ -59,7 +59,7 @@ public class Alert extends AppCompatActivity {
     public void getData(String authHeader) {
         retrofit = RetrofitInitialize.getApiClient();
         clientAPIs = retrofit.create(ClientAPIs.class);
-        Call<HolidayResponseList> call = clientAPIs.getHolidays(userData.getUsertype(), "english", authHeader);
+        Call<HolidayResponseList> call = clientAPIs.getHolidays("english", authHeader);
         call.enqueue(new Callback<HolidayResponseList>() {
             @Override
             public void onResponse(Call<HolidayResponseList> call, Response<HolidayResponseList> response) {
