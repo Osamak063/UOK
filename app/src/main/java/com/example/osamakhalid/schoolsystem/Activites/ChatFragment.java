@@ -13,6 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.osamakhalid.schoolsystem.Adapters.Chat_Adapter;
@@ -48,6 +51,9 @@ public class ChatFragment extends Fragment {
     EditText inputText;
     Button sendButton;
     String messageId;
+    ImageView attachmentIcon;
+    TextView attachmentName;
+    LinearLayout attachmentLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,6 +71,9 @@ public class ChatFragment extends Fragment {
         listItems = new ArrayList<>();
         progressDialog = CommonCalls.createDialouge(getActivity(), "", Values.DIALOGUE_MSG);
         recyclerView = (RecyclerView) view.findViewById(R.id.chat_recycler_view);
+        attachmentIcon = view.findViewById(R.id.chat_attachment_icon);
+        attachmentName = view.findViewById(R.id.chat_attachment_name);
+        attachmentLayout = view.findViewById(R.id.chat_attachment_layout);
         inputText = (EditText) view.findViewById(R.id.chat_input_msg);
         sendButton = (Button) view.findViewById(R.id.chat_send_msg);
         recyclerView.setHasFixedSize(true);
@@ -81,7 +90,7 @@ public class ChatFragment extends Fragment {
     public void getData(String authHeader) {
         retrofit = RetrofitInitialize.getApiClient();
         clientAPIs = retrofit.create(ClientAPIs.class);
-        Call<ChatResponse> call = clientAPIs.getChat(messageId, userData.getCreateUserID(), userData.getUsertype(), authHeader);
+        Call<ChatResponse> call = clientAPIs.getChat(messageId, userData.getCreateUserID(), authHeader);
         call.enqueue(new Callback<ChatResponse>() {
             @Override
             public void onResponse(Call<ChatResponse> call, Response<ChatResponse> response) {
@@ -89,12 +98,19 @@ public class ChatFragment extends Fragment {
                     ChatResponse chatResponse = response.body();
                     if (chatResponse != null && chatResponse.getMessagesData() != null) {
                         progressDialog.dismiss();
+                        if (!chatResponse.getAttachmentName().equals("")) {
+                            attachmentLayout.setVisibility(View.VISIBLE);
+                            attachmentName.setText(chatResponse.getAttachmentName());
+                            attachmentIcon.setBackgroundResource(R.drawable.file_icon);
+                        } else {
+                            attachmentLayout.setVisibility(View.GONE);
+                        }
                         listItems.addAll(chatResponse.getMessagesData());
                         adapter.notifyDataSetChanged();
                         recyclerView.scrollToPosition(listItems.size() - 1);
                     } else {
                         progressDialog.dismiss();
-                        Toast.makeText(getActivity(), "Inbox not available yet.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Chat not available yet.", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
