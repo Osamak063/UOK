@@ -41,7 +41,7 @@ public class ExamSchedule extends AppCompatActivity {
         setContentView(R.layout.activity_exam_schedule);
         recyclerView = findViewById(R.id.exam_schedule_recycler_view);
         listItems = new ArrayList<>();
-        progressDialog = CommonCalls.createDialouge(this,"", Values.DIALOGUE_MSG);
+        progressDialog = CommonCalls.createDialouge(this, "", Values.DIALOGUE_MSG);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         userData = CommonCalls.getUserData(ExamSchedule.this);
@@ -55,7 +55,7 @@ public class ExamSchedule extends AppCompatActivity {
     public void getData(String authHeader) {
         retrofit = RetrofitInitialize.getApiClient();
         clientAPIs = retrofit.create(ClientAPIs.class);
-        Call<ExamScheduleResponseList> call = clientAPIs.getExamSchedule(userData.getUsername(), userData.getUsertype(), authHeader);
+        Call<ExamScheduleResponseList> call = clientAPIs.getExamSchedule(userData.getUsername(), authHeader);
         call.enqueue(new Callback<ExamScheduleResponseList>() {
             @Override
             public void onResponse(Call<ExamScheduleResponseList> call, Response<ExamScheduleResponseList> response) {
