@@ -79,7 +79,7 @@ public class InboxFragment extends Fragment implements ItemClickListener {
     public void getData(String authHeader) {
         retrofit = RetrofitInitialize.getApiClient();
         clientAPIs = retrofit.create(ClientAPIs.class);
-        Call<MessagesInboxResponseList> call = clientAPIs.getMessagesInbox(userData.getUsername(), userData.getUsertype(), authHeader);
+        Call<MessagesInboxResponseList> call = clientAPIs.getMessagesInbox(userData.getUsername(), authHeader);
         call.enqueue(new Callback<MessagesInboxResponseList>() {
             @Override
             public void onResponse(Call<MessagesInboxResponseList> call, Response<MessagesInboxResponseList> response) {
