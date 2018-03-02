@@ -71,7 +71,7 @@ public class SentMessagesFragment extends Fragment implements ItemClickListener 
     public void getData(String authHeader) {
         retrofit = RetrofitInitialize.getApiClient();
         clientAPIs = retrofit.create(ClientAPIs.class);
-        Call<MessagesSentResponseList> call = clientAPIs.getMessagesSent(userData.getUsername(), userData.getUsertype(), authHeader);
+        Call<MessagesSentResponseList> call = clientAPIs.getMessagesSent(userData.getUsername(), authHeader);
         call.enqueue(new Callback<MessagesSentResponseList>() {
             @Override
             public void onResponse(Call<MessagesSentResponseList> call, Response<MessagesSentResponseList> response) {
