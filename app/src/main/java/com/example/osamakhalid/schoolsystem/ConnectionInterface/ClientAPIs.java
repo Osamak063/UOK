@@ -3,11 +3,17 @@ package com.example.osamakhalid.schoolsystem.ConnectionInterface;
 import com.example.osamakhalid.schoolsystem.APIs.ConnectionURLS;
 import com.example.osamakhalid.schoolsystem.Model.AlertResponse_Model;
 import com.example.osamakhalid.schoolsystem.Model.AttendanceResponse;
+import com.example.osamakhalid.schoolsystem.Model.ChatResponse;
 import com.example.osamakhalid.schoolsystem.Model.ExamScheduleResponseList;
 import com.example.osamakhalid.schoolsystem.Model.Exam_Model;
 import com.example.osamakhalid.schoolsystem.Model.HolidayResponseList;
 import com.example.osamakhalid.schoolsystem.Model.Homework_Model;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
+import com.example.osamakhalid.schoolsystem.Model.MessagesFavResponseList;
+import com.example.osamakhalid.schoolsystem.Model.MessagesInboxResponseList;
+import com.example.osamakhalid.schoolsystem.Model.MessagesSentResponseList;
+import com.example.osamakhalid.schoolsystem.Model.MessagesTrashResponse;
+import com.example.osamakhalid.schoolsystem.Model.MessagesTrashResponseList;
 import com.example.osamakhalid.schoolsystem.Model.NewsAndEventsResponseList;
 import com.example.osamakhalid.schoolsystem.Model.SubjectResponseList;
 import com.example.osamakhalid.schoolsystem.Model.TeacherPersonalProfile;
@@ -60,6 +66,7 @@ public interface ClientAPIs {
     @GET(ConnectionURLS.TEACHER_PERSONAL_PROFILE)
     Call<TeacherPersonalProfile> getPersonalProfile(@Query("id") String id, @Header("Authorization") String authHeader);
 
+
 //    @GET(ConnectionURLS.SYLLABUS_URL)
 //    Call<Syllabus_Model> getSyllabus(@Query("type") String type,@Query("username") String username,@Query("lang") String lang,@Query("monthyear") String monthyear,@Header("Authorization") String authHeader);
 
@@ -68,6 +75,22 @@ public interface ClientAPIs {
 
     @GET(ConnectionURLS.TRANSPORT_PERSONAL)
     Call<Transport_Model> getPersonalTranportData(@Query("studentID") String studentID, @Header("Authorization") String authHeade);
+=======
+    @GET(ConnectionURLS.MESSAGE_INBOX_URL)
+    Call<MessagesInboxResponseList> getMessagesInbox(@Query("username") String username, @Query("type") String type, @Header("Authorization") String authHeader);
+
+    @GET(ConnectionURLS.MESSAGE_SENT_URL)
+    Call<MessagesSentResponseList> getMessagesSent(@Query("username") String username, @Query("type") String type, @Header("Authorization") String authHeader);
+
+    @GET(ConnectionURLS.MESSAGE_FAV_URL)
+    Call<MessagesFavResponseList> getMessagesFav(@Query("username") String username, @Query("type") String type, @Header("Authorization") String authHeader);
+
+    @GET(ConnectionURLS.MESSAGE_TRASH_URL)
+    Call<MessagesTrashResponseList> getMessageTrash(@Query("username") String username, @Header("Authorization") String authHeader);
+
+    @GET(ConnectionURLS.MESSAGE_CHAT_URL)
+    Call<ChatResponse> getChat(@Query("messageid") String messageId, @Query("userid") String userId, @Query("type") String type, @Header("Authorization") String authHeader);
+
 
 }
 

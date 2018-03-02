@@ -105,7 +105,7 @@ public class DashboardActivity extends AppCompatActivity {
         messages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(DashboardActivity.this, Messages.class));
+                startActivity(new Intent(DashboardActivity.this, AllMessages.class));
             }
         });
         attendance.setOnClickListener(new View.OnClickListener() {

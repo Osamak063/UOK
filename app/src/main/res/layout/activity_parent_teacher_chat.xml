@@ -1,28 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    tools:context="com.example.osamakhalid.schoolsystem.Activites.ParentTeacherChat"
-    xmlns:tools="http://schemas.android.com/tools">
+    tools:context="com.example.osamakhalid.schoolsystem.Activites.ParentTeacherChat">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/chat_recycler_view"
+        android:id="@+id/chat_recycler_view2"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_above="@id/send_msg_layout"
-        android:layout_alignParentStart="true"
-        android:layout_height="wrap_content" />
+        android:layout_alignParentStart="true" />
 
     <LinearLayout
         android:id="@+id/send_msg_layout"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/chat_input_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -30,8 +28,6 @@
             android:maxLines="2" />
 
         <Button
-            android:id="@+id/chat_send_msg"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Send"
             android:textAllCaps="false" />
