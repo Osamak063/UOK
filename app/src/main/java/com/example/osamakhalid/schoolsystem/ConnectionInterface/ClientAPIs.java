@@ -43,7 +43,7 @@ public interface ClientAPIs {
     Call<NewsAndEventsResponseList> getNewsAndEvents(@Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.HOLIDAY_URL)
-    Call<HolidayResponseList> getHolidays(@Query("type") String type, @Query("lang") String lang, @Header("Authorization") String authHeader);
+    Call<HolidayResponseList> getHolidays(@Query("lang") String lang, @Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.HOMEWORK_URL)
     Call<Homework_Model> getHomeWOrk(@Query("date") String userName, @Header("Authorization") String authHeader);
@@ -52,16 +52,16 @@ public interface ClientAPIs {
     Call<AlertResponse_Model> getNoticeData(@Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.SUBJECTS_URL)
-    Call<SubjectResponseList> getSubjects(@Query("type") String type, @Query("username") String username, @Header("Authorization") String authHeader);
+    Call<SubjectResponseList> getSubjects(@Query("username") String username, @Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.ATTENDANCE_URL)
-    Call<AttendanceResponse> getAttendance(@Query("id") String id, @Query("type") String type, @Query("username") String username, @Query("lang") String lang, @Query("monthyear") String monthYear, @Header("Authorization") String authHeader);
+    Call<AttendanceResponse> getAttendance(@Query("id") String id, @Query("username") String username, @Query("lang") String lang, @Query("monthyear") String monthYear, @Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.EXAM_SCHEDULE_URL)
-    Call<ExamScheduleResponseList> getExamSchedule(@Query("username") String username, @Query("type") String type, @Header("Authorization") String authHeader);
+    Call<ExamScheduleResponseList> getExamSchedule(@Query("username") String username, @Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.TEACHER_DETAILS_URL)
-    Call<Teacher_Model> getCourseTeacherData(@Query("username") String username, @Query("type") String user_type, @Header("Authorization") String authHeader);
+    Call<Teacher_Model> getCourseTeacherData(@Query("username") String username, @Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.TEACHER_PERSONAL_PROFILE)
     Call<TeacherPersonalProfile> getPersonalProfile(@Query("id") String id, @Header("Authorization") String authHeader);
@@ -71,25 +71,25 @@ public interface ClientAPIs {
 //    Call<Syllabus_Model> getSyllabus(@Query("type") String type,@Query("username") String username,@Query("lang") String lang,@Query("monthyear") String monthyear,@Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.TRANSPORT_ALL)
-    Call<TransportResponse_Model> getTranportData(@Query("type") String type, @Header("Authorization") String authHeader);
+    Call<TransportResponse_Model> getTranportData(@Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.TRANSPORT_PERSONAL)
     Call<Transport_Model> getPersonalTranportData(@Query("studentID") String studentID, @Header("Authorization") String authHeade);
-=======
+
     @GET(ConnectionURLS.MESSAGE_INBOX_URL)
-    Call<MessagesInboxResponseList> getMessagesInbox(@Query("username") String username, @Query("type") String type, @Header("Authorization") String authHeader);
+    Call<MessagesInboxResponseList> getMessagesInbox(@Query("username") String username, @Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.MESSAGE_SENT_URL)
-    Call<MessagesSentResponseList> getMessagesSent(@Query("username") String username, @Query("type") String type, @Header("Authorization") String authHeader);
+    Call<MessagesSentResponseList> getMessagesSent(@Query("username") String username, @Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.MESSAGE_FAV_URL)
-    Call<MessagesFavResponseList> getMessagesFav(@Query("username") String username, @Query("type") String type, @Header("Authorization") String authHeader);
+    Call<MessagesFavResponseList> getMessagesFav(@Query("username") String username, @Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.MESSAGE_TRASH_URL)
     Call<MessagesTrashResponseList> getMessageTrash(@Query("username") String username, @Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.MESSAGE_CHAT_URL)
-    Call<ChatResponse> getChat(@Query("messageid") String messageId, @Query("userid") String userId, @Query("type") String type, @Header("Authorization") String authHeader);
+    Call<ChatResponse> getChat(@Query("messageid") String messageId, @Query("userid") String userId, @Header("Authorization") String authHeader);
 
 
 }
