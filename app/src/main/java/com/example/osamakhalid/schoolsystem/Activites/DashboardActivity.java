@@ -32,7 +32,7 @@ import retrofit2.Retrofit;
 
 public class DashboardActivity extends AppCompatActivity {
     private LinearLayout attendance, syllabus, results, noticeBoard, transport, messages, library, photoGallery, newsAndEvents,
-            examSchedule, teacherDetails, fees, holidayAlert, homework, subjects,timeTable;
+            examSchedule, teacherDetails, fees, holidayAlert, homework, subjects, timeTable;
     ;
     public AlertResponse_Model alert_response_model;
     public static String Currentdate;
@@ -73,7 +73,7 @@ public class DashboardActivity extends AppCompatActivity {
         syllabus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-         //     startActivity(new Intent(DashboardActivity.this,Syllabus.class));
+                //     startActivity(new Intent(DashboardActivity.this,Syllabus.class));
             }
         });
 
@@ -203,7 +203,7 @@ public class DashboardActivity extends AppCompatActivity {
         String base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
         String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
         Call<Teacher_Model> call = clientAPIs.getCourseTeacherData
-                (loginResponse.getUsername(), loginResponse.getUsertype(), authHeader);
+                (loginResponse.getUsername(), authHeader);
         call.enqueue(new Callback<Teacher_Model>() {
             @Override
             public void onResponse(Call<Teacher_Model> call, Response<Teacher_Model> response) {
@@ -232,6 +232,6 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
 
-        }
+}
 
 
