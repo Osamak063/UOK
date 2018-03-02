@@ -50,7 +50,7 @@ public class Attendance extends AppCompatActivity {
         setContentView(R.layout.activity_attendance);
         listItems = new ArrayList<>();
         MonthNameListItems = new ArrayList<>();
-        progressDialouge = CommonCalls.createDialouge(this,"", Values.DIALOGUE_MSG);
+        progressDialouge = CommonCalls.createDialouge(this, "", Values.DIALOGUE_MSG);
         MonthNameListItems.addAll(Arrays.asList(getResources().getStringArray(R.array.months)));
         Intent i = getIntent();
         if (i != null) {
@@ -81,7 +81,7 @@ public class Attendance extends AppCompatActivity {
         } else {
             monthyear = "0" + (index + 1) + "-" + year;
         }
-        Call<AttendanceResponse> call = clientAPIs.getAttendance(userData.getStudentID(), userData.getUsertype(), userData.getUsername(), "english", monthyear, authHeader);
+        Call<AttendanceResponse> call = clientAPIs.getAttendance(userData.getStudentID(), userData.getUsername(), "english", monthyear, authHeader);
         call.enqueue(new Callback<AttendanceResponse>() {
             @Override
             public void onResponse(Call<AttendanceResponse> call, Response<AttendanceResponse> response) {
