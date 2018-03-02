@@ -109,7 +109,7 @@ public class Transport extends AppCompatActivity {
         LoginResponse loginResponse = CommonCalls.getUserData(Transport.this);
         String base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
         String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
-        Call<TransportResponse_Model> call = clientAPIs.getTranportData(loginResponse.getUsertype(), authHeader);
+        Call<TransportResponse_Model> call = clientAPIs.getTranportData(authHeader);
         call.enqueue(new Callback<TransportResponse_Model>() {
             @Override
             public void onResponse(Call<TransportResponse_Model> call, Response<TransportResponse_Model> response) {

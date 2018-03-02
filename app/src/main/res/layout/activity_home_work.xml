@@ -14,20 +14,51 @@
         android:orientation="vertical"
         android:padding="3dp"
         android:id="@+id/hlineview">
-
-        <TextView
-            android:id="@+id/date_section"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:gravity="center"
-            android:background="@color/colorPrimary"
-            android:textColor="#fff"
-            android:textStyle="bold"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <Spinner
+                android:id="@+id/day_spinner"
+                android:layout_width="50dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="5dp"></Spinner>
+
+            <Spinner
+                android:id="@+id/month_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="5dp"></Spinner>
+
+            <Spinner
+                android:id="@+id/year__spinner"
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="5dp"></Spinner>
+
+            <Button
+                android:id="@+id/checkHomeWork"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:textColor="#000"
+                android:text="Check"
+                android:layout_marginLeft="5dp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/homeworkview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="5dp">
 
         </android.support.v7.widget.RecyclerView>
 

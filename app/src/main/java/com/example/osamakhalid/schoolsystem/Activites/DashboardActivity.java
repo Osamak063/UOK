@@ -203,7 +203,7 @@ public class DashboardActivity extends AppCompatActivity {
         String base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
         String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
         Call<Teacher_Model> call = clientAPIs.getCourseTeacherData
-                (loginResponse.getUsername(), loginResponse.getUsertype(), authHeader);
+                (loginResponse.getUsername(), authHeader);
         call.enqueue(new Callback<Teacher_Model>() {
             @Override
             public void onResponse(Call<Teacher_Model> call, Response<Teacher_Model> response) {

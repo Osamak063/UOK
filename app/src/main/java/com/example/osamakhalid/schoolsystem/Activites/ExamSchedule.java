@@ -55,7 +55,7 @@ public class ExamSchedule extends AppCompatActivity {
     public void getData(String authHeader) {
         retrofit = RetrofitInitialize.getApiClient();
         clientAPIs = retrofit.create(ClientAPIs.class);
-        Call<ExamScheduleResponseList> call = clientAPIs.getExamSchedule(userData.getUsername(), userData.getUsertype(), authHeader);
+        Call<ExamScheduleResponseList> call = clientAPIs.getExamSchedule(userData.getUsername(), authHeader);
         call.enqueue(new Callback<ExamScheduleResponseList>() {
             @Override
             public void onResponse(Call<ExamScheduleResponseList> call, Response<ExamScheduleResponseList> response) {
