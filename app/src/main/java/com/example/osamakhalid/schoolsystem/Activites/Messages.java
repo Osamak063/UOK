@@ -49,7 +49,7 @@ public class Messages extends AppCompatActivity implements ItemClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messages);
 
-        teacher_modelList = new ArrayList<>();
+        //teacher_modelList = new ArrayList<>();
         recyclerView = findViewById(R.id.messages_recycler_view);
 //        teacher_modelList.add(new Teacher_Model("Asim Ali", "Courses: Science,Maths"));
 //        teacher_modelList.add(new Teacher_Model("Muhammad Saeed", "Courses: Islamiat,Urdu"));
@@ -75,7 +75,7 @@ public class Messages extends AppCompatActivity implements ItemClickListener {
     public void getData(String authHeader) {
         retrofit = RetrofitInitialize.getApiClient();
         clientAPIs = retrofit.create(ClientAPIs.class);
-        Call<MessagesInboxResponseList> call = clientAPIs.getMessagesInbox(userData.getUsername(), userData.getUsertype(), authHeader);
+        Call<MessagesInboxResponseList> call = clientAPIs.getMessagesInbox(userData.getUsername(), authHeader);
         call.enqueue(new Callback<MessagesInboxResponseList>() {
             @Override
             public void onResponse(Call<MessagesInboxResponseList> call, Response<MessagesInboxResponseList> response) {
