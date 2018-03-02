@@ -33,12 +33,13 @@ public class Transport extends AppCompatActivity {
     public RecyclerView.Adapter adapter;
     public List<Transport_Model> listItems;
     ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transport);
         listItems = new ArrayList<>();
-        progressDialog = CommonCalls.createDialouge(this,"",Values.DIALOGUE_MSG);
+        progressDialog = CommonCalls.createDialouge(this, "", Values.DIALOGUE_MSG);
         getAllTransportDetail();
 
 
@@ -54,7 +55,7 @@ public class Transport extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.personal_transport) {
-            progressDialog = CommonCalls.createDialouge(this,"",Values.DIALOGUE_MSG);
+            progressDialog = CommonCalls.createDialouge(this, "", Values.DIALOGUE_MSG);
             getPersonalTranportDetails();
 
         }
@@ -68,25 +69,25 @@ public class Transport extends AppCompatActivity {
         LoginResponse loginResponse = CommonCalls.getUserData(Transport.this);
         String base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
         String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
-        Call<Transport_Model> call = clientAPIs.getPersonalTranportData(loginResponse.getStudentID(),authHeader);
+        Call<Transport_Model> call = clientAPIs.getPersonalTranportData(loginResponse.getStudentID(), authHeader);
         call.enqueue(new Callback<Transport_Model>() {
             @Override
             public void onResponse(Call<Transport_Model> call, Response<Transport_Model> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
 
                     Transport_Model transport_model = response.body();
-                    if(transport_model != null){
+                    if (transport_model != null) {
                         listItems = new ArrayList<>();
                         progressDialog.dismiss();
                         listItems.add(transport_model);
-                        recyclerView =  findViewById(R.id.transport_recycler_view);
+                        recyclerView = findViewById(R.id.transport_recycler_view);
                         recyclerView.setHasFixedSize(true);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                        adapter = new Transport_Adapter(listItems,getApplicationContext());
+                        adapter = new Transport_Adapter(listItems, getApplicationContext());
                         recyclerView.setAdapter(adapter);
 
-                    }else{
-                        Toast.makeText(Transport.this, Values.Error,Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(Transport.this, Values.Error, Toast.LENGTH_SHORT).show();
 
                     }
 
@@ -102,31 +103,31 @@ public class Transport extends AppCompatActivity {
     }
 
 
-    public void getAllTransportDetail(){
+    public void getAllTransportDetail() {
 
         Retrofit retrofit = RetrofitInitialize.getApiClient();
         ClientAPIs clientAPIs = retrofit.create(ClientAPIs.class);
         LoginResponse loginResponse = CommonCalls.getUserData(Transport.this);
         String base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
         String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
-        Call<TransportResponse_Model> call = clientAPIs.getTranportData(loginResponse.getUsertype(), authHeader);
+        Call<TransportResponse_Model> call = clientAPIs.getTranportData(authHeader);
         call.enqueue(new Callback<TransportResponse_Model>() {
             @Override
             public void onResponse(Call<TransportResponse_Model> call, Response<TransportResponse_Model> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
 
                     TransportResponse_Model transport_model = response.body();
-                    if(transport_model != null){
+                    if (transport_model != null) {
                         progressDialog.dismiss();
-                        recyclerView =  findViewById(R.id.transport_recycler_view);
+                        recyclerView = findViewById(R.id.transport_recycler_view);
                         recyclerView.setHasFixedSize(true);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
-                        adapter = new Transport_Adapter(transport_model.getTransportData(),getApplicationContext());
+                        adapter = new Transport_Adapter(transport_model.getTransportData(), getApplicationContext());
                         recyclerView.setAdapter(adapter);
 
-                    }else{
-                        Toast.makeText(Transport.this, Values.Error,Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(Transport.this, Values.Error, Toast.LENGTH_SHORT).show();
 
                     }
 
@@ -137,7 +138,7 @@ public class Transport extends AppCompatActivity {
             @Override
             public void onFailure(Call<TransportResponse_Model> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(Transport.this, Values.SERVER_ERROR,Toast.LENGTH_SHORT).show();
+                Toast.makeText(Transport.this, Values.SERVER_ERROR, Toast.LENGTH_SHORT).show();
 
             }
         });
