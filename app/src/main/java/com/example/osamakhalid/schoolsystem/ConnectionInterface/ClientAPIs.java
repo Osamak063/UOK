@@ -8,6 +8,7 @@ import com.example.osamakhalid.schoolsystem.Model.ExamScheduleResponseList;
 import com.example.osamakhalid.schoolsystem.Model.Exam_Model;
 import com.example.osamakhalid.schoolsystem.Model.HolidayResponseList;
 import com.example.osamakhalid.schoolsystem.Model.Homework_Model;
+import com.example.osamakhalid.schoolsystem.Model.LeavesResponseList;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.MessagesFavResponseList;
 import com.example.osamakhalid.schoolsystem.Model.MessagesInboxResponseList;
@@ -21,6 +22,7 @@ import com.example.osamakhalid.schoolsystem.Model.Teacher_Model;
 import com.example.osamakhalid.schoolsystem.Model.TransportResponse_Model;
 import com.example.osamakhalid.schoolsystem.Model.Transport_Model;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -28,6 +30,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import retrofit2.http.Streaming;
+import retrofit2.http.Url;
 
 
 public interface ClientAPIs {
@@ -46,7 +50,7 @@ public interface ClientAPIs {
     Call<HolidayResponseList> getHolidays(@Query("lang") String lang, @Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.HOMEWORK_URL)
-    Call<Homework_Model> getHomeWOrk(@Query("date") String date,@Query("username") String username,@Header("Authorization") String authHeader);
+    Call<Homework_Model> getHomeWOrk(@Query("date") String date, @Query("username") String username, @Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.NOTICE_BOARD_URL)
     Call<AlertResponse_Model> getNoticeData(@Header("Authorization") String authHeader);
@@ -91,6 +95,11 @@ public interface ClientAPIs {
     @GET(ConnectionURLS.MESSAGE_CHAT_URL)
     Call<ChatResponse> getChat(@Query("messageid") String messageId, @Query("userid") String userId, @Header("Authorization") String authHeader);
 
+    @Streaming
+    @GET
+    Call<ResponseBody> downloadFileWithDynamicUrlAsync(@Url String fileUrl);
 
+    @GET(ConnectionURLS.LEAVES_URL)
+    Call<LeavesResponseList> getLeaves(@Query("username") String username, @Query("type") String type, @Header("Authorization") String authHeader);
 }
 

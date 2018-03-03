@@ -32,7 +32,7 @@ import retrofit2.Retrofit;
 
 public class DashboardActivity extends AppCompatActivity {
     private LinearLayout attendance, syllabus, results, noticeBoard, transport, messages, library, photoGallery, newsAndEvents,
-            examSchedule, teacherDetails, fees, holidayAlert, homework, subjects, timeTable;
+            examSchedule, teacherDetails, fees, holidayAlert, homework, subjects, timeTable,leaves;
     ;
     public AlertResponse_Model alert_response_model;
     public static String Currentdate;
@@ -62,6 +62,7 @@ public class DashboardActivity extends AppCompatActivity {
         fees = findViewById(R.id.fees);
         holidayAlert = findViewById(R.id.holiday_alert);
         examSchedule = findViewById(R.id.exam_schedule);
+        leaves = findViewById(R.id.leaves);
 
         homework.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,6 +158,13 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(DashboardActivity.this, ExamSchedule.class));
+
+            }
+        });
+        leaves.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(DashboardActivity.this, Leaves.class));
 
             }
         });

@@ -3,7 +3,9 @@ package com.example.osamakhalid.schoolsystem.Activites;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +20,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.downloader.Error;
+import com.downloader.OnCancelListener;
+import com.downloader.OnDownloadListener;
+import com.downloader.OnPauseListener;
+import com.downloader.OnProgressListener;
+import com.downloader.OnStartOrResumeListener;
+import com.downloader.PRDownloader;
+import com.downloader.PRDownloaderConfig;
+import com.downloader.Progress;
 import com.example.osamakhalid.schoolsystem.Adapters.Chat_Adapter;
 import com.example.osamakhalid.schoolsystem.Adapters.MessagesAdapter;
 import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
@@ -31,9 +42,15 @@ import com.example.osamakhalid.schoolsystem.Model.MessagesInboxResponse;
 import com.example.osamakhalid.schoolsystem.Model.MessagesInboxResponseList;
 import com.example.osamakhalid.schoolsystem.R;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,8 +69,10 @@ public class ChatFragment extends Fragment {
     Button sendButton;
     String messageId;
     ImageView attachmentIcon;
-    TextView attachmentName;
+    TextView attachmentNameTextView;
     LinearLayout attachmentLayout;
+    String attachmentUrl;
+    String attachmentDir;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,9 +89,14 @@ public class ChatFragment extends Fragment {
         setHasOptionsMenu(true);
         listItems = new ArrayList<>();
         progressDialog = CommonCalls.createDialouge(getActivity(), "", Values.DIALOGUE_MSG);
+        PRDownloaderConfig config = PRDownloaderConfig.newBuilder()
+                .setReadTimeout(30_000)
+                .setConnectTimeout(30_000)
+                .build();
+        PRDownloader.initialize(getActivity().getApplicationContext(), config);
         recyclerView = (RecyclerView) view.findViewById(R.id.chat_recycler_view);
         attachmentIcon = view.findViewById(R.id.chat_attachment_icon);
-        attachmentName = view.findViewById(R.id.chat_attachment_name);
+        attachmentNameTextView = view.findViewById(R.id.chat_attachment_name);
         attachmentLayout = view.findViewById(R.id.chat_attachment_layout);
         inputText = (EditText) view.findViewById(R.id.chat_input_msg);
         sendButton = (Button) view.findViewById(R.id.chat_send_msg);
@@ -84,6 +108,12 @@ public class ChatFragment extends Fragment {
         getData(authHeader);
         adapter = new Chat_Adapter(listItems, getActivity().getApplicationContext());
         recyclerView.setAdapter(adapter);
+        attachmentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                downloadAttachment(attachmentUrl);
+            }
+        });
         return view;
     }
 
@@ -98,13 +128,9 @@ public class ChatFragment extends Fragment {
                     ChatResponse chatResponse = response.body();
                     if (chatResponse != null && chatResponse.getMessagesData() != null) {
                         progressDialog.dismiss();
-                        if (!chatResponse.getAttachmentName().equals("")) {
-                            attachmentLayout.setVisibility(View.VISIBLE);
-                            attachmentName.setText(chatResponse.getAttachmentName());
-                            attachmentIcon.setBackgroundResource(R.drawable.file_icon);
-                        } else {
-                            attachmentLayout.setVisibility(View.GONE);
-                        }
+                        setAttachment(chatResponse.getAttachmentName());
+                        attachmentUrl = chatResponse.getAttachmentUrl();
+                        attachmentDir = chatResponse.getAttachmentDir();
                         listItems.addAll(chatResponse.getMessagesData());
                         adapter.notifyDataSetChanged();
                         recyclerView.scrollToPosition(listItems.size() - 1);
@@ -121,6 +147,91 @@ public class ChatFragment extends Fragment {
                 Toast.makeText(getActivity(), "Sorry something went wrong.", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void setAttachment(String attachmentName) {
+        if (attachmentName.equals("")) {
+            attachmentLayout.setVisibility(View.VISIBLE);
+            attachmentNameTextView.setText(attachmentName);
+            attachmentIcon.setBackgroundResource(R.drawable.file_icon);
+        } else {
+            attachmentLayout.setVisibility(View.GONE);
+        }
+
+    }
+
+    public void downloadAttachment(String url) {
+        clientAPIs = retrofit.create(ClientAPIs.class);
+        Call<ResponseBody> call = clientAPIs.downloadFileWithDynamicUrlAsync(url);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, final Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    System.out.println("logg response successful");
+                    new AsyncTask<Void, Void, Void>() {
+                        @Override
+                        protected Void doInBackground(Void... voids) {
+                            boolean writtenToDisk = writeResponseBodyToDisk(response.body(), attachmentNameTextView.getText().toString());
+                            return null;
+                        }
+                    }.execute();
+                } else {
+                    Toast.makeText(getActivity(), "Attachment not available.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getActivity(), "Download failed.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private boolean writeResponseBodyToDisk(ResponseBody body, String attachmentName) {
+        try {
+            File futureStudioIconFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), attachmentName + ".jpg");
+
+            InputStream inputStream = null;
+            OutputStream outputStream = null;
+
+            try {
+                byte[] fileReader = new byte[4096];
+
+                long fileSize = body.contentLength();
+                long fileSizeDownloaded = 0;
+
+                inputStream = body.byteStream();
+                outputStream = new FileOutputStream(futureStudioIconFile);
+
+                while (true) {
+                    int read = inputStream.read(fileReader);
+
+                    if (read == -1) {
+                        break;
+                    }
+
+                    outputStream.write(fileReader, 0, read);
+
+                    fileSizeDownloaded += read;
+
+                }
+
+                outputStream.flush();
+                return true;
+            } catch (IOException e) {
+                return false;
+            } finally {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+
+                if (outputStream != null) {
+                    outputStream.close();
+                }
+            }
+        } catch (IOException e) {
+            return false;
+        }
     }
 
 
