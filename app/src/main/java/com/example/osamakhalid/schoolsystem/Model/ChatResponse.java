@@ -19,9 +19,12 @@ public class ChatResponse {
     @SerializedName("subject")
     @Expose
     private String subject;
-    @SerializedName("attachment")
+    @SerializedName("attachment_url")
     @Expose
-    private String attachment;
+    private String attachmentUrl;
+    @SerializedName("attachment_dir")
+    @Expose
+    private String attachmentDir;
     @SerializedName("attachment_name")
     @Expose
     private String attachmentName;
@@ -56,12 +59,20 @@ public class ChatResponse {
         this.subject = subject;
     }
 
-    public String getAttachment() {
-        return attachment;
+    public String getAttachmentDir() {
+        return attachmentDir;
     }
 
-    public void setAttachment(String attachment) {
-        this.attachment = attachment;
+    public String getAttachmentUrl() {
+        return attachmentUrl;
+    }
+
+    public void setAttachmentDir(String attachmentDir) {
+        this.attachmentDir = attachmentDir;
+    }
+
+    public void setAttachmentUrl(String attachmentUrl) {
+        this.attachmentUrl = attachmentUrl;
     }
 
     public String getAttachmentName() {
