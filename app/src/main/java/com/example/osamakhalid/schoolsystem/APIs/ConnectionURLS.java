@@ -35,5 +35,10 @@ public class ConnectionURLS {
     public static final String MESSAGE_FAV_URL = "student/fav_message/";
     public static final String MESSAGE_TRASH_URL = "student/trash_message/";
     public static final String MESSAGE_CHAT_URL = "student/message_view/";
+
+    public static final String BOOK_ISSUE_DATE = "student/issued_books/";
+    public static final String ALL_BOOKS_RECORD = "student/books";
+
     public static final String LEAVES_URL = "student/leaves/";
+
 }

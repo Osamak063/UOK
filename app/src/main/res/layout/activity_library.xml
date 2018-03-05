@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_content"
@@ -26,18 +27,67 @@
             app:title="@string/app_name">
 
         </android.support.v7.widget.Toolbar>
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabMode="fixed"
-            app:tabGravity="fill"/>
+
+
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/container"
+    <LinearLayout
+        android:id="@+id/library_initial_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appbar"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+
+        <TextView
+            android:id="@+id/library_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Library ID"
+            android:textColor="#000"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:textSize="15dp"/>
+
+        <TextView
+            android:id="@+id/library_fee"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Library Fees"
+            android:textColor="#000"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:textSize="15dp"/>
+
+        <TextView
+            android:id="@+id/library_Jdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Joining Date"
+            android:textColor="#000"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:textSize="15dp"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:orientation="vertical"
+        android:layout_below="@+id/library_initial_view">
 
-</android.support.design.widget.CoordinatorLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/library_books_issued"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp">
+
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
+</RelativeLayout>

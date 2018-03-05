@@ -2,18 +2,21 @@ package com.example.osamakhalid.schoolsystem.ConnectionInterface;
 
 import com.example.osamakhalid.schoolsystem.APIs.ConnectionURLS;
 import com.example.osamakhalid.schoolsystem.Model.AlertResponse_Model;
+import com.example.osamakhalid.schoolsystem.Model.AllBooks_Model;
 import com.example.osamakhalid.schoolsystem.Model.AttendanceResponse;
 import com.example.osamakhalid.schoolsystem.Model.ChatResponse;
 import com.example.osamakhalid.schoolsystem.Model.ExamScheduleResponseList;
 import com.example.osamakhalid.schoolsystem.Model.Exam_Model;
 import com.example.osamakhalid.schoolsystem.Model.HolidayResponseList;
 import com.example.osamakhalid.schoolsystem.Model.Homework_Model;
+
+import com.example.osamakhalid.schoolsystem.Model.Libray_Model;
 import com.example.osamakhalid.schoolsystem.Model.LeavesResponseList;
+
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.MessagesFavResponseList;
 import com.example.osamakhalid.schoolsystem.Model.MessagesInboxResponseList;
 import com.example.osamakhalid.schoolsystem.Model.MessagesSentResponseList;
-import com.example.osamakhalid.schoolsystem.Model.MessagesTrashResponse;
 import com.example.osamakhalid.schoolsystem.Model.MessagesTrashResponseList;
 import com.example.osamakhalid.schoolsystem.Model.NewsAndEventsResponseList;
 import com.example.osamakhalid.schoolsystem.Model.SubjectResponseList;
@@ -94,6 +97,12 @@ public interface ClientAPIs {
 
     @GET(ConnectionURLS.MESSAGE_CHAT_URL)
     Call<ChatResponse> getChat(@Query("messageid") String messageId, @Query("userid") String userId, @Header("Authorization") String authHeader);
+
+   @GET(ConnectionURLS.BOOK_ISSUE_DATE)
+    Call<Libray_Model> getLibraryInfo(@Query("username") String username,@Header("Authorization") String authHeader);
+
+    @GET(ConnectionURLS.ALL_BOOKS_RECORD)
+    Call<AllBooks_Model> getAllBooks(@Header("Authorization") String authHeader);
 
     @Streaming
     @GET

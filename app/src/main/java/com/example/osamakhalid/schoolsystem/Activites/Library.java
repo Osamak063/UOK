@@ -1,89 +1,96 @@
 package com.example.osamakhalid.schoolsystem.Activites;
 
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.osamakhalid.schoolsystem.Fragments.AvailableBooksFragment;
-import com.example.osamakhalid.schoolsystem.Fragments.TotalBooksFragment;
+import com.example.osamakhalid.schoolsystem.Adapters.Issued_Book_Adapter;
+import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
+import com.example.osamakhalid.schoolsystem.ConnectionInterface.ClientAPIs;
+import com.example.osamakhalid.schoolsystem.Consts.Values;
+import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
+import com.example.osamakhalid.schoolsystem.Model.Libray_Model;
+import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.R;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class Library extends AppCompatActivity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    TextView library_id,library_fees,library_joiningdate;
+    ProgressDialog progress_dialouge;
+    public RecyclerView recyclerView;
+    public RecyclerView.Adapter adapter;
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    private ViewPager mViewPager;
-    private TabLayout tabLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_library);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setting up toolbar
+        Toolbar toolbar =  findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        progress_dialouge = CommonCalls.createDialouge(this,"",Values.DIALOGUE_MSG);
+        library_id = findViewById(R.id.library_id);
+        library_fees = findViewById(R.id.library_fee);
+        library_joiningdate = findViewById(R.id.library_Jdate);
+        //Loding Data in View
+        getLibraryData();
 
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-        tabLayout.setupWithViewPager(mViewPager);
     }
 
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public void getLibraryData(){
 
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
+        Retrofit retrofit = RetrofitInitialize.getApiClient();
+        ClientAPIs clientAPIs = retrofit.create(ClientAPIs.class);
+        final LoginResponse loginResponse = CommonCalls.getUserData(Library.this);
+        String base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+        String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+        Call<Libray_Model> call = clientAPIs.getLibraryInfo(loginResponse.getUsername(),authHeader);
+        call.enqueue(new Callback<Libray_Model>() {
+            @Override
+            public void onResponse(Call<Libray_Model> call, Response<Libray_Model> response) {
+                if(response.isSuccessful()){
 
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return position==0 ? new AvailableBooksFragment():new TotalBooksFragment();
-        }
+                    Libray_Model libray_model = response.body();
+                    if(libray_model != null && libray_model.getBooks() != null){
+                        progress_dialouge.dismiss();
+                        library_id.setText("Library ID :         "+libray_model.getLibraryId());
+                        library_fees.setText("Library Fees :      "+libray_model.getLibraryFee());
+                        library_joiningdate.setText("Joining Date :      "+libray_model.getJoiningDate());
+                        recyclerView = findViewById(R.id.library_books_issued);
+                        recyclerView.setHasFixedSize(true);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                        adapter = new Issued_Book_Adapter(libray_model.getBooks(), getApplicationContext());
+                        recyclerView.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
 
-        @Override
-        public int getCount() {
-            return 2;
-        }
+                    }else{
+                        Toast.makeText(Library.this,Values.DATA_ERROR,Toast.LENGTH_SHORT).show();
+                    }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return position==0 ? "Available Books":"Total Books";
-        }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Libray_Model> call, Throwable t) {
+                progress_dialouge.dismiss();
+                Toast.makeText(Library.this, Values.SERVER_ERROR, Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
+
+
 }

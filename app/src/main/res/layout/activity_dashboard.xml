@@ -355,6 +355,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="3dp"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <ImageView
@@ -379,6 +380,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="3dp"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <ImageView
@@ -404,12 +406,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="3dp"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="60dp"
                         android:background="#4C000000"
+                        android:src="@drawable/syllabus"
                         android:scaleType="centerInside"
                          />
 
@@ -423,11 +427,20 @@
                         android:textStyle="bold" />
                 </LinearLayout>
 
+
+                <LinearLayout
+                    android:id="@+id/library_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:layout_weight="1"
+
                 <LinearLayout
                     android:id="@+id/leaves"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="3dp"
+
                     android:orientation="vertical">
 
                     <ImageView
@@ -435,12 +448,16 @@
                         android:layout_height="60dp"
                         android:background="#4C000000"
                         android:scaleType="centerInside"
+
+                        android:src="@drawable/library"/>
+
                         />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:text="Library"
                         android:text="Leaves"
                         android:textColor="@color/dashboard_text_color"
                         android:textSize="12dp"

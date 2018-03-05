@@ -12,4 +12,5 @@ public class Values {
     public static final String WAIT_MSG = "Please wait...";
     public static final String LANGUAGE = "english";
     public static final String Error = "Error while Loding..";
+    public static final String DATA_ERROR = "No Data Available";
 }
