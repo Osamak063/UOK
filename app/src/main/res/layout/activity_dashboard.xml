@@ -36,7 +36,7 @@
 
                     <ImageView
                         android:layout_width="80dp"
-                        android:layout_height="60dp"
+                        android:layout_height="50dp"
                         android:background="#4C000000"
                         android:scaleType="centerInside"
                         android:src="@drawable/attendence" />
@@ -61,7 +61,7 @@
 
                     <ImageView
                         android:layout_width="80dp"
-                        android:layout_height="60dp"
+                        android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:background="#4C000000"
                         android:scaleType="centerInside"
@@ -87,7 +87,7 @@
 
                     <ImageView
                         android:layout_width="80dp"
-                        android:layout_height="60dp"
+                        android:layout_height="50dp"
                         android:background="#4C000000"
                         android:scaleType="centerInside"
                         android:src="@drawable/results" />
@@ -112,7 +112,7 @@
 
                     <ImageView
                         android:layout_width="80dp"
-                        android:layout_height="60dp"
+                        android:layout_height="50dp"
                         android:background="#4C000000"
                         android:scaleType="centerInside"
                         android:src="@drawable/notice_board" />
@@ -144,7 +144,7 @@
 
                     <ImageView
                         android:layout_width="80dp"
-                        android:layout_height="60dp"
+                        android:layout_height="50dp"
                         android:background="#4C000000"
                         android:scaleType="centerInside"
                         android:src="@drawable/transport" />
@@ -169,7 +169,7 @@
 
                     <ImageView
                         android:layout_width="80dp"
-                        android:layout_height="60dp"
+                        android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:background="#4C000000"
                         android:scaleType="centerInside"
@@ -195,7 +195,7 @@
 
                     <ImageView
                         android:layout_width="80dp"
-                        android:layout_height="60dp"
+                        android:layout_height="50dp"
                         android:background="#4C000000"
                         android:scaleType="centerInside"
                         android:src="@drawable/homework" />
@@ -220,7 +220,7 @@
 
                     <ImageView
                         android:layout_width="80dp"
-                        android:layout_height="60dp"
+                        android:layout_height="50dp"
                         android:background="#4C000000"
                         android:scaleType="centerInside"
                         android:src="@drawable/photo_gallery" />
@@ -252,7 +252,7 @@
 
                     <ImageView
                         android:layout_width="80dp"
-                        android:layout_height="60dp"
+                        android:layout_height="50dp"
                         android:background="#4C000000"
                         android:scaleType="centerInside"
                         android:src="@drawable/calender" />
@@ -277,7 +277,7 @@
 
                     <ImageView
                         android:layout_width="80dp"
-                        android:layout_height="60dp"
+                        android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:background="#4C000000"
                         android:scaleType="centerInside"
@@ -303,7 +303,7 @@
 
                     <ImageView
                         android:layout_width="80dp"
-                        android:layout_height="60dp"
+                        android:layout_height="50dp"
                         android:background="#4C000000"
                         android:scaleType="centerInside"
                         android:src="@drawable/fees_invoice" />
@@ -328,7 +328,7 @@
 
                     <ImageView
                         android:layout_width="80dp"
-                        android:layout_height="60dp"
+                        android:layout_height="50dp"
                         android:background="#4C000000"
                         android:scaleType="centerInside"
                         android:src="@drawable/notice_board" />
@@ -360,7 +360,7 @@
 
                     <ImageView
                         android:layout_width="80dp"
-                        android:layout_height="60dp"
+                        android:layout_height="50dp"
                         android:background="#4C000000"
                         android:scaleType="centerInside"
                         android:src="@drawable/subjects" />
@@ -385,7 +385,7 @@
 
                     <ImageView
                         android:layout_width="80dp"
-                        android:layout_height="60dp"
+                        android:layout_height="50dp"
                         android:background="#4C000000"
                         android:scaleType="centerInside"
                         android:src="@drawable/exam_schedule_two" />
@@ -411,11 +411,9 @@
 
                     <ImageView
                         android:layout_width="80dp"
-                        android:layout_height="60dp"
+                        android:layout_height="50dp"
                         android:background="#4C000000"
-                        android:src="@drawable/syllabus"
-                        android:scaleType="centerInside"
-                         />
+                        android:scaleType="centerInside" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -433,7 +431,36 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="3dp"
-                    android:layout_weight="1"
+
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:background="#4C000000"
+                        android:scaleType="centerInside"
+
+                        android:src="@drawable/library" />
+
+                    />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Library"
+                        android:textColor="@color/dashboard_text_color"
+                        android:textSize="12dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/row5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:id="@+id/leaves"
@@ -445,25 +472,19 @@
 
                     <ImageView
                         android:layout_width="80dp"
-                        android:layout_height="60dp"
+                        android:layout_height="50dp"
                         android:background="#4C000000"
-                        android:scaleType="centerInside"
-
-                        android:src="@drawable/library"/>
-
-                        />
+                        android:scaleType="centerInside" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Library"
                         android:text="Leaves"
                         android:textColor="@color/dashboard_text_color"
                         android:textSize="12dp"
                         android:textStyle="bold" />
                 </LinearLayout>
-
             </TableRow>
         </TableLayout>
 
