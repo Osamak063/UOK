@@ -1,4 +1,4 @@
-package com.example.osamakhalid.schoolsystem.Model;
+package com.example.osamakhalid.schoolsystem.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
