@@ -45,7 +45,6 @@
     </string-array>
 
     <string-array name="months">
-        <item></item>
         <item>January</item>
         <item>Feburary</item>
         <item>March</item>
