@@ -1,11 +1,16 @@
 package com.example.osamakhalid.schoolsystem.Activites;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.osamakhalid.schoolsystem.Adapters.LeavesAdapter;
@@ -13,14 +18,19 @@ import com.example.osamakhalid.schoolsystem.Adapters.NewsAndEvents_Adapter;
 import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
 import com.example.osamakhalid.schoolsystem.ConnectionInterface.ClientAPIs;
 import com.example.osamakhalid.schoolsystem.Consts.Values;
+import com.example.osamakhalid.schoolsystem.Fragments.LeavesListFragment;
+import com.example.osamakhalid.schoolsystem.Fragments.SubmitLeaveFragment;
 import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
 import com.example.osamakhalid.schoolsystem.Model.HolidayResponse;
 import com.example.osamakhalid.schoolsystem.Model.HolidayResponseList;
 import com.example.osamakhalid.schoolsystem.Model.LeavesResponse;
 import com.example.osamakhalid.schoolsystem.Model.LeavesResponseList;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
+import com.example.osamakhalid.schoolsystem.Model.TeacherData_Model;
+import com.example.osamakhalid.schoolsystem.Model.Teacher_Model;
 import com.example.osamakhalid.schoolsystem.R;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,56 +40,87 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class Leaves extends AppCompatActivity {
-    public RecyclerView recyclerView;
-    public RecyclerView.Adapter adapter;
-    public List<LeavesResponse> listItems;
-    private Retrofit retrofit;
-    private ClientAPIs clientAPIs;
-    LoginResponse userData;
-    ProgressDialog progressDialog;
+    Fragment fragment;
+    public static List<TeacherData_Model> teacherData_models;
+    public static ArrayList<String> teachersUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaves);
-        listItems = new ArrayList<>();
-        progressDialog = CommonCalls.createDialouge(this, "", Values.DIALOGUE_MSG);
-        recyclerView = findViewById(R.id.leaves_recycler_view);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        userData = CommonCalls.getUserData(Leaves.this);
-        String base = userData.getUsername() + ":" + userData.getPassword();
-        String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
-        getData(authHeader);
-        adapter = new LeavesAdapter(listItems, getApplicationContext());
-        recyclerView.setAdapter(adapter);
+        teacherData_models = new ArrayList<>();
+        teachersUsername = new ArrayList<>();
+        getTeacherData();
     }
 
-    public void getData(String authHeader) {
-        retrofit = RetrofitInitialize.getApiClient();
-        clientAPIs = retrofit.create(ClientAPIs.class);
-        Call<LeavesResponseList> call = clientAPIs.getLeaves(userData.getUsername(), userData.getUsertype(), authHeader);
-        call.enqueue(new Callback<LeavesResponseList>() {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.leaves_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public void getTeacherData() {
+
+        Retrofit retrofit = RetrofitInitialize.getApiClient();
+        ClientAPIs clientAPIs = retrofit.create(ClientAPIs.class);
+        final LoginResponse loginResponse = CommonCalls.getUserData(Leaves.this);
+        String base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+        String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+        Call<Teacher_Model> call = clientAPIs.getCourseTeacherData
+                (loginResponse.getUsername(), authHeader);
+        call.enqueue(new Callback<Teacher_Model>() {
             @Override
-            public void onResponse(Call<LeavesResponseList> call, Response<LeavesResponseList> response) {
+            public void onResponse(Call<Teacher_Model> call, Response<Teacher_Model> response) {
+
                 if (response.isSuccessful()) {
-                    LeavesResponseList leavesList = response.body();
-                    if (leavesList != null && leavesList.getLeavesData() != null) {
-                        progressDialog.dismiss();
-                        listItems.addAll(leavesList.getLeavesData());
-                        adapter.notifyDataSetChanged();
+
+                    Teacher_Model teacher_model = response.body();
+                    if (teacher_model != null && teacher_model.getTeacherData() != null) {
+                        teacherData_models = teacher_model.getTeacherData();
+                        getTeachersUsername(teacherData_models);
                     } else {
-                        progressDialog.dismiss();
-                        Toast.makeText(Leaves.this, "Leaves not available yet.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Leaves.this, "Teachers not available yet.", Toast.LENGTH_SHORT).show();
                     }
+
                 }
+
             }
 
             @Override
-            public void onFailure(Call<LeavesResponseList> call, Throwable t) {
-                progressDialog.dismiss();
-                Toast.makeText(Leaves.this, "Sorry something went wrong.", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<Teacher_Model> call, Throwable t) {
+
+                Toast.makeText(Leaves.this, Values.SERVER_ERROR, Toast.LENGTH_SHORT).show();
+
             }
         });
+    }
+
+    public void getTeachersUsername(List<TeacherData_Model> list) {
+        if (teachersUsername != null) {
+            teachersUsername.clear();
+        }
+        for (TeacherData_Model data : list) {
+            teachersUsername.add(data.getTeacherUsername());
+        }
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.leaves_list) {
+            fragment = new LeavesListFragment();
+        } else if (id == R.id.submit_leave_menu) {
+            fragment = new SubmitLeaveFragment();
+            Bundle bundle = new Bundle();
+            bundle.putStringArrayList("usernames", teachersUsername);
+            fragment.setArguments(bundle);
+        }
+        if (fragment != null) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.fragment_leaves_list, fragment);
+            ft.commit();
+        }
+        return true;
     }
 }

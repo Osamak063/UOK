@@ -6,31 +6,9 @@
     android:layout_height="match_parent"
     tools:context="com.example.osamakhalid.schoolsystem.Activites.Leaves">
 
-    <TextView
-        android:id="@+id/examtext"
+    <fragment
+        android:id="@+id/fragment_leaves_list"
+        class="com.example.osamakhalid.schoolsystem.Fragments.LeavesListFragment"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:background="@color/colorPrimary"
-        android:textColor="#ffff"
-        android:text="Leaves"
-        android:textSize="20sp"
-        android:gravity="center"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/leaves_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/examtext" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:text="Copyright©2018, SEE, All rights reserved."
-        android:textColor="#fff" />
-
+        android:layout_height="match_parent"></fragment>
 </RelativeLayout>

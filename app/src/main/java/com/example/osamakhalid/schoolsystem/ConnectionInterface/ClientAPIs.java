@@ -20,6 +20,7 @@ import com.example.osamakhalid.schoolsystem.Model.MessagesSentResponseList;
 import com.example.osamakhalid.schoolsystem.Model.MessagesTrashResponseList;
 import com.example.osamakhalid.schoolsystem.Model.NewsAndEventsResponseList;
 import com.example.osamakhalid.schoolsystem.Model.SubjectResponseList;
+import com.example.osamakhalid.schoolsystem.Model.SubmitLeaveResponse;
 import com.example.osamakhalid.schoolsystem.Model.TeacherPersonalProfile;
 import com.example.osamakhalid.schoolsystem.Model.Teacher_Model;
 import com.example.osamakhalid.schoolsystem.Model.TransportResponse_Model;
@@ -98,8 +99,8 @@ public interface ClientAPIs {
     @GET(ConnectionURLS.MESSAGE_CHAT_URL)
     Call<ChatResponse> getChat(@Query("messageid") String messageId, @Query("userid") String userId, @Header("Authorization") String authHeader);
 
-   @GET(ConnectionURLS.BOOK_ISSUE_DATE)
-    Call<Libray_Model> getLibraryInfo(@Query("username") String username,@Header("Authorization") String authHeader);
+    @GET(ConnectionURLS.BOOK_ISSUE_DATE)
+    Call<Libray_Model> getLibraryInfo(@Query("username") String username, @Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.ALL_BOOKS_RECORD)
     Call<AllBooks_Model> getAllBooks(@Header("Authorization") String authHeader);
@@ -110,5 +111,10 @@ public interface ClientAPIs {
 
     @GET(ConnectionURLS.LEAVES_URL)
     Call<LeavesResponseList> getLeaves(@Query("username") String username, @Query("type") String type, @Header("Authorization") String authHeader);
+
+    @FormUrlEncoded
+    @POST(ConnectionURLS.SUBMIT_LEAVES_URL)
+    Call<SubmitLeaveResponse> submitLeave(@Field("title") String title, @Field("details") String details, @Field("fdate") String fDate, @Field("tdate") String toDate, @Field("fromusername") String username, @Field("to") String to, @Header("Authorization") String authHeader);
+
 }
 
