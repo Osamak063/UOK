@@ -7,6 +7,7 @@ import com.example.osamakhalid.schoolsystem.Model.AttendanceResponse;
 import com.example.osamakhalid.schoolsystem.Model.ChatResponse;
 import com.example.osamakhalid.schoolsystem.Model.ExamScheduleResponseList;
 import com.example.osamakhalid.schoolsystem.Model.Exam_Model;
+import com.example.osamakhalid.schoolsystem.Model.FeesResponseList;
 import com.example.osamakhalid.schoolsystem.Model.HolidayResponseList;
 import com.example.osamakhalid.schoolsystem.Model.Homework_Model;
 
@@ -115,6 +116,9 @@ public interface ClientAPIs {
     @FormUrlEncoded
     @POST(ConnectionURLS.SUBMIT_LEAVES_URL)
     Call<SubmitLeaveResponse> submitLeave(@Field("title") String title, @Field("details") String details, @Field("fdate") String fDate, @Field("tdate") String toDate, @Field("fromusername") String username, @Field("to") String to, @Header("Authorization") String authHeader);
+
+    @GET(ConnectionURLS.FEES_AND_INVOICE_URL)
+    Call<FeesResponseList> getFeesAndInvoice(@Query("username") String username, @Query("lang") String lang, @Query("limit") int limit, @Query("offset") int offset, @Header("Authorization") String authHeader);
 
 }
 
