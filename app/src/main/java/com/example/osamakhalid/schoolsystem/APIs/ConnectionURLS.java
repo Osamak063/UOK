@@ -41,4 +41,5 @@ public class ConnectionURLS {
 
     public static final String LEAVES_URL = "student/leaves/";
     public static final String SUBMIT_LEAVES_URL = "student/leave/";
+    public static final String FEES_AND_INVOICE_URL="student/fee_and_invoices/";
 }
