@@ -7,13 +7,15 @@ import com.example.osamakhalid.schoolsystem.Model.AttendanceResponse;
 import com.example.osamakhalid.schoolsystem.Model.ChatResponse;
 import com.example.osamakhalid.schoolsystem.Model.ExamScheduleResponseList;
 import com.example.osamakhalid.schoolsystem.Model.Exam_Model;
+
+import com.example.osamakhalid.schoolsystem.Model.GalleryResponse_Model;
+
 import com.example.osamakhalid.schoolsystem.Model.FeesResponseList;
+
 import com.example.osamakhalid.schoolsystem.Model.HolidayResponseList;
 import com.example.osamakhalid.schoolsystem.Model.Homework_Model;
-
-import com.example.osamakhalid.schoolsystem.Model.Libray_Model;
 import com.example.osamakhalid.schoolsystem.Model.LeavesResponseList;
-
+import com.example.osamakhalid.schoolsystem.Model.Libray_Model;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.MessagesFavResponseList;
 import com.example.osamakhalid.schoolsystem.Model.MessagesInboxResponseList;
@@ -21,7 +23,11 @@ import com.example.osamakhalid.schoolsystem.Model.MessagesSentResponseList;
 import com.example.osamakhalid.schoolsystem.Model.MessagesTrashResponseList;
 import com.example.osamakhalid.schoolsystem.Model.NewsAndEventsResponseList;
 import com.example.osamakhalid.schoolsystem.Model.SubjectResponseList;
+
+import com.example.osamakhalid.schoolsystem.Model.SyllabusResponse_Model;
+
 import com.example.osamakhalid.schoolsystem.Model.SubmitLeaveResponse;
+
 import com.example.osamakhalid.schoolsystem.Model.TeacherPersonalProfile;
 import com.example.osamakhalid.schoolsystem.Model.Teacher_Model;
 import com.example.osamakhalid.schoolsystem.Model.TransportResponse_Model;
@@ -76,8 +82,8 @@ public interface ClientAPIs {
     Call<TeacherPersonalProfile> getPersonalProfile(@Query("id") String id, @Header("Authorization") String authHeader);
 
 
-//    @GET(ConnectionURLS.SYLLABUS_URL)
-//    Call<Syllabus_Model> getSyllabus(@Query("type") String type,@Query("username") String username,@Query("lang") String lang,@Query("monthyear") String monthyear,@Header("Authorization") String authHeader);
+    @GET(ConnectionURLS.SYLLABUS_URL)
+    Call<SyllabusResponse_Model> getSyllabus(@Query("username") String username, @Query("lang") String lang, @Query("monthyear") String monthyear, @Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.TRANSPORT_ALL)
     Call<TransportResponse_Model> getTranportData(@Header("Authorization") String authHeader);
@@ -113,12 +119,18 @@ public interface ClientAPIs {
     @GET(ConnectionURLS.LEAVES_URL)
     Call<LeavesResponseList> getLeaves(@Query("username") String username, @Query("type") String type, @Header("Authorization") String authHeader);
 
+    @GET(ConnectionURLS.MEDIALIBRARY_URL)
+    Call<GalleryResponse_Model> getPhotoGalleryImages(@Query("user") String username, @Header("Authorization") String authHeader);
+
+
+
     @FormUrlEncoded
     @POST(ConnectionURLS.SUBMIT_LEAVES_URL)
     Call<SubmitLeaveResponse> submitLeave(@Field("title") String title, @Field("details") String details, @Field("fdate") String fDate, @Field("tdate") String toDate, @Field("fromusername") String username, @Field("to") String to, @Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.FEES_AND_INVOICE_URL)
     Call<FeesResponseList> getFeesAndInvoice(@Query("username") String username, @Query("lang") String lang, @Query("limit") int limit, @Query("offset") int offset, @Header("Authorization") String authHeader);
+
 
 }
 
