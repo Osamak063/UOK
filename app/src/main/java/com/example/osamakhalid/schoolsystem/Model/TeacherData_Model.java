@@ -12,12 +12,24 @@ public class TeacherData_Model {
     @SerializedName("teacher_id")
     @Expose
     private String teacherId;
+
+    @SerializedName("teacher_username")
+    @Expose
+    private String teacherUsername;
     @SerializedName("name")
     @Expose
     private String name;
     @SerializedName("subject")
     @Expose
     private String subject;
+
+    public String getTeacherUsername() {
+        return teacherUsername;
+    }
+
+    public void setTeacherUsername(String teacherUsername) {
+        this.teacherUsername = teacherUsername;
+    }
 
     public String getTeacherId() {
         return teacherId;
