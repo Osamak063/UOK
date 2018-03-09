@@ -87,7 +87,7 @@ public class CommonCalls extends AppCompatActivity {
             case "December":
                 return "12";
             default:
-                return "-1";
+                return "null";
         }
     }
 

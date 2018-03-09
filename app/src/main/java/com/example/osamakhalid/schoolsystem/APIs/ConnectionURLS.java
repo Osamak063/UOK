@@ -40,5 +40,6 @@ public class ConnectionURLS {
     public static final String ALL_BOOKS_RECORD = "student/books";
 
     public static final String LEAVES_URL = "student/leaves/";
+    public static final String MEDIALIBRARY_URL = "student/media/";
 
 }

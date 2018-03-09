@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -46,14 +45,18 @@ public class HomeWork extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_work);
         fill_spinners();
-      //  progressDialog = CommonCalls.createDialouge(HomeWork.this,"", Values.DIALOGUE_MSG);
+    //    progressDialog = CommonCalls.createDialouge(HomeWork.this,"", Values.DIALOGUE_MSG);
         check = findViewById(R.id.checkHomeWork);
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressDialog = CommonCalls.createDialouge(HomeWork.this,"", Values.DIALOGUE_MSG);
+
                 String date = year+"-"+month+"-"+day;
-                getHomeWork(date);
+                if(date != null){
+                    progressDialog = CommonCalls.createDialouge(HomeWork.this,"", Values.DIALOGUE_MSG);
+                    getHomeWork(date);
+                }
+
 
             }
         });
@@ -137,16 +140,16 @@ public class HomeWork extends AppCompatActivity {
         if(new_date == null){
             new_date = CommonCalls.getCurrentDate();
         }
-        Log.e("Parameter",new_date+"++"+loginResponse.getUsername());
+     //   Log.e("Parameter",new_date+"++"+loginResponse.getUsername());
         Call<Homework_Model> call = clientAPIs.getHomeWOrk(new_date,loginResponse.getUsername(),authHeader);
         call.enqueue(new Callback<Homework_Model>() {
             @Override
             public void onResponse(Call<Homework_Model> call, Response<Homework_Model> response) {
                 if(response.isSuccessful()){
-                    progressDialog.dismiss();
+
                     Homework_Model homework_model = response.body();
                     if(homework_model != null){
-
+                        progressDialog.dismiss();
                       if(homework_model.getHomeworkDateData() != null){
                             listItem = homework_model.getHomeworkDateData();
                             recyclerView =  findViewById(R.id.homeworkview);
@@ -154,12 +157,9 @@ public class HomeWork extends AppCompatActivity {
                             recyclerView.setLayoutManager(new LinearLayoutManager(HomeWork.this));
                             adapter = new HomeWork_Adapter(listItem,HomeWork.this);
                             recyclerView.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
 
-                        }else{
-                                progressDialog.dismiss();
-                                listItem.clear();
-                                adapter.notifyDataSetChanged();
-                        }
+                        }else{}
 
 
                     }
