@@ -2,7 +2,6 @@ package com.example.osamakhalid.schoolsystem.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,8 +19,6 @@ import com.example.osamakhalid.schoolsystem.Consts.Values;
 import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
 import com.example.osamakhalid.schoolsystem.Model.ItemClickListener;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
-import com.example.osamakhalid.schoolsystem.Model.MessagesFavResponse;
-import com.example.osamakhalid.schoolsystem.Model.MessagesFavResponseList;
 import com.example.osamakhalid.schoolsystem.Model.MessagesTrashResponse;
 import com.example.osamakhalid.schoolsystem.Model.MessagesTrashResponseList;
 import com.example.osamakhalid.schoolsystem.R;
@@ -42,7 +39,7 @@ public class TrashMessagesFragment extends Fragment implements ItemClickListener
     private ClientAPIs clientAPIs;
     ProgressDialog progressDialog;
     LoginResponse userData;
-
+    OnTrashFragmentInteractionListener mListener;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -95,12 +92,26 @@ public class TrashMessagesFragment extends Fragment implements ItemClickListener
         });
     }
 
-    @Override
-    public void onClick(View view, String name) {
-        //   Intent i = new Intent(this, ParentTeacherChat.class);
-        //   i.putExtra("name", name);
-        //   startActivity(i);
+    public interface OnTrashFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(String messageId);
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mListener = (TrashMessagesFragment.OnTrashFragmentInteractionListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnHeadlineSelectedListener");
+        }
+    }
+
+
+    @Override
+    public void onClick(View view, String messageId) {
+        mListener.onFragmentInteraction(messageId);
+    }
 
 }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/personal_transport"
-        android:title="Route Transport"
+        android:title="Assigned Transport"
         app:showAsAction="never">
     </item>
 </menu>

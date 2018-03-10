@@ -45,8 +45,7 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressDialog.setMessage(Values.WAIT_MSG);
-                progressDialog.show();
+                progressDialog = CommonCalls.createDialouge(MainActivity.this,"",Values.WAIT_MSG);
                 loginUser();
             }
         });

@@ -84,9 +84,11 @@ public class Transport extends AppCompatActivity {
                         recyclerView.setHasFixedSize(true);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                         adapter = new Transport_Adapter(listItems, getApplicationContext());
+                        adapter.notifyDataSetChanged();
                         recyclerView.setAdapter(adapter);
 
                     } else {
+                        progressDialog.dismiss();
                         Toast.makeText(Transport.this, Values.Error, Toast.LENGTH_SHORT).show();
 
                     }
@@ -97,6 +99,8 @@ public class Transport extends AppCompatActivity {
             @Override
             public void onFailure(Call<Transport_Model> call, Throwable t) {
                 progressDialog.dismiss();
+                Toast.makeText(Transport.this, Values.SERVER_ERROR, Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -122,11 +126,12 @@ public class Transport extends AppCompatActivity {
                         recyclerView = findViewById(R.id.transport_recycler_view);
                         recyclerView.setHasFixedSize(true);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-
                         adapter = new Transport_Adapter(transport_model.getTransportData(), getApplicationContext());
+                        adapter.notifyDataSetChanged();
                         recyclerView.setAdapter(adapter);
 
                     } else {
+                        progressDialog.dismiss();
                         Toast.makeText(Transport.this, Values.Error, Toast.LENGTH_SHORT).show();
 
                     }

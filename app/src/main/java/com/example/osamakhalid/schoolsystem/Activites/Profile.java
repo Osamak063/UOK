@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.osamakhalid.schoolsystem.Adapters.Teachers_Adapter;
 import com.example.osamakhalid.schoolsystem.Consts.Values;
@@ -23,7 +24,7 @@ import java.util.List;
 public class Profile extends AppCompatActivity implements ItemClickListener {
     RecyclerView recyclerView;
     public Teachers_Adapter adapter;
-    public static String teacher_id ;
+    public static String teacher_id;
     public static List<TeacherData_Model> teacher_list;
     ProgressDialog progressDialog;
 
@@ -32,19 +33,23 @@ public class Profile extends AppCompatActivity implements ItemClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         recyclerView = findViewById(R.id.profile_recycler_view);
-         progressDialog = CommonCalls.createDialouge(this,"", Values.DIALOGUE_MSG);
+        progressDialog = CommonCalls.createDialouge(this, "", Values.DIALOGUE_MSG);
 
         //getTeacherData();
         teacher_list = DashboardActivity.teacherData_models;
         teacher_id = teacher_list.get(0).getTeacherId();
-        if(teacher_list!= null){
+        if (teacher_list != null) {
             progressDialog.dismiss();
-
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
             adapter = new Teachers_Adapter(teacher_list, getApplicationContext());
             adapter.setItemClickListener(this);
+            adapter.notifyDataSetChanged();
             recyclerView.setAdapter(adapter);
+
+        }else{
+            progressDialog.dismiss();
+            Toast.makeText(Profile.this, Values.DATA_ERROR,Toast.LENGTH_SHORT).show();
 
         }
 

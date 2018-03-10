@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -79,6 +78,7 @@ public class Syllabus_Activity extends AppCompatActivity implements ItemClickLis
                     year = parent.getItemAtPosition(i).toString();
 
                     if (month != null && year != null) {
+
                         getSyllabusData(year + "-" + month);
 
                     }
@@ -97,7 +97,6 @@ public class Syllabus_Activity extends AppCompatActivity implements ItemClickLis
 
 
     public void getSyllabusData(String month_year) {
-
         Retrofit retrofit = RetrofitInitialize.getApiClient();
         ClientAPIs clientAPIs = retrofit.create(ClientAPIs.class);
         final LoginResponse loginResponse = CommonCalls.getUserData(Syllabus_Activity.this);
@@ -109,7 +108,6 @@ public class Syllabus_Activity extends AppCompatActivity implements ItemClickLis
             @Override
             public void onResponse(Call<SyllabusResponse_Model> call, Response<SyllabusResponse_Model> response) {
                 if(response.isSuccessful()){
-
                     SyllabusResponse_Model syllabusResponse_model = response.body();
                     if(syllabusResponse_model != null){
 
@@ -122,6 +120,7 @@ public class Syllabus_Activity extends AppCompatActivity implements ItemClickLis
                         adapter.notifyDataSetChanged();
 
                     }else{
+
                         adapter.notifyDataSetChanged();
                         Toast.makeText(getApplicationContext(),Values.DATA_ERROR,Toast.LENGTH_SHORT).show();
 
@@ -142,7 +141,6 @@ public class Syllabus_Activity extends AppCompatActivity implements ItemClickLis
 
     @Override
     public void onClick(View view, List<SyllabusMultiple_Subject_Model> galleryData_models) {
-        Log.e("","Clicked!!!!");
         Intent mIntent = new Intent(Syllabus_Activity.this, SyllabusSubject_Activity.class);
         mIntent.putParcelableArrayListExtra("syllabus_data", (ArrayList<? extends Parcelable>) galleryData_models);
         startActivity(mIntent);
