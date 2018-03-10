@@ -1,8 +1,6 @@
 package com.example.osamakhalid.schoolsystem.Activites;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -20,17 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.downloader.Error;
-import com.downloader.OnCancelListener;
-import com.downloader.OnDownloadListener;
-import com.downloader.OnPauseListener;
-import com.downloader.OnProgressListener;
-import com.downloader.OnStartOrResumeListener;
-import com.downloader.PRDownloader;
-import com.downloader.PRDownloaderConfig;
-import com.downloader.Progress;
 import com.example.osamakhalid.schoolsystem.Adapters.Chat_Adapter;
-import com.example.osamakhalid.schoolsystem.Adapters.MessagesAdapter;
 import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
 import com.example.osamakhalid.schoolsystem.ConnectionInterface.ClientAPIs;
 import com.example.osamakhalid.schoolsystem.Consts.Values;
@@ -38,8 +26,6 @@ import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
 import com.example.osamakhalid.schoolsystem.Model.ChatDataResponse;
 import com.example.osamakhalid.schoolsystem.Model.ChatResponse;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
-import com.example.osamakhalid.schoolsystem.Model.MessagesInboxResponse;
-import com.example.osamakhalid.schoolsystem.Model.MessagesInboxResponseList;
 import com.example.osamakhalid.schoolsystem.R;
 
 import java.io.File;
@@ -89,11 +75,6 @@ public class ChatFragment extends Fragment {
         setHasOptionsMenu(true);
         listItems = new ArrayList<>();
         progressDialog = CommonCalls.createDialouge(getActivity(), "", Values.DIALOGUE_MSG);
-        PRDownloaderConfig config = PRDownloaderConfig.newBuilder()
-                .setReadTimeout(30_000)
-                .setConnectTimeout(30_000)
-                .build();
-        PRDownloader.initialize(getActivity().getApplicationContext(), config);
         recyclerView = (RecyclerView) view.findViewById(R.id.chat_recycler_view);
         attachmentIcon = view.findViewById(R.id.chat_attachment_icon);
         attachmentNameTextView = view.findViewById(R.id.chat_attachment_name);
@@ -150,7 +131,7 @@ public class ChatFragment extends Fragment {
     }
 
     public void setAttachment(String attachmentName) {
-        if (attachmentName.equals("")) {
+        if (!attachmentName.equals("")) {
             attachmentLayout.setVisibility(View.VISIBLE);
             attachmentNameTextView.setText(attachmentName);
             attachmentIcon.setBackgroundResource(R.drawable.file_icon);

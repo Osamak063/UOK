@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="#E0E0E0"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:paddingTop="5dp">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -41,8 +41,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/chat_msg_2"
-                android:layout_gravity="right"
-                android:paddingRight="5dp"
+                android:layout_toRightOf="@id/chat_image_2"
+                android:paddingLeft="5dp"
                 android:text="11:30 PM"
                 android:textSize="10dp" />
         </RelativeLayout>

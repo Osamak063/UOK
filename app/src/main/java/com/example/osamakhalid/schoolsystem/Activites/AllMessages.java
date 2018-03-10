@@ -16,10 +16,12 @@ import android.view.MenuItem;
 import com.example.osamakhalid.schoolsystem.Fragments.FavoriteMessagesFragment;
 import com.example.osamakhalid.schoolsystem.Fragments.InboxFragment;
 import com.example.osamakhalid.schoolsystem.Fragments.SentMessagesFragment;
+import com.example.osamakhalid.schoolsystem.Fragments.TrashMessagesFragment;
 import com.example.osamakhalid.schoolsystem.R;
 
 public class AllMessages extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, InboxFragment.OnInboxFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, InboxFragment.OnInboxFragmentInteractionListener ,SentMessagesFragment.OnSentFragmentInteractionListener
+        ,TrashMessagesFragment.OnTrashFragmentInteractionListener,FavoriteMessagesFragment.OnFavoriteFragmentInteractionListener {
     private Fragment fragment;
 
     @Override

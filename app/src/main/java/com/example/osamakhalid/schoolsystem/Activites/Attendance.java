@@ -86,16 +86,23 @@ public class Attendance extends AppCompatActivity {
             @Override
             public void onResponse(Call<AttendanceResponse> call, Response<AttendanceResponse> response) {
                 if (response.isSuccessful()) {
+
                     AttendanceResponse attendanceResponseList = response.body();
-                    if (attendanceResponseList != null && attendanceResponseList.getData() != null) {
+                    if (attendanceResponseList != null ) {
                         progressDialouge.dismiss();
-                        listItems.addAll(attendanceResponseList.getData().getAttendance());
-                        adapter.notifyDataSetChanged();
-                    } else {
-                        progressDialouge.dismiss();
-                        Toast.makeText(Attendance.this, "Attendance not available yet.", Toast.LENGTH_SHORT).show();
+                        if(attendanceResponseList.getData() != null){
+                            listItems.addAll(attendanceResponseList.getData().getAttendance());
+                            adapter.notifyDataSetChanged();
+                        }
+
+
                     }
+
+                } else {
+                    progressDialouge.dismiss();
+                    Toast.makeText(Attendance.this, Values.DATA_ERROR, Toast.LENGTH_SHORT).show();
                 }
+
             }
 
             @Override
