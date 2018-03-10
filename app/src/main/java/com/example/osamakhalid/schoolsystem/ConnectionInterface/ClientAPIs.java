@@ -24,6 +24,7 @@ import com.example.osamakhalid.schoolsystem.Model.SubmitLeaveResponse;
 import com.example.osamakhalid.schoolsystem.Model.SyllabusResponse_Model;
 import com.example.osamakhalid.schoolsystem.Model.TeacherPersonalProfile;
 import com.example.osamakhalid.schoolsystem.Model.Teacher_Model;
+import com.example.osamakhalid.schoolsystem.Model.TimeTable_Model;
 import com.example.osamakhalid.schoolsystem.Model.TransportResponse_Model;
 import com.example.osamakhalid.schoolsystem.Model.Transport_Model;
 
@@ -132,6 +133,10 @@ public interface ClientAPIs {
     Call<FeesResponseList> getFeesAndInvoice(@Query("username") String username, @Query("lang") String lang,
                                              @Query("limit") int limit, @Query("offset") int offset,
                                              @Header("Authorization") String authHeader);
+
+    @GET(ConnectionURLS.TIME_TABLE_URL)
+    Call<TimeTable_Model> getTimeTable(@Query("username") String username, @Query("lang") String lang,
+                                       @Header("Authorization") String authHeader);
 
 
 }
