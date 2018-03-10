@@ -71,7 +71,7 @@ public class Alert extends AppCompatActivity {
                         adapter.notifyDataSetChanged();
                     } else {
                         progressDialog.dismiss();
-                        Toast.makeText(Alert.this, "Holiday alert not available yet.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Alert.this, Values.DATA_ERROR, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
