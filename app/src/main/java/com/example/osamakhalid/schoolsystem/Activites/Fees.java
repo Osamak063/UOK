@@ -12,18 +12,12 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.osamakhalid.schoolsystem.Adapters.FeesAdapter;
-import com.example.osamakhalid.schoolsystem.Adapters.NewsAndEvents_Adapter;
-import com.example.osamakhalid.schoolsystem.Adapters.alert_adapter;
 import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
 import com.example.osamakhalid.schoolsystem.ConnectionInterface.ClientAPIs;
 import com.example.osamakhalid.schoolsystem.Consts.Values;
 import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
-import com.example.osamakhalid.schoolsystem.Model.Alert_Model;
-import com.example.osamakhalid.schoolsystem.Model.ExamResult_Data;
 import com.example.osamakhalid.schoolsystem.Model.FeesResponse;
 import com.example.osamakhalid.schoolsystem.Model.FeesResponseList;
-import com.example.osamakhalid.schoolsystem.Model.HolidayResponse;
-import com.example.osamakhalid.schoolsystem.Model.HolidayResponseList;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.R;
 
@@ -94,15 +88,13 @@ public class Fees extends AppCompatActivity {
     public void getData(String authHeader, int offset) {
         retrofit = RetrofitInitialize.getApiClient();
         clientAPIs = retrofit.create(ClientAPIs.class);
-        Call<FeesResponseList> call = clientAPIs.getFeesAndInvoice(userData.getUsername(), "english", 10, offset, authHeader);
+        Call<FeesResponseList> call = clientAPIs.getFeesAndInvoice(userData.getUsername(), Values.LANGUAGE, 10, offset, authHeader);
         call.enqueue(new Callback<FeesResponseList>() {
             @Override
             public void onResponse(Call<FeesResponseList> call, Response<FeesResponseList> response) {
-                System.out.println("logg coming");
                 if (response.isSuccessful()) {
                     FeesResponseList feesList = response.body();
                     if (feesList != null && feesList.getFeeData() != null) {
-                        System.out.println("logg feeslist=" + feesList.getCount());
                         progressDialog.dismiss();
                         listItems.addAll(feesList.getFeeData());
                         adapter.notifyDataSetChanged();

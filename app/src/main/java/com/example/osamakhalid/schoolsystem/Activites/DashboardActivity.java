@@ -15,9 +15,6 @@ import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
 import com.example.osamakhalid.schoolsystem.ConnectionInterface.ClientAPIs;
 import com.example.osamakhalid.schoolsystem.Consts.Values;
 import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
-import com.example.osamakhalid.schoolsystem.Model.AlertResponse_Model;
-import com.example.osamakhalid.schoolsystem.Model.Alert_Model;
-import com.example.osamakhalid.schoolsystem.Model.Homework_Data_Model;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.TeacherData_Model;
 import com.example.osamakhalid.schoolsystem.Model.Teacher_Model;
@@ -35,10 +32,7 @@ public class DashboardActivity extends AppCompatActivity {
 
             examSchedule, teacherDetails, fees, holidayAlert, homework, subjects, timeTable,leaves;
 
-    public AlertResponse_Model alert_response_model;
-    public static String Currentdate;
-    public static List<Alert_Model> alert_model;
-    public static List<Homework_Data_Model> homework_data_models;
+
 
 
 
@@ -85,7 +79,7 @@ public class DashboardActivity extends AppCompatActivity {
         syllabus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //     startActivity(new Intent(DashboardActivity.this,Syllabus.class));
+                     startActivity(new Intent(DashboardActivity.this,Syllabus_Activity.class));
             }
         });
 

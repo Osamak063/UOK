@@ -2,7 +2,6 @@ package com.example.osamakhalid.schoolsystem.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,8 +21,6 @@ import com.example.osamakhalid.schoolsystem.Model.ItemClickListener;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.MessagesFavResponse;
 import com.example.osamakhalid.schoolsystem.Model.MessagesFavResponseList;
-import com.example.osamakhalid.schoolsystem.Model.MessagesSentResponse;
-import com.example.osamakhalid.schoolsystem.Model.MessagesSentResponseList;
 import com.example.osamakhalid.schoolsystem.R;
 
 import java.util.ArrayList;
@@ -42,7 +39,7 @@ public class FavoriteMessagesFragment extends Fragment implements ItemClickListe
     private ClientAPIs clientAPIs;
     ProgressDialog progressDialog;
     LoginResponse userData;
-
+    OnFavoriteFragmentInteractionListener mListener;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -94,12 +91,26 @@ public class FavoriteMessagesFragment extends Fragment implements ItemClickListe
             }
         });
     }
+    public interface OnFavoriteFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(String messageId);
+    }
 
     @Override
-    public void onClick(View view, String name) {
-        //   Intent i = new Intent(this, ParentTeacherChat.class);
-        //   i.putExtra("name", name);
-        //   startActivity(i);
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mListener = (FavoriteMessagesFragment.OnFavoriteFragmentInteractionListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnHeadlineSelectedListener");
+        }
+    }
+
+
+    @Override
+    public void onClick(View view, String messageId) {
+        mListener.onFragmentInteraction(messageId);
     }
 
 }

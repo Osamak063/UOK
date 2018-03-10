@@ -1,13 +1,14 @@
 package com.example.osamakhalid.schoolsystem.Activites;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.osamakhalid.schoolsystem.Adapters.exam_adapter;
+import com.example.osamakhalid.schoolsystem.Consts.Values;
 import com.example.osamakhalid.schoolsystem.Model.ExamResult_Data;
 import com.example.osamakhalid.schoolsystem.R;
 
@@ -20,7 +21,6 @@ public class Exam_Result extends AppCompatActivity {
     public static List<ExamResult_Data> listItems;
     String exam_name;
     TextView examview_name;
-    private ProgressDialog progressDialog;
 
 
     @Override
@@ -44,14 +44,21 @@ public class Exam_Result extends AppCompatActivity {
         }
 
 
+        if(listItems != null){
+            //setting up recyclerview
+            recyclerView =  findViewById(R.id.examResult);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-         //setting up recyclerview
-        recyclerView =  findViewById(R.id.examResult);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            adapter = new exam_adapter(listItems,getApplicationContext());
+            adapter.notifyDataSetChanged();
+            recyclerView.setAdapter(adapter);
+        }else{
+            Toast.makeText(Exam_Result.this, Values.DATA_ERROR, Toast.LENGTH_SHORT).show();
 
-        adapter = new exam_adapter(listItems,getApplicationContext());
-        recyclerView.setAdapter(adapter);
+        }
+
+
     }
 
 

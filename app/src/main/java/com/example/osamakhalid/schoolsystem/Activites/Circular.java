@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.example.osamakhalid.schoolsystem.Adapters.alert_adapter;
@@ -51,9 +50,7 @@ public class Circular extends AppCompatActivity {
         call.enqueue(new Callback<AlertResponse_Model>() {
             @Override
             public void onResponse(Call<AlertResponse_Model> call, Response<AlertResponse_Model> response) {
-                Log.e("Server hit: ", "Successful");
                 if (response.isSuccessful()) {
-                    Log.e("Server Response: ", "Successful");
 
                     AlertResponse_Model  alert_response_model = response.body();
                     if (alert_response_model != null) {
@@ -63,9 +60,11 @@ public class Circular extends AppCompatActivity {
                         recyclerView.setLayoutManager(new LinearLayoutManager(Circular.this));
                         adapter = new alert_adapter(alert_response_model.getNoticeData(),getApplicationContext());
                         recyclerView.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
 
                     } else {
-                        Toast.makeText(Circular.this, "No Notice!", Toast.LENGTH_SHORT).show();
+                        progress_dialouge.dismiss();
+                        Toast.makeText(Circular.this, Values.DATA_ERROR, Toast.LENGTH_SHORT).show();
 
                     }
 
