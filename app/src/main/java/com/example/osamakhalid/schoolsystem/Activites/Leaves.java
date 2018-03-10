@@ -1,36 +1,26 @@
 package com.example.osamakhalid.schoolsystem.Activites;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.osamakhalid.schoolsystem.Adapters.LeavesAdapter;
-import com.example.osamakhalid.schoolsystem.Adapters.NewsAndEvents_Adapter;
 import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
 import com.example.osamakhalid.schoolsystem.ConnectionInterface.ClientAPIs;
 import com.example.osamakhalid.schoolsystem.Consts.Values;
 import com.example.osamakhalid.schoolsystem.Fragments.LeavesListFragment;
 import com.example.osamakhalid.schoolsystem.Fragments.SubmitLeaveFragment;
 import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
-import com.example.osamakhalid.schoolsystem.Model.HolidayResponse;
-import com.example.osamakhalid.schoolsystem.Model.HolidayResponseList;
-import com.example.osamakhalid.schoolsystem.Model.LeavesResponse;
-import com.example.osamakhalid.schoolsystem.Model.LeavesResponseList;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.TeacherData_Model;
 import com.example.osamakhalid.schoolsystem.Model.Teacher_Model;
 import com.example.osamakhalid.schoolsystem.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +33,7 @@ public class Leaves extends AppCompatActivity {
     Fragment fragment;
     public static List<TeacherData_Model> teacherData_models;
     public static ArrayList<String> teachersUsername;
+    private ProgressDialog progressDilougue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

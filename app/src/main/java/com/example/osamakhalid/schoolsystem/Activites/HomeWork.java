@@ -150,18 +150,24 @@ public class HomeWork extends AppCompatActivity {
                     Homework_Model homework_model = response.body();
                     if(homework_model != null){
                         progressDialog.dismiss();
-                      if(homework_model.getHomeworkDateData() != null){
+           //           if(homework_model.getHomeworkDateData() != null){
                             listItem = homework_model.getHomeworkDateData();
                             recyclerView =  findViewById(R.id.homeworkview);
                             recyclerView.setHasFixedSize(true);
                             recyclerView.setLayoutManager(new LinearLayoutManager(HomeWork.this));
                             adapter = new HomeWork_Adapter(listItem,HomeWork.this);
-                            recyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
+                            recyclerView.setAdapter(adapter);
 
-                        }else{}
 
-
+//                        }else{
+//                      //    progressDialog.dismiss();
+//                          Toast.makeText(HomeWork.this,Values.DATA_ERROR,Toast.LENGTH_SHORT).show();
+//
+//
+//                      }
+                    }else{
+                        Toast.makeText(HomeWork.this,Values.DATA_ERROR,Toast.LENGTH_SHORT).show();
                     }
                 }
             }

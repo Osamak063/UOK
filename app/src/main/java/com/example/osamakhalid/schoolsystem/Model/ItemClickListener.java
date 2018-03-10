@@ -10,6 +10,4 @@ public interface ItemClickListener {
 
     void onClick(View view,String name);
 
-  //  void onClick(View view, int adapterPosition, boolean b);
-
 }

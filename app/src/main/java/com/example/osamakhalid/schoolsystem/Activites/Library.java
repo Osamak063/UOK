@@ -76,6 +76,7 @@ public class Library extends AppCompatActivity {
                         adapter.notifyDataSetChanged();
 
                     }else{
+                        progress_dialouge.dismiss();
                         Toast.makeText(Library.this,Values.DATA_ERROR,Toast.LENGTH_SHORT).show();
                     }
 

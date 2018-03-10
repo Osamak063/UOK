@@ -95,6 +95,7 @@ public class Initiate_Library extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<AllBooks_Model> call, Throwable t) {
+                progress_dialouge.dismiss();
                 Toast.makeText(Initiate_Library.this, Values.SERVER_ERROR,Toast.LENGTH_SHORT).show();
             }
         });
