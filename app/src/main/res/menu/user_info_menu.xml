@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/user_info"
-        android:title="@string/user_info"
+        android:title="User Information"
         app:showAsAction="never"
         ></item>
     <item
         android:id="@+id/parent_info"
-        android:title="@string/parent_info"
+        android:title="Parent Information"
         app:showAsAction="never"
         ></item>
 </menu>
