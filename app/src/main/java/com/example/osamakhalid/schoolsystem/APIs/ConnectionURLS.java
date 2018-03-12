@@ -46,5 +46,7 @@ public class ConnectionURLS {
     public static final String FEES_AND_INVOICE_URL="student/fee_and_invoices/";
 
     public static final String TIME_TABLE_URL = "student/class_routine/";
+
+    public static final String STUDENT_PARENT_INFO = "student/student_parent/";
 }
 
