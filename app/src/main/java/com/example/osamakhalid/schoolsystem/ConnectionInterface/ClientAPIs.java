@@ -27,6 +27,7 @@ import com.example.osamakhalid.schoolsystem.Model.Teacher_Model;
 import com.example.osamakhalid.schoolsystem.Model.TimeTable_Model;
 import com.example.osamakhalid.schoolsystem.Model.TransportResponse_Model;
 import com.example.osamakhalid.schoolsystem.Model.Transport_Model;
+import com.example.osamakhalid.schoolsystem.Model.UserParentInfoResponse;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -143,6 +144,9 @@ public interface ClientAPIs {
     @GET(ConnectionURLS.TIME_TABLE_URL)
     Call<TimeTable_Model> getTimeTable(@Query("username") String username, @Query("lang") String lang,
                                        @Header("Authorization") String authHeader);
+
+    @GET(ConnectionURLS.STUDENT_PARENT_INFO)
+    Call<UserParentInfoResponse> getParentInfo(@Query("username") String username, @Header("Authorization") String authHeader);
 
 
 }
