@@ -121,7 +121,7 @@ public class Syllabus_Activity extends AppCompatActivity implements ItemClickLis
 
                     }else{
 
-                        adapter.notifyDataSetChanged();
+                       // adapter.notifyDataSetChanged();
                         Toast.makeText(getApplicationContext(),Values.DATA_ERROR,Toast.LENGTH_SHORT).show();
 
                     }

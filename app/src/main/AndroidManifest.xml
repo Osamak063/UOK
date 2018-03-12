@@ -77,7 +77,8 @@
         <activity android:name=".Activites.Leaves" />
         <activity android:name=".Activites.PhotoGalleryImages" />
         <activity android:name=".Activites.Syllabus_Activity" />
-        <activity android:name=".Activites.SyllabusSubject_Activity"></activity>
+        <activity android:name=".Activites.SyllabusSubject_Activity" />
+        <activity android:name=".Activites.TimeTable_Subjects"></activity>
     </application>
 
 </manifest>

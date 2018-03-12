@@ -28,7 +28,9 @@ public class SyllabusSubject_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_syllabus_subject_);
         progressDilouge = CommonCalls.createDialouge(SyllabusSubject_Activity.this,null,Values.DIALOGUE_MSG);
         syllabusMultiple_subject_models = this.getIntent().getParcelableArrayListExtra("syllabus_data");
+
         if(syllabusMultiple_subject_models != null){
+
             progressDilouge.dismiss();
             recyclerView = findViewById(R.id.subject_recyclerVIEWS);
             recyclerView.setHasFixedSize(true);

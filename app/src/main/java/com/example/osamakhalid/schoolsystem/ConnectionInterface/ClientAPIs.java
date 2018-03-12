@@ -78,22 +78,27 @@ public interface ClientAPIs {
 
 
     @GET(ConnectionURLS.SYLLABUS_URL)
-    Call<SyllabusResponse_Model> getSyllabus(@Query("username") String username, @Query("lang") String lang, @Query("monthyear") String monthyear, @Header("Authorization") String authHeader);
+    Call<SyllabusResponse_Model> getSyllabus(@Query("username") String username, @Query("lang") String lang,
+                                             @Query("monthyear") String monthyear, @Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.TRANSPORT_ALL)
     Call<TransportResponse_Model> getTranportData(@Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.TRANSPORT_PERSONAL)
-    Call<Transport_Model> getPersonalTranportData(@Query("studentID") String studentID, @Header("Authorization") String authHeade);
+    Call<Transport_Model> getPersonalTranportData(@Query("studentID") String studentID,
+                                                  @Header("Authorization") String authHeade);
 
     @GET(ConnectionURLS.MESSAGE_INBOX_URL)
-    Call<MessagesInboxResponseList> getMessagesInbox(@Query("username") String username, @Header("Authorization") String authHeader);
+    Call<MessagesInboxResponseList> getMessagesInbox(@Query("username") String username,
+                                                     @Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.MESSAGE_SENT_URL)
-    Call<MessagesSentResponseList> getMessagesSent(@Query("username") String username, @Header("Authorization") String authHeader);
+    Call<MessagesSentResponseList> getMessagesSent(@Query("username") String username,
+                                                   @Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.MESSAGE_FAV_URL)
-    Call<MessagesFavResponseList> getMessagesFav(@Query("username") String username, @Header("Authorization") String authHeader);
+    Call<MessagesFavResponseList> getMessagesFav(@Query("username") String username,
+                                                 @Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.MESSAGE_TRASH_URL)
     Call<MessagesTrashResponseList> getMessageTrash(@Query("username") String username,
@@ -104,7 +109,8 @@ public interface ClientAPIs {
                                @Header("Authorization") String authHeader);
 
    @GET(ConnectionURLS.BOOK_ISSUE_DATE)
-    Call<Libray_Model> getLibraryInfo(@Query("username") String username,@Header("Authorization") String authHeader);
+    Call<Libray_Model> getLibraryInfo(@Query("username") String username,
+                                      @Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.ALL_BOOKS_RECORD)
     Call<AllBooks_Model> getAllBooks(@Header("Authorization") String authHeader);

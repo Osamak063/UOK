@@ -23,6 +23,7 @@ import com.example.osamakhalid.schoolsystem.Model.Homework_Model;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -61,10 +62,8 @@ public class HomeWork extends AppCompatActivity {
             }
         });
 
-
-
-
     }
+
 
     public void fill_spinners(){
 
@@ -148,9 +147,10 @@ public class HomeWork extends AppCompatActivity {
                 if(response.isSuccessful()){
 
                     Homework_Model homework_model = response.body();
-                    if(homework_model != null){
+
+                    if( homework_model != null ) {
                         progressDialog.dismiss();
-           //           if(homework_model.getHomeworkDateData() != null){
+                      if(homework_model.getHomeworkDateData() != null){
                             listItem = homework_model.getHomeworkDateData();
                             recyclerView =  findViewById(R.id.homeworkview);
                             recyclerView.setHasFixedSize(true);
@@ -158,14 +158,14 @@ public class HomeWork extends AppCompatActivity {
                             adapter = new HomeWork_Adapter(listItem,HomeWork.this);
                             adapter.notifyDataSetChanged();
                             recyclerView.setAdapter(adapter);
-
-
-//                        }else{
-//                      //    progressDialog.dismiss();
-//                          Toast.makeText(HomeWork.this,Values.DATA_ERROR,Toast.LENGTH_SHORT).show();
-//
-//
-//                      }
+                        }else{
+                      //    progressDialog.dismiss();
+                          listItem = new ArrayList<>();
+                          listItem.clear();
+                          adapter = new HomeWork_Adapter(listItem,HomeWork.this);
+                          adapter.notifyDataSetChanged();
+                          Toast.makeText(HomeWork.this,Values.DATA_ERROR,Toast.LENGTH_SHORT).show();
+                      }
                     }else{
                         Toast.makeText(HomeWork.this,Values.DATA_ERROR,Toast.LENGTH_SHORT).show();
                     }

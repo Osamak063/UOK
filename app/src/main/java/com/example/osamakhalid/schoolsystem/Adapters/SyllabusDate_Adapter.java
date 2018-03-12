@@ -24,6 +24,7 @@ public class SyllabusDate_Adapter extends RecyclerView.Adapter<SyllabusDate_Adap
     List<SyllabusData_Model> syllabusData_modelList;
     private ItemClickListenerDate itemClickListener;
 
+
     public SyllabusDate_Adapter( List<SyllabusData_Model> syllabusData_modelList,Context context) {
         this.context = context;
         this.syllabusData_modelList = syllabusData_modelList;
