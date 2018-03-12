@@ -7,4 +7,10 @@
         android:title="Search"
         app:showAsAction="always"
         ></item>
+    <item
+        android:id="@+id/user_profile_menu"
+        android:title="User Profile"
+        app:showAsAction="always"
+        android:icon="@drawable/profile_icon"
+        ></item>
 </menu>
