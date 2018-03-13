@@ -204,6 +204,8 @@ public class DashboardActivity extends AppCompatActivity {
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(i);
             finish();
+        }else if(id==R.id.user_profile_menu){
+            startActivity(new Intent(DashboardActivity.this,UserProfile.class));
         }
         return super.onOptionsItemSelected(item);
     }
