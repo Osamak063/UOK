@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
+import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -29,6 +30,15 @@ public class CommonCalls extends AppCompatActivity {
         Gson gson = new Gson();
         String json = gson.toJson(loginResponse);
         prefsEditor.putString("UserObject", json);
+        prefsEditor.commit();
+    }
+
+    public static void saveParentData(ParentLoginResponse parentLoginResponse, Context context) {
+        SharedPreferences mPrefs = context.getSharedPreferences("ParentData", 0);
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(parentLoginResponse);
+        prefsEditor.putString("ParentObject", json);
         prefsEditor.commit();
     }
 
