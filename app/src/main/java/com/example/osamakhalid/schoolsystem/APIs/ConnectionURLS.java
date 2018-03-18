@@ -48,5 +48,6 @@ public class ConnectionURLS {
     public static final String TIME_TABLE_URL = "student/class_routine/";
 
     public static final String STUDENT_PARENT_INFO = "student/student_parent/";
+    public static final String GET_USER_TYPE_URL = "login/login_type";
 }
 

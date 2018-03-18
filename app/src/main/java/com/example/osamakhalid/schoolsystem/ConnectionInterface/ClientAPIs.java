@@ -9,6 +9,7 @@ import com.example.osamakhalid.schoolsystem.Model.ExamScheduleResponseList;
 import com.example.osamakhalid.schoolsystem.Model.Exam_Model;
 import com.example.osamakhalid.schoolsystem.Model.FeesResponseList;
 import com.example.osamakhalid.schoolsystem.Model.GalleryResponse_Model;
+import com.example.osamakhalid.schoolsystem.Model.GetUserTypeResponse;
 import com.example.osamakhalid.schoolsystem.Model.HolidayResponseList;
 import com.example.osamakhalid.schoolsystem.Model.Homework_Model;
 import com.example.osamakhalid.schoolsystem.Model.LeavesResponseList;
@@ -19,6 +20,7 @@ import com.example.osamakhalid.schoolsystem.Model.MessagesInboxResponseList;
 import com.example.osamakhalid.schoolsystem.Model.MessagesSentResponseList;
 import com.example.osamakhalid.schoolsystem.Model.MessagesTrashResponseList;
 import com.example.osamakhalid.schoolsystem.Model.NewsAndEventsResponseList;
+import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.SubjectResponseList;
 import com.example.osamakhalid.schoolsystem.Model.SubmitLeaveResponse;
 import com.example.osamakhalid.schoolsystem.Model.SyllabusResponse_Model;
@@ -109,7 +111,7 @@ public interface ClientAPIs {
     Call<ChatResponse> getChat(@Query("messageid") String messageId, @Query("userid") String userId,
                                @Header("Authorization") String authHeader);
 
-   @GET(ConnectionURLS.BOOK_ISSUE_DATE)
+    @GET(ConnectionURLS.BOOK_ISSUE_DATE)
     Call<Libray_Model> getLibraryInfo(@Query("username") String username,
                                       @Header("Authorization") String authHeader);
 
@@ -148,6 +150,13 @@ public interface ClientAPIs {
     @GET(ConnectionURLS.STUDENT_PARENT_INFO)
     Call<UserParentInfoResponse> getParentInfo(@Query("username") String username, @Header("Authorization") String authHeader);
 
+    @FormUrlEncoded
+    @POST(ConnectionURLS.GET_USER_TYPE_URL)
+    Call<GetUserTypeResponse> getUserTypeData(@Field("username") String userName, @Field("password") String password, @Header("Authorization") String authHeader);
+
+    @FormUrlEncoded
+    @POST(ConnectionURLS.LOGIN_URL)
+    Call<ParentLoginResponse> loginParent(@Field("username") String userName, @Field("password") String password, @Header("Authorization") String authHeader);
 
 }
 
