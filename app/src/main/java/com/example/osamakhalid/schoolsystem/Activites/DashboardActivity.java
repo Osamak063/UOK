@@ -30,10 +30,7 @@ import retrofit2.Retrofit;
 public class DashboardActivity extends AppCompatActivity {
     private LinearLayout attendance, syllabus, results, noticeBoard, transport, messages, library, photoGallery, newsAndEvents,
 
-            examSchedule, teacherDetails, fees, holidayAlert, homework, subjects, timeTable,leaves;
-
-
-
+    examSchedule, teacherDetails, fees, holidayAlert, homework, subjects, timeTable, leaves;
 
 
     public static List<TeacherData_Model> teacherData_models;
@@ -58,15 +55,13 @@ public class DashboardActivity extends AppCompatActivity {
         fees = findViewById(R.id.fees);
         holidayAlert = findViewById(R.id.holiday_alert);
         examSchedule = findViewById(R.id.exam_schedule);
-
         library = findViewById(R.id.library_view);
-
         leaves = findViewById(R.id.leaves);
 
         library.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(DashboardActivity.this,Initiate_Library.class));
+                startActivity(new Intent(DashboardActivity.this, Initiate_Library.class));
             }
         });
         homework.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +74,7 @@ public class DashboardActivity extends AppCompatActivity {
         syllabus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                     startActivity(new Intent(DashboardActivity.this,Syllabus_Activity.class));
+                startActivity(new Intent(DashboardActivity.this, Syllabus_Activity.class));
             }
         });
 
@@ -204,8 +199,8 @@ public class DashboardActivity extends AppCompatActivity {
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(i);
             finish();
-        }else if(id==R.id.user_profile_menu){
-            startActivity(new Intent(DashboardActivity.this,UserProfile.class));
+        } else if (id == R.id.user_profile_menu) {
+            startActivity(new Intent(DashboardActivity.this, UserProfile.class));
         }
         return super.onOptionsItemSelected(item);
     }
