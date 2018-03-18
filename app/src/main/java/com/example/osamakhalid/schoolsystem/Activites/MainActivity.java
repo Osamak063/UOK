@@ -14,7 +14,9 @@ import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
 import com.example.osamakhalid.schoolsystem.ConnectionInterface.ClientAPIs;
 import com.example.osamakhalid.schoolsystem.Consts.Values;
 import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
+import com.example.osamakhalid.schoolsystem.Model.GetUserTypeResponse;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
+import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
 import com.example.osamakhalid.schoolsystem.R;
 
 import retrofit2.Call;
@@ -45,29 +47,97 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressDialog = CommonCalls.createDialouge(MainActivity.this,"",Values.WAIT_MSG);
-                loginUser();
+                progressDialog = CommonCalls.createDialouge(MainActivity.this, "", Values.WAIT_MSG);
+                checkUserType();
             }
         });
     }
 
-    public void loginUser() {
+    public void checkUserType(){
+        Retrofit retrofit = RetrofitInitialize.getApiClient();
+        ClientAPIs clientAPIs = retrofit.create(ClientAPIs.class);
+        String base = Values.USER_CURL + ":" + Values.PASSWORD_CURL;
+        String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+        Call<GetUserTypeResponse> call = clientAPIs.getUserTypeData(userName.getText().toString(), password.getText().toString(), authHeader);
+        call.enqueue(new Callback<GetUserTypeResponse>() {
+            @Override
+            public void onResponse(Call<GetUserTypeResponse> call, Response<GetUserTypeResponse> response) {
+                if (response.isSuccessful()) {
+                    GetUserTypeResponse loginResponse = response.body();
+                    System.out.println("logg user type="+loginResponse.getUsertype());
+                    if (loginResponse!=null && loginResponse.getUsertype()!=null) {
+                        if(loginResponse.getUsertype().equals("Parent")){
+                            loginParent();
+                        }
+                        else if(loginResponse.getUsertype().equals("Student")){
+                            System.out.println("logg coming student type");
+                            loginStudent();
+                        }
+                    }
+                } else {
+                    progressDialog.dismiss();
+                    Toast.makeText(MainActivity.this, "Wrong username or password.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetUserTypeResponse> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(MainActivity.this, "Sorry something went wrong.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    public void loginParent() {
+        Retrofit retrofit = RetrofitInitialize.getApiClient();
+        ClientAPIs clientAPIs = retrofit.create(ClientAPIs.class);
+        String base = Values.USER_CURL + ":" + Values.PASSWORD_CURL;
+        String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+        Call<ParentLoginResponse> call = clientAPIs.loginParent(userName.getText().toString(), password.getText().toString(), authHeader);
+        call.enqueue(new Callback<ParentLoginResponse>() {
+            @Override
+            public void onResponse(Call<ParentLoginResponse> call, Response<ParentLoginResponse> response) {
+                if (response.isSuccessful()) {
+                    ParentLoginResponse loginResponse = response.body();
+                    if (loginResponse.getStatus() == 1) {
+                        progressDialog.dismiss();
+                        Toast.makeText(MainActivity.this, "Successfully logged in..", Toast.LENGTH_SHORT).show();
+                         CommonCalls.saveParentData(loginResponse, MainActivity.this);
+                        Intent i = new Intent(MainActivity.this, TrackingActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(i);
+                        finish();
+                    }
+                } else {
+                    progressDialog.dismiss();
+                    Toast.makeText(MainActivity.this, "Wrong username or password.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ParentLoginResponse> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(MainActivity.this, "Sorry something went wrong.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void loginStudent() {
         Retrofit retrofit = RetrofitInitialize.getApiClient();
         ClientAPIs clientAPIs = retrofit.create(ClientAPIs.class);
         String base = Values.USER_CURL + ":" + Values.PASSWORD_CURL;
         String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
         Call<LoginResponse> call = clientAPIs.loginUser(userName.getText().toString(), password.getText().toString(), authHeader);
-        System.out.println("logg coming");
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-            //    LoginResponse loginResponse1 = response.body();
                 if (response.isSuccessful()) {
                     LoginResponse loginResponse = response.body();
                     if (loginResponse.getStatus() == 1) {
                         progressDialog.dismiss();
                         Toast.makeText(MainActivity.this, "Successfully logged in..", Toast.LENGTH_SHORT).show();
-                        CommonCalls.saveUserData(loginResponse,MainActivity.this);
+                        CommonCalls.saveUserData(loginResponse, MainActivity.this);
                         Intent i = new Intent(MainActivity.this, TrackingActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
