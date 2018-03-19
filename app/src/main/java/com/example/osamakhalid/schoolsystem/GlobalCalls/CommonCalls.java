@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 
+import com.bignerdranch.expandablerecyclerview.model.Parent;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
 import com.google.gson.Gson;
@@ -48,6 +49,27 @@ public class CommonCalls extends AppCompatActivity {
         String json = mPrefs.getString("UserObject", "");
         LoginResponse userData = gson.fromJson(json, LoginResponse.class);
         return userData;
+    }
+
+    public static ParentLoginResponse getParentData(Context context) {
+        SharedPreferences mPrefs = context.getSharedPreferences("ParentData", 0);
+        Gson gson = new Gson();
+        String json = mPrefs.getString("ParentObject", "");
+        ParentLoginResponse parentData = gson.fromJson(json, ParentLoginResponse.class);
+        return parentData;
+    }
+
+    public static void saveUserType(String type,Context context ){
+        SharedPreferences mPrefs = context.getSharedPreferences("UserTypeData", 0);
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        prefsEditor.putString("UserType", type);
+        prefsEditor.commit();
+    }
+
+    public static String getUserType(Context context){
+        SharedPreferences mPrefs = context.getSharedPreferences("UserTypeData", 0);
+        String type = mPrefs.getString("UserType", "");
+        return type;
     }
 
     public static String getCurrentDate(){
