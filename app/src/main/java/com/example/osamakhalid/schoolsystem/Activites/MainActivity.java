@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void checkUserType(){
+    public void checkUserType() {
         Retrofit retrofit = RetrofitInitialize.getApiClient();
         ClientAPIs clientAPIs = retrofit.create(ClientAPIs.class);
         String base = Values.USER_CURL + ":" + Values.PASSWORD_CURL;
@@ -64,12 +64,11 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<GetUserTypeResponse> call, Response<GetUserTypeResponse> response) {
                 if (response.isSuccessful()) {
                     GetUserTypeResponse loginResponse = response.body();
-                    System.out.println("logg user type="+loginResponse.getUsertype());
-                    if (loginResponse!=null && loginResponse.getUsertype()!=null) {
-                        if(loginResponse.getUsertype().equals("Parent")){
+                    System.out.println("logg user type=" + loginResponse.getUsertype());
+                    if (loginResponse != null && loginResponse.getUsertype() != null) {
+                        if (loginResponse.getUsertype().equals("Parent")) {
                             loginParent();
-                        }
-                        else if(loginResponse.getUsertype().equals("Student")){
+                        } else if (loginResponse.getUsertype().equals("Student")) {
                             System.out.println("logg coming student type");
                             loginStudent();
                         }
@@ -103,7 +102,8 @@ public class MainActivity extends AppCompatActivity {
                     if (loginResponse.getStatus() == 1) {
                         progressDialog.dismiss();
                         Toast.makeText(MainActivity.this, "Successfully logged in..", Toast.LENGTH_SHORT).show();
-                         CommonCalls.saveParentData(loginResponse, MainActivity.this);
+                        CommonCalls.saveParentData(loginResponse, MainActivity.this);
+                        CommonCalls.saveUserType(loginResponse.getUsertype(), MainActivity.this);
                         Intent i = new Intent(MainActivity.this, TrackingActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                         Toast.makeText(MainActivity.this, "Successfully logged in..", Toast.LENGTH_SHORT).show();
                         CommonCalls.saveUserData(loginResponse, MainActivity.this);
+                        CommonCalls.saveUserType(loginResponse.getUsertype(), MainActivity.this);
                         Intent i = new Intent(MainActivity.this, TrackingActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
