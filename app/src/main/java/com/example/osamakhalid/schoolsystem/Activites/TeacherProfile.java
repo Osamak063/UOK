@@ -15,6 +15,7 @@ import com.example.osamakhalid.schoolsystem.ConnectionInterface.ClientAPIs;
 import com.example.osamakhalid.schoolsystem.Consts.Values;
 import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
+import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.TeacherPersonalProfile;
 import com.example.osamakhalid.schoolsystem.R;
 
@@ -56,8 +57,15 @@ public class TeacherProfile extends AppCompatActivity {
 
         final Retrofit[] retrofit = {RetrofitInitialize.getApiClient()};
         ClientAPIs clientAPIs = retrofit[0].create(ClientAPIs.class);
-        final LoginResponse loginResponse = CommonCalls.getUserData(TeacherProfile.this);
-        String base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+        String base = null;
+        if (CommonCalls.getUserType(TeacherProfile.this).equals(Values.TYPE_PARENT)) {
+            ParentLoginResponse loginResponse = CommonCalls.getParentData(TeacherProfile.this);
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+        } else if (CommonCalls.getUserType(TeacherProfile.this).equals(Values.TYPE_STUDENT)) {
+            LoginResponse loginResponse = CommonCalls.getUserData(TeacherProfile.this);
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+
+        }
         String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
         Call<TeacherPersonalProfile> call = clientAPIs.getPersonalProfile(id,authHeader);
         call.enqueue(new Callback<TeacherPersonalProfile>() {
