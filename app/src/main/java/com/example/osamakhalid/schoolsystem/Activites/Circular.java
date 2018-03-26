@@ -15,6 +15,7 @@ import com.example.osamakhalid.schoolsystem.Consts.Values;
 import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
 import com.example.osamakhalid.schoolsystem.Model.AlertResponse_Model;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
+import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
 import com.example.osamakhalid.schoolsystem.R;
 
 import retrofit2.Call;
@@ -32,7 +33,6 @@ public class Circular extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_circular);
-
         progress_dialouge = CommonCalls.createDialouge(Circular.this,"","Loading...");
         getNoticeData();
 
@@ -43,8 +43,15 @@ public class Circular extends AppCompatActivity {
 
         Retrofit retrofit = RetrofitInitialize.getApiClient();
         ClientAPIs clientAPIs = retrofit.create(ClientAPIs.class);
-        final LoginResponse loginResponse = CommonCalls.getUserData(Circular.this);
-        String base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+        String base = null;
+        if (CommonCalls.getUserType(Circular.this).equals(Values.TYPE_PARENT)) {
+            ParentLoginResponse loginResponse = CommonCalls.getParentData(Circular.this);
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+        } else if (CommonCalls.getUserType(Circular.this).equals(Values.TYPE_STUDENT)) {
+            LoginResponse loginResponse = CommonCalls.getUserData(Circular.this);
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+
+        }
         String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
         Call<AlertResponse_Model> call = clientAPIs.getNoticeData(authHeader);
         call.enqueue(new Callback<AlertResponse_Model>() {

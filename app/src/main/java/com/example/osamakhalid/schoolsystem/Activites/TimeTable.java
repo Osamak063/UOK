@@ -8,7 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.osamakhalid.schoolsystem.Adapters.timetable_adapter;
@@ -18,6 +22,8 @@ import com.example.osamakhalid.schoolsystem.Consts.Values;
 import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
 import com.example.osamakhalid.schoolsystem.Interfaces.ItemClickListenerDay;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
+import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
+import com.example.osamakhalid.schoolsystem.Model.ParentStudentData;
 import com.example.osamakhalid.schoolsystem.Model.TimeTable_Data_Model;
 import com.example.osamakhalid.schoolsystem.Model.TimeTable_Model;
 import com.example.osamakhalid.schoolsystem.R;
@@ -35,6 +41,10 @@ public class TimeTable extends AppCompatActivity implements ItemClickListenerDay
     RecyclerView recyclerView;
     timetable_adapter adapter;
     private ProgressDialog progressDilouge;
+    String base,username;
+    List<ParentStudentData> parentStudentDataList;
+    List<String>childrenUsernames;
+    private Spinner TimeTable_spinner;
 
 
     @Override
@@ -42,20 +52,61 @@ public class TimeTable extends AppCompatActivity implements ItemClickListenerDay
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time_table);
         progressDilouge = CommonCalls.createDialouge(this,"", Values.DIALOGUE_MSG);
-        getTimeTableData();
+        TimeTable_spinner = findViewById(R.id.timetable_spinner);
+        parentStudentDataList = CommonCalls.getChildrenOfParentList(TimeTable.this);
+        childrenUsernames= new ArrayList<>();
+        for (ParentStudentData data : parentStudentDataList) {
+            childrenUsernames.add(data.getName());
+        }
+        if (CommonCalls.getUserType(this).equals(Values.TYPE_PARENT)) {
+
+            TimeTable_spinner.setVisibility(View.VISIBLE);
+            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter
+                    (TimeTable.this, android.R.layout.simple_spinner_item, childrenUsernames);
+            spinnerArrayAdapter.setDropDownViewResource(android.R.layout
+                    .simple_spinner_dropdown_item);
+            TimeTable_spinner.setAdapter(spinnerArrayAdapter);
+            TimeTable_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    username = parentStudentDataList.get(i).getUsername();
+                    Log.e("Username",username);
+                    if(username!=null){
+                        getTimeTableData();
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+
+        }else if (CommonCalls.getUserType(this).equals(Values.TYPE_STUDENT)) {
+            TimeTable_spinner.setVisibility(View.GONE);
+            getTimeTableData();
+        }
 
 
 
-    }
+
+
+        }
 
     public void getTimeTableData(){
 
         Retrofit retrofit = RetrofitInitialize.getApiClient();
         ClientAPIs clientAPIs = retrofit.create(ClientAPIs.class);
-        final LoginResponse loginResponse = CommonCalls.getUserData(TimeTable.this);
-        String base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+        if (CommonCalls.getUserType(TimeTable.this).equals(Values.TYPE_PARENT)) {
+            ParentLoginResponse loginResponse = CommonCalls.getParentData(TimeTable.this);
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+        } else if (CommonCalls.getUserType(TimeTable.this).equals(Values.TYPE_STUDENT)) {
+            LoginResponse loginResponse = CommonCalls.getUserData(TimeTable.this);
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+            username = loginResponse.getUsername();
+        }
         String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
-        Call<TimeTable_Model> call = clientAPIs.getTimeTable(loginResponse.getUsername(), Values.LANGUAGE,authHeader);
+        Call<TimeTable_Model> call = clientAPIs.getTimeTable(username, Values.LANGUAGE,authHeader);
         call.enqueue(new Callback<TimeTable_Model>() {
             @Override
             public void onResponse(Call<TimeTable_Model> call, Response<TimeTable_Model> response) {
@@ -64,14 +115,22 @@ public class TimeTable extends AppCompatActivity implements ItemClickListenerDay
 
                     TimeTable_Model timeTable_model = response.body();
                     if(timeTable_model != null ){
-                        progressDilouge.dismiss();
-                        recyclerView = findViewById(R.id.timetable_date_recyclerview);
-                        recyclerView.setHasFixedSize(true);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(TimeTable.this));
-                        adapter = new timetable_adapter(timeTable_model.getRoutineData(),getApplicationContext());
-                        adapter.setItemClickListener(TimeTable.this);
-                        recyclerView.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
+                        if(timeTable_model.getRoutineData()!=null){
+                            progressDilouge.dismiss();
+                            recyclerView = findViewById(R.id.timetable_date_recyclerview);
+                            recyclerView.setHasFixedSize(true);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(TimeTable.this));
+                            adapter = new timetable_adapter(timeTable_model.getRoutineData(),getApplicationContext());
+                            adapter.setItemClickListener(TimeTable.this);
+                            recyclerView.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                        }else{
+                            adapter = new timetable_adapter(timeTable_model.getRoutineData(),getApplicationContext());
+                            adapter.setItemClickListener(TimeTable.this);
+                            recyclerView.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                        }
+
 
                     }else{
 

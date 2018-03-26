@@ -8,7 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.osamakhalid.schoolsystem.Adapters.FeesAdapter;
@@ -19,6 +22,8 @@ import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
 import com.example.osamakhalid.schoolsystem.Model.FeesResponse;
 import com.example.osamakhalid.schoolsystem.Model.FeesResponseList;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
+import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
+import com.example.osamakhalid.schoolsystem.Model.ParentStudentData;
 import com.example.osamakhalid.schoolsystem.R;
 
 import java.util.ArrayList;
@@ -36,12 +41,16 @@ public class Fees extends AppCompatActivity {
     public List<FeesResponse> listItems;
     private Retrofit retrofit;
     private ClientAPIs clientAPIs;
-    LoginResponse userData;
+    String username;
     ProgressDialog progressDialog;
     LinearLayoutManager manager;
     boolean isScrolling = false;
     int currentItems, totalItems, scrollOutItems, offset = 0;
     ProgressBar progressBar;
+    private String base;
+    List<ParentStudentData> parentStudentDataList;
+    List<String> childrenUsernames;
+    private Spinner Fees_Spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,14 +61,56 @@ public class Fees extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.fees_and_invoice_recycler_view);
         progressBar = findViewById(R.id.progressbar_fees);
         progressDialog = CommonCalls.createDialouge(Fees.this, "", Values.DIALOGUE_MSG);
+
+        //   userData = CommonCalls.getUserData(Fees.this);
+        //  String base = userData.getUsername() + ":" + userData.getPassword();
+        Fees_Spinner = findViewById(R.id.Fees_spinner);
+        parentStudentDataList = CommonCalls.getChildrenOfParentList(Fees.this);
+        childrenUsernames = new ArrayList<>();
+        for (ParentStudentData data : parentStudentDataList) {
+            childrenUsernames.add(data.getName());
+        }
+
         recyclerView.setHasFixedSize(true);
-        userData = CommonCalls.getUserData(Fees.this);
-        String base = userData.getUsername() + ":" + userData.getPassword();
-        final String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
-        getData(authHeader, offset);
+        recyclerView.setLayoutManager(manager);
+// For Parent APIs
+        if (CommonCalls.getUserType(this).equals(Values.TYPE_PARENT)) {
+
+            final int offset = 0;
+            Fees_Spinner.setVisibility(View.VISIBLE);
+            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter
+                    (Fees.this, android.R.layout.simple_spinner_item, childrenUsernames);
+            spinnerArrayAdapter.setDropDownViewResource(android.R.layout
+                    .simple_spinner_dropdown_item);
+            Fees_Spinner.setAdapter(spinnerArrayAdapter);
+            Fees_Spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    username = parentStudentDataList.get(i).getUsername();
+                    listItems.clear();
+                    if (username != null) {
+                        getData(offset);
+                    }
+
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+
+        }
+        if (CommonCalls.getUserType(this).equals(Values.TYPE_STUDENT)) {
+            getData(offset);
+
+
+        }
         adapter = new FeesAdapter(listItems, getApplicationContext());
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(manager);
+
+
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -79,26 +130,43 @@ public class Fees extends AppCompatActivity {
                 if (isScrolling && (currentItems + scrollOutItems == totalItems)) {
                     isScrolling = false;
                     progressBar.setVisibility(View.VISIBLE);
-                    getData(authHeader, offset);
+                    if(offset>0){
+                    getData(offset);}
                 }
             }
         });
     }
 
-    public void getData(String authHeader, int offset) {
+    public void getData(int offset) {
         retrofit = RetrofitInitialize.getApiClient();
         clientAPIs = retrofit.create(ClientAPIs.class);
-        Call<FeesResponseList> call = clientAPIs.getFeesAndInvoice(userData.getUsername(), Values.LANGUAGE, 10, offset, authHeader);
+        if (CommonCalls.getUserType(Fees.this).equals(Values.TYPE_PARENT)) {
+            ParentLoginResponse loginResponse = CommonCalls.getParentData(Fees.this);
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+        } else if (CommonCalls.getUserType(Fees.this).equals(Values.TYPE_STUDENT)) {
+            LoginResponse loginResponse = CommonCalls.getUserData(Fees.this);
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+            username = loginResponse.getUsername();
+        }
+        String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+        Call<FeesResponseList> call = clientAPIs.getFeesAndInvoice(username, Values.LANGUAGE, 10, offset, authHeader);
         call.enqueue(new Callback<FeesResponseList>() {
             @Override
             public void onResponse(Call<FeesResponseList> call, Response<FeesResponseList> response) {
                 if (response.isSuccessful()) {
                     FeesResponseList feesList = response.body();
-                    if (feesList != null && feesList.getFeeData() != null) {
-                        progressDialog.dismiss();
-                        listItems.addAll(feesList.getFeeData());
-                        adapter.notifyDataSetChanged();
-                        progressBar.setVisibility(View.GONE);
+                    if (feesList != null ) {
+                        if(feesList.getFeeData() != null){
+                            progressDialog.dismiss();
+                            listItems.addAll(feesList.getFeeData());
+                            adapter.notifyDataSetChanged();
+                            progressBar.setVisibility(View.GONE);
+                        }else{
+                            progressDialog.dismiss();
+                            adapter.notifyDataSetChanged();
+                            progressBar.setVisibility(View.GONE);
+                        }
+
                     } else {
                         progressDialog.dismiss();
                         Toast.makeText(Fees.this, "No more fees and invoice.", Toast.LENGTH_SHORT).show();

@@ -72,7 +72,6 @@ public class timetable_adapter extends RecyclerView.Adapter<timetable_adapter.Vi
         @Override
         public void onClick(View view) {
             if (itemClickListener != null) {
-                System.out.println("logg onClick adapter");
                 TimeTable_Response_Model timeTable_response_model = modelList.get(getAdapterPosition());
                 itemClickListener.onClick(view, timeTable_response_model.getData());
             }

@@ -17,12 +17,30 @@
         android:textColor="#ffff"
         android:textSize="20sp" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/transport"
+        android:padding="5dp"
+        android:layout_below="@+id/examtext"
+        >
+
+        <Spinner
+            android:id="@+id/Fees_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:textColor="#000"
+            android:visibility="gone"
+            />
+
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/fees_and_invoice_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/examtext"
+        android:layout_below="@+id/transport"
         android:layout_above="@id/progressbar_fees"
         android:paddingBottom="15dp" />
 

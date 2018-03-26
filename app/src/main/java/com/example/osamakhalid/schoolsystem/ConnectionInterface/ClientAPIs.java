@@ -20,7 +20,9 @@ import com.example.osamakhalid.schoolsystem.Model.MessagesInboxResponseList;
 import com.example.osamakhalid.schoolsystem.Model.MessagesSentResponseList;
 import com.example.osamakhalid.schoolsystem.Model.MessagesTrashResponseList;
 import com.example.osamakhalid.schoolsystem.Model.NewsAndEventsResponseList;
+import com.example.osamakhalid.schoolsystem.Model.NewsandEventDetailResponse;
 import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
+import com.example.osamakhalid.schoolsystem.Model.ParentStudentListResponse;
 import com.example.osamakhalid.schoolsystem.Model.SubjectResponseList;
 import com.example.osamakhalid.schoolsystem.Model.SubmitLeaveResponse;
 import com.example.osamakhalid.schoolsystem.Model.SyllabusResponse_Model;
@@ -55,6 +57,9 @@ public interface ClientAPIs {
     @GET(ConnectionURLS.NEWS_AND_EVENTS_URL)
     Call<NewsAndEventsResponseList> getNewsAndEvents(@Header("Authorization") String authHeader);
 
+    @GET(ConnectionURLS.NEWS_AND_EVENTS_DETAIL_URL)
+    Call<NewsandEventDetailResponse> getNewsDetails(@Query("event_id") String eventID,@Header("Authorization") String authHeader);
+
     @GET(ConnectionURLS.HOLIDAY_URL)
     Call<HolidayResponseList> getHolidays(@Query("lang") String lang, @Header("Authorization") String authHeader);
 
@@ -68,7 +73,7 @@ public interface ClientAPIs {
     Call<SubjectResponseList> getSubjects(@Query("username") String username, @Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.ATTENDANCE_URL)
-    Call<AttendanceResponse> getAttendance(@Query("id") String id, @Query("username") String username, @Query("lang") String lang, @Query("monthyear") String monthYear, @Header("Authorization") String authHeader);
+    Call<AttendanceResponse> getAttendance(@Query("username") String username, @Query("lang") String lang, @Query("monthyear") String monthYear, @Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.EXAM_SCHEDULE_URL)
     Call<ExamScheduleResponseList> getExamSchedule(@Query("username") String username, @Header("Authorization") String authHeader);
@@ -158,5 +163,7 @@ public interface ClientAPIs {
     @POST(ConnectionURLS.LOGIN_URL)
     Call<ParentLoginResponse> loginParent(@Field("username") String userName, @Field("password") String password, @Header("Authorization") String authHeader);
 
+    @GET(ConnectionURLS.GET_PARENT_STUDENTS_LIST_URL)
+    Call<ParentStudentListResponse> getParentStudentList(@Query("parentID") String parentId, @Header("Authorization") String authHeader);
 }
 

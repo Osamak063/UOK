@@ -17,14 +17,21 @@
         android:text="Attendance"
         android:textSize="20sp"
         android:gravity="center"/>
-
+    <Spinner
+        android:layout_marginTop="5dp"
+        android:id="@+id/attendance_children_spinner"
+        android:layout_below="@id/attendance_header"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginBottom="5dp"
+        ></Spinner>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/attendance_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_above="@id/copyrights_text"
-        android:layout_below="@+id/attendance_header" />
+        android:layout_below="@+id/attendance_children_spinner" />
 
     <TextView
         android:id="@+id/copyrights_text"

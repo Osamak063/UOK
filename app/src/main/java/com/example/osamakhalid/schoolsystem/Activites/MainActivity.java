@@ -27,7 +27,6 @@ import retrofit2.Retrofit;
 public class MainActivity extends AppCompatActivity {
     private Button loginButton;
     private EditText userName, password;
-    private String username = "user1", pass = "userpass";
     private ProgressDialog progressDialog;
 
     @Override
@@ -64,12 +63,10 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<GetUserTypeResponse> call, Response<GetUserTypeResponse> response) {
                 if (response.isSuccessful()) {
                     GetUserTypeResponse loginResponse = response.body();
-                    System.out.println("logg user type=" + loginResponse.getUsertype());
                     if (loginResponse != null && loginResponse.getUsertype() != null) {
                         if (loginResponse.getUsertype().equals("Parent")) {
                             loginParent();
                         } else if (loginResponse.getUsertype().equals("Student")) {
-                            System.out.println("logg coming student type");
                             loginStudent();
                         }
                     }
@@ -159,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean checkUserAlreadyLoggedIn() {
-        if (CommonCalls.getUserData(MainActivity.this) != null) {
+        if (CommonCalls.getUserData(MainActivity.this) != null || CommonCalls.getParentData(MainActivity.this) !=null) {
             return true;
         } else {
             return false;

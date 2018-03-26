@@ -14,5 +14,6 @@ public class Values {
     public static final String Error = "Error while Loding..";
     public static final String DATA_ERROR = "No Data Available";
     public static final String image_path = "http://demo.simsportal.com/uploads/media/";
-
+    public static final String TYPE_STUDENT = "Student";
+    public static final String TYPE_PARENT = "Parent";
 }
