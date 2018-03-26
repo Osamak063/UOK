@@ -10,14 +10,18 @@ import android.support.v7.app.AppCompatActivity;
 import com.bignerdranch.expandablerecyclerview.model.Parent;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
+import com.example.osamakhalid.schoolsystem.Model.ParentStudentData;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by HAMI on 19/02/2018.
@@ -33,7 +37,23 @@ public class CommonCalls extends AppCompatActivity {
         prefsEditor.putString("UserObject", json);
         prefsEditor.commit();
     }
+    public static void saveChildrenOfParentList(Context context, List<ParentStudentData> list){
+        SharedPreferences mPrefs = context.getSharedPreferences("ParentChildren", 0);
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        prefsEditor.putString("ParentChildrenList", json);
+        prefsEditor.commit();
+    }
 
+    public static List<ParentStudentData> getChildrenOfParentList(Context context){
+        SharedPreferences mPrefs = context.getSharedPreferences("ParentChildren", 0);
+        Gson gson = new Gson();
+        String json = mPrefs.getString("ParentChildrenList", "");
+        Type type = new TypeToken<List<ParentStudentData>>(){}.getType();
+        List<ParentStudentData> children = gson.fromJson(json, type);
+        return children;
+    }
     public static void saveParentData(ParentLoginResponse parentLoginResponse, Context context) {
         SharedPreferences mPrefs = context.getSharedPreferences("ParentData", 0);
         SharedPreferences.Editor prefsEditor = mPrefs.edit();

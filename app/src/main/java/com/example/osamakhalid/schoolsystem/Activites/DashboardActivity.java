@@ -16,6 +16,7 @@ import com.example.osamakhalid.schoolsystem.ConnectionInterface.ClientAPIs;
 import com.example.osamakhalid.schoolsystem.Consts.Values;
 import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
+import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.TeacherData_Model;
 import com.example.osamakhalid.schoolsystem.Model.Teacher_Model;
 import com.example.osamakhalid.schoolsystem.R;
@@ -34,6 +35,7 @@ public class DashboardActivity extends AppCompatActivity {
 
 
     public static List<TeacherData_Model> teacherData_models;
+    private  String base,username;
 
 
     @Override
@@ -193,8 +195,13 @@ public class DashboardActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.logout_menu) {
-            SharedPreferences mPrefs = getSharedPreferences("UserData", 0);
-            mPrefs.edit().remove("UserObject").apply();
+            if(CommonCalls.getUserType(this).equals(Values.TYPE_STUDENT)) {
+                SharedPreferences mPrefs = getSharedPreferences("UserData", 0);
+                mPrefs.edit().remove("UserObject").apply();
+            }else if(CommonCalls.getUserType(this).equals(Values.TYPE_PARENT)) {
+                SharedPreferences mPrefss = getSharedPreferences("ParentData", 0);
+                mPrefss.edit().remove("ParentObject").apply();
+            }
             Intent i = new Intent(DashboardActivity.this, MainActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(i);
@@ -209,11 +216,21 @@ public class DashboardActivity extends AppCompatActivity {
 
         Retrofit retrofit = RetrofitInitialize.getApiClient();
         ClientAPIs clientAPIs = retrofit.create(ClientAPIs.class);
-        final LoginResponse loginResponse = CommonCalls.getUserData(DashboardActivity.this);
-        String base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+        if(CommonCalls.getUserType(DashboardActivity.this).equals(Values.TYPE_PARENT)){
+            final ParentLoginResponse loginResponse = CommonCalls.getParentData(DashboardActivity.this);
+             base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+             username = loginResponse.getUsername();
+
+        }
+
+        else if(CommonCalls.getUserType(DashboardActivity.this).equals(Values.TYPE_STUDENT)){
+            final LoginResponse loginResponse = CommonCalls.getUserData(DashboardActivity.this);
+             base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+             username = loginResponse.getUsername();
+        }
         String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
         Call<Teacher_Model> call = clientAPIs.getCourseTeacherData
-                (loginResponse.getUsername(), authHeader);
+                (username, authHeader);
         call.enqueue(new Callback<Teacher_Model>() {
             @Override
             public void onResponse(Call<Teacher_Model> call, Response<Teacher_Model> response) {

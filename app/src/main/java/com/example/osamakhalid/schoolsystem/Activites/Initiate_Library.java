@@ -18,6 +18,7 @@ import com.example.osamakhalid.schoolsystem.Consts.Values;
 import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
 import com.example.osamakhalid.schoolsystem.Model.AllBooks_Model;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
+import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
 import com.example.osamakhalid.schoolsystem.R;
 
 import retrofit2.Call;
@@ -56,8 +57,15 @@ public class Initiate_Library extends AppCompatActivity {
 
         Retrofit retrofit = RetrofitInitialize.getApiClient();
         ClientAPIs clientAPIs = retrofit.create(ClientAPIs.class);
-        LoginResponse loginResponse = CommonCalls.getUserData(Initiate_Library.this);
-        String base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+         String base = null;
+        if (CommonCalls.getUserType(Initiate_Library.this).equals(Values.TYPE_PARENT)) {
+            ParentLoginResponse loginResponse = CommonCalls.getParentData(Initiate_Library.this);
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+        } else if (CommonCalls.getUserType(Initiate_Library.this).equals(Values.TYPE_STUDENT)) {
+            LoginResponse loginResponse = CommonCalls.getUserData(Initiate_Library.this);
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+
+        }
         String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
         Call<AllBooks_Model> call = clientAPIs.getAllBooks(authHeader);
         call.enqueue(new Callback<AllBooks_Model>() {

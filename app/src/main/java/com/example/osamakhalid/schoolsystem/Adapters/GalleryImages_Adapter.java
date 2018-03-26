@@ -2,7 +2,6 @@ package com.example.osamakhalid.schoolsystem.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +42,6 @@ public class GalleryImages_Adapter extends RecyclerView.Adapter<GalleryImages_Ad
         if(galleryData != null){
             holder.image_name.setText(galleryData.getFileNameDisplay());
             Glide.with(context).load(Values.image_path + galleryData.getFileName()).into(holder.imageView);
-            Log.e("Data",Values.image_path + galleryData.getFileName());
         }else{
 
         }

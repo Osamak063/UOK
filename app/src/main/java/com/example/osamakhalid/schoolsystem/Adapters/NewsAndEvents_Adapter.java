@@ -2,17 +2,16 @@ package com.example.osamakhalid.schoolsystem.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.osamakhalid.schoolsystem.Model.HolidayResponse;
+import com.example.osamakhalid.schoolsystem.Model.ItemClickListener;
 import com.example.osamakhalid.schoolsystem.Model.NewsAndEventsResponse;
-import com.example.osamakhalid.schoolsystem.Model.News_Model;
 import com.example.osamakhalid.schoolsystem.R;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -25,6 +24,7 @@ public class NewsAndEvents_Adapter extends RecyclerView.Adapter<NewsAndEvents_Ad
     List<NewsAndEventsResponse> newsModels;
     List<HolidayResponse> holidayModels;
     String type = "news";
+    ItemClickListener itemClickListener;
 
     public NewsAndEvents_Adapter(List<NewsAndEventsResponse> transportmodel, Context context) {
         this.context = context;
@@ -59,6 +59,9 @@ public class NewsAndEvents_Adapter extends RecyclerView.Adapter<NewsAndEvents_Ad
             holder.details.setText("Details: " + model.getDetails());
         }
     }
+    public void setItemClickListener(ItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
 
     @Override
     public int getItemCount() {
@@ -69,7 +72,7 @@ public class NewsAndEvents_Adapter extends RecyclerView.Adapter<NewsAndEvents_Ad
         }
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView title;
         TextView fromDate;
@@ -82,6 +85,16 @@ public class NewsAndEvents_Adapter extends RecyclerView.Adapter<NewsAndEvents_Ad
             fromDate = itemView.findViewById(R.id.from_date_news);
             toDate = itemView.findViewById(R.id.to_date_news);
             details = itemView.findViewById(R.id.details_news);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (itemClickListener != null) {
+                NewsAndEventsResponse newsAndEventsResponse = newsModels.get(getAdapterPosition());
+                itemClickListener.onClick(view, newsAndEventsResponse.getEventId());
+                Log.e("EventID",newsAndEventsResponse.getEventId());
+            }
         }
     }
 }

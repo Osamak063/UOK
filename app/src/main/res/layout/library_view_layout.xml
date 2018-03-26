@@ -34,7 +34,7 @@
                     android:padding="5dp"
                     android:textSize="15dp"
                     android:textColor="#000"
-                    android:text="Book Serial"
+                    android:text=""
                     android:layout_alignParentRight="true"
                     android:id="@+id/book__serial"/>
 
@@ -60,7 +60,7 @@
                     android:textSize="15dp"
                     android:textColor="#000"
                     android:layout_alignParentRight="true"
-                    android:text="Book"
+                    android:text=""
                     android:id="@+id/book__name"/>
 
 
@@ -86,7 +86,7 @@
                     android:padding="5dp"
                     android:textSize="15dp"
                     android:textColor="#000"
-                    android:text="Author : "
+                    android:text=""
                     android:layout_alignParentRight="true"
                     android:id="@+id/book__author"/>
 
@@ -112,7 +112,7 @@
                     android:padding="5dp"
                     android:textSize="15dp"
                     android:textColor="#000"
-                    android:text="Issue Date : "
+                    android:text=""
                     android:layout_alignParentRight="true"
                     android:id="@+id/book__issue_date"/>
 
@@ -137,7 +137,7 @@
                     android:padding="5dp"
                     android:textSize="15dp"
                     android:textColor="#000"
-                    android:text="Due Date"
+                    android:text=""
                     android:layout_alignParentRight="true"
                     android:id="@+id/book__due_date"/>
 
@@ -163,7 +163,7 @@
                     android:padding="5dp"
                     android:textSize="15dp"
                     android:textColor="#000"
-                    android:text="Book Return Date"
+                    android:text=""
                     android:layout_alignParentRight="true"
                     android:id="@+id/book__return_date"/>
 
@@ -189,7 +189,7 @@
                     android:padding="5dp"
                     android:textSize="15dp"
                     android:textColor="#000"
-                    android:text="Fine"
+                    android:text=""
                     android:layout_alignParentRight="true"
                     android:id="@+id/book__fine"/>
 

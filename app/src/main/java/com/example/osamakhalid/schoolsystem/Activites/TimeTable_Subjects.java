@@ -25,9 +25,7 @@ public class TimeTable_Subjects extends AppCompatActivity {
         setContentView(R.layout.activity_time_table__subjects);
 
         timeTable_data_models = this.getIntent().getParcelableArrayListExtra("timetable_data");
-        for(TimeTable_Data_Model time: timeTable_data_models){
-            System.out.println("Onclick "+time.getRoom());
-        }
+
         if (timeTable_data_models != null) {
 
 

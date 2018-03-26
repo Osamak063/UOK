@@ -16,6 +16,7 @@ import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
 import com.example.osamakhalid.schoolsystem.Model.HolidayResponse;
 import com.example.osamakhalid.schoolsystem.Model.HolidayResponseList;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
+import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
 import com.example.osamakhalid.schoolsystem.R;
 
 import java.util.ArrayList;
@@ -33,7 +34,6 @@ public class Alert extends AppCompatActivity {
     public List<HolidayResponse> listItems;
     private Retrofit retrofit;
     private ClientAPIs clientAPIs;
-    LoginResponse userData;
     ProgressDialog progressDialog;
 
     @Override
@@ -48,17 +48,24 @@ public class Alert extends AppCompatActivity {
         recyclerView = findViewById(R.id.alert);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        userData = CommonCalls.getUserData(Alert.this);
-        String base = userData.getUsername() + ":" + userData.getPassword();
-        String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
-        getData(authHeader);
+        getData();
         adapter = new NewsAndEvents_Adapter(listItems, getApplicationContext(), "holiday");
         recyclerView.setAdapter(adapter);
     }
 
-    public void getData(String authHeader) {
+    public void getData() {
         retrofit = RetrofitInitialize.getApiClient();
         clientAPIs = retrofit.create(ClientAPIs.class);
+        String base = null;
+        if (CommonCalls.getUserType(Alert.this).equals(Values.TYPE_PARENT)) {
+            ParentLoginResponse loginResponse = CommonCalls.getParentData(Alert.this);
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+        } else if (CommonCalls.getUserType(Alert.this).equals(Values.TYPE_STUDENT)) {
+            LoginResponse loginResponse = CommonCalls.getUserData(Alert.this);
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+
+        }
+        String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
         Call<HolidayResponseList> call = clientAPIs.getHolidays("english", authHeader);
         call.enqueue(new Callback<HolidayResponseList>() {
             @Override
