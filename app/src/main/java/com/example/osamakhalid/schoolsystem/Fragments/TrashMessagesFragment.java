@@ -21,6 +21,7 @@ import com.example.osamakhalid.schoolsystem.Model.ItemClickListener;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.MessagesTrashResponse;
 import com.example.osamakhalid.schoolsystem.Model.MessagesTrashResponseList;
+import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
 import com.example.osamakhalid.schoolsystem.R;
 
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class TrashMessagesFragment extends Fragment implements ItemClickListener
     ProgressDialog progressDialog;
     LoginResponse userData;
     OnTrashFragmentInteractionListener mListener;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,20 +56,28 @@ public class TrashMessagesFragment extends Fragment implements ItemClickListener
         recyclerView = view.findViewById(R.id.trashmessages_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
-        userData = CommonCalls.getUserData(getActivity().getBaseContext());
-        String base = userData.getUsername() + ":" + userData.getPassword();
-        String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
-        getData(authHeader);
-        adapter = new MessagesAdapter(getActivity().getApplicationContext(), listItems,"trash" );
+        adapter = new MessagesAdapter(getActivity().getApplicationContext(), listItems, "trash");
         recyclerView.setAdapter(adapter);
+        String base = null;
+        if (CommonCalls.getUserType(getActivity().getApplicationContext()).equals(Values.TYPE_PARENT)) {
+            ParentLoginResponse loginResponse = CommonCalls.getParentData(getActivity().getApplicationContext());
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+            String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+            getParentData(authHeader, loginResponse.getUsername());
+        } else if (CommonCalls.getUserType(getActivity().getApplicationContext()).equals(Values.TYPE_STUDENT)) {
+            LoginResponse loginResponse = CommonCalls.getUserData(getActivity().getApplicationContext());
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+            String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+            getData(authHeader, loginResponse.getUsername());
+        }
         adapter.setItemClickListener(this);
         return view;
     }
 
-    public void getData(String authHeader) {
+    public void getData(String authHeader,String username) {
         retrofit = RetrofitInitialize.getApiClient();
         clientAPIs = retrofit.create(ClientAPIs.class);
-        Call<MessagesTrashResponseList> call = clientAPIs.getMessageTrash(userData.getUsername(), authHeader);
+        Call<MessagesTrashResponseList> call = clientAPIs.getMessageTrash(username, authHeader);
         call.enqueue(new Callback<MessagesTrashResponseList>() {
             @Override
             public void onResponse(Call<MessagesTrashResponseList> call, Response<MessagesTrashResponseList> response) {
@@ -79,7 +89,35 @@ public class TrashMessagesFragment extends Fragment implements ItemClickListener
                         adapter.notifyDataSetChanged();
                     } else {
                         progressDialog.dismiss();
-                        Toast.makeText(getActivity(), "Favorite messages not available yet.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Trash messages not available yet.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MessagesTrashResponseList> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(getActivity(), "Sorry something went wrong.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void getParentData(String authHeader,String username) {
+        retrofit = RetrofitInitialize.getApiClient();
+        clientAPIs = retrofit.create(ClientAPIs.class);
+        Call<MessagesTrashResponseList> call = clientAPIs.getParentMessageTrash(username, authHeader);
+        call.enqueue(new Callback<MessagesTrashResponseList>() {
+            @Override
+            public void onResponse(Call<MessagesTrashResponseList> call, Response<MessagesTrashResponseList> response) {
+                if (response.isSuccessful()) {
+                    MessagesTrashResponseList messageTrashResponseList = response.body();
+                    if (messageTrashResponseList != null && messageTrashResponseList.getMessageData() != null) {
+                        progressDialog.dismiss();
+                        listItems.addAll(messageTrashResponseList.getMessageData());
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        progressDialog.dismiss();
+                        Toast.makeText(getActivity(), "Trash messages not available yet.", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
