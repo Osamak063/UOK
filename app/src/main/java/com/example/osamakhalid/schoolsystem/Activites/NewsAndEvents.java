@@ -100,7 +100,6 @@ public class NewsAndEvents extends AppCompatActivity implements ItemClickListene
 
     @Override
     public void onClick(View view, String name) {
-        Log.e("NewsActivityEventID",name);
         Intent i = new Intent(NewsAndEvents.this,NewsandEventDetail.class);
         i.putExtra("eventID",name);
         startActivity(i);

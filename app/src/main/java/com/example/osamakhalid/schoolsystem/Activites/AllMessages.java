@@ -30,7 +30,6 @@ public class AllMessages extends AppCompatActivity
         setContentView(R.layout.activity_all_messages);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Inbox");
         fragment = new InboxFragment();
         FragmentManager fm1 = getSupportFragmentManager();
         FragmentTransaction ft1 = fm1.beginTransaction();
@@ -100,7 +99,7 @@ public class AllMessages extends AppCompatActivity
                 getSupportActionBar().setTitle("Favorite Messages");
                 break;
             case R.id.all_messages_trash:
-                fragment = new FavoriteMessagesFragment();
+                fragment = new TrashMessagesFragment();
                 getSupportActionBar().setTitle("Trash Messages");
                 break;
         }
@@ -109,7 +108,6 @@ public class AllMessages extends AppCompatActivity
             ft.replace(R.id.content_frame, fragment);
             ft.commit();
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

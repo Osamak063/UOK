@@ -50,5 +50,10 @@ public class ConnectionURLS {
     public static final String STUDENT_PARENT_INFO = "student/student_parent/";
     public static final String GET_USER_TYPE_URL = "login/login_type";
     public static final String GET_PARENT_STUDENTS_LIST_URL="parents/student_list/";
+    public static final String GET_PARENT_MESSAGE_INBOX_URL="parents/inbox/";
+    public static final String GET_PARENT_MESSAGE_SENT_URL="parents/sent/";
+    public static final String GET_PARENT_MESSAGE_FAV_URL="parents/favourite/";
+    public static final String GET_PARENT_MESSAGE_TRASH_URL="parents/trash/";
+    public static final String GET_PARENT_MESSAGE_CHAT_URL="parents/message_view/";
 }
 
