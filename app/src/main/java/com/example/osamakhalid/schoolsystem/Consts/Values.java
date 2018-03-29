@@ -16,4 +16,5 @@ public class Values {
     public static final String image_path = "http://demo.simsportal.com/uploads/media/";
     public static final String TYPE_STUDENT = "Student";
     public static final String TYPE_PARENT = "Parent";
+    public static final String INVALID_USER_PASS = "Incorrect username or passoword";
 }
