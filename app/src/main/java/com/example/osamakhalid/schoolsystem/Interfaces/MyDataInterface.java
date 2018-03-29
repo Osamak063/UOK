@@ -1,6 +1,6 @@
 package com.example.osamakhalid.schoolsystem.Interfaces;
 
-import com.example.osamakhalid.schoolsystem.Model.ParentModels.ParentChildData_Model;
+import com.example.osamakhalid.schoolsystem.Model.TeacherData_Model;
 
 import java.util.List;
 
@@ -9,5 +9,5 @@ import java.util.List;
  */
 
 public interface MyDataInterface {
-    void onLond(List<ParentChildData_Model> list);
+    void onLond(List<TeacherData_Model> list);
 }

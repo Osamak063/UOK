@@ -23,7 +23,7 @@ import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
 import com.example.osamakhalid.schoolsystem.Interfaces.ItemClickListenerDate;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
-import com.example.osamakhalid.schoolsystem.Model.ParentStudentData;
+import com.example.osamakhalid.schoolsystem.Model.ParentModels.ParentStudentData;
 import com.example.osamakhalid.schoolsystem.Model.SyllabusMultiple_Subject_Model;
 import com.example.osamakhalid.schoolsystem.Model.SyllabusResponse_Model;
 import com.example.osamakhalid.schoolsystem.R;
@@ -35,6 +35,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+
 
 public class Syllabus_Activity extends AppCompatActivity implements ItemClickListenerDate{
 

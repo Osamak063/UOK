@@ -13,13 +13,14 @@ import com.example.osamakhalid.schoolsystem.ConnectionInterface.ClientAPIs;
 import com.example.osamakhalid.schoolsystem.Consts.Values;
 import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
 import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
-import com.example.osamakhalid.schoolsystem.Model.ParentStudentListResponse;
+import com.example.osamakhalid.schoolsystem.Model.ParentModels.ParentStudentListResponse;
 import com.example.osamakhalid.schoolsystem.R;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+
 
 public class TrackingActivity extends AppCompatActivity {
     private Button educationalButton, physicalButton;

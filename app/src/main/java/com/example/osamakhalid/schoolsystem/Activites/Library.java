@@ -22,7 +22,7 @@ import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
 import com.example.osamakhalid.schoolsystem.Model.Libray_Model;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
-import com.example.osamakhalid.schoolsystem.Model.ParentStudentData;
+import com.example.osamakhalid.schoolsystem.Model.ParentModels.ParentStudentData;
 import com.example.osamakhalid.schoolsystem.R;
 
 import java.util.ArrayList;
@@ -32,6 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+
 
 public class Library extends AppCompatActivity {
 
@@ -87,7 +88,8 @@ public class Library extends AppCompatActivity {
                 }
             });
 
-        }else if(CommonCalls.getUserType(Library.this).equals(Values.TYPE_STUDENT)){
+        }
+        else if(CommonCalls.getUserType(Library.this).equals(Values.TYPE_STUDENT)){
             getLibraryData();
         }
         //Loding Data in View

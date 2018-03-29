@@ -16,12 +16,22 @@
         android:textSize="20sp"
         android:gravity="center"/>
 
+    <Spinner
+        android:id="@+id/examSchdule_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/examtext"
+        android:layout_marginBottom="5dp"
+        android:visibility="gone">
+
+    </Spinner>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/exam_schedule_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/examtext" />
+        android:layout_below="@+id/examSchdule" />
 
     <TextView
         android:layout_width="match_parent"

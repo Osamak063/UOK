@@ -20,6 +20,7 @@ import com.example.osamakhalid.schoolsystem.Interfaces.ItemClickListernerPhoto;
 import com.example.osamakhalid.schoolsystem.Model.GalleryData_Model;
 import com.example.osamakhalid.schoolsystem.Model.GalleryResponse_Model;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
+import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
 import com.example.osamakhalid.schoolsystem.R;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class PhotoGallery extends AppCompatActivity implements ItemClickListerne
     RecyclerView recyclerView;
     GalleryFolder_Adapter adapter;
     private ProgressDialog progressDilouge;
+    String studentID;
 
 
     @Override
@@ -49,10 +51,19 @@ public class PhotoGallery extends AppCompatActivity implements ItemClickListerne
 
         Retrofit retrofit = RetrofitInitialize.getApiClient();
         ClientAPIs clientAPIs = retrofit.create(ClientAPIs.class);
-        final LoginResponse loginResponse = CommonCalls.getUserData(PhotoGallery.this);
-        String base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+        String base = null;
+        if (CommonCalls.getUserType(PhotoGallery.this).equals(Values.TYPE_PARENT)) {
+            ParentLoginResponse loginResponse = CommonCalls.getParentData(PhotoGallery.this);
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+            studentID = loginResponse.getParentID();
+        } else if (CommonCalls.getUserType(PhotoGallery.this).equals(Values.TYPE_STUDENT)) {
+            LoginResponse loginResponse = CommonCalls.getUserData(PhotoGallery.this);
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+            studentID = loginResponse.getStudentID();
+
+        }
         final String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
-        Call<GalleryResponse_Model> call = clientAPIs.getPhotoGalleryImages(loginResponse.getStudentID(),authHeader);
+        Call<GalleryResponse_Model> call = clientAPIs.getPhotoGalleryImages(studentID,authHeader);
         call.enqueue(new Callback<GalleryResponse_Model>() {
             @Override
             public void onResponse(Call<GalleryResponse_Model> call, Response<GalleryResponse_Model> response) {

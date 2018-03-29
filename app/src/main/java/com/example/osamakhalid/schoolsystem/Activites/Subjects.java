@@ -20,7 +20,7 @@ import com.example.osamakhalid.schoolsystem.Consts.Values;
 import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
-import com.example.osamakhalid.schoolsystem.Model.ParentStudentData;
+import com.example.osamakhalid.schoolsystem.Model.ParentModels.ParentStudentData;
 import com.example.osamakhalid.schoolsystem.Model.SubjectResponse;
 import com.example.osamakhalid.schoolsystem.Model.SubjectResponseList;
 import com.example.osamakhalid.schoolsystem.R;
@@ -32,6 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+
 
 public class Subjects extends AppCompatActivity {
     public RecyclerView recyclerView;
@@ -126,7 +127,7 @@ public class Subjects extends AppCompatActivity {
                         adapter.notifyDataSetChanged();
                     } else {
                         progressDialog.dismiss();
-                        Toast.makeText(Subjects.this, "Subjects not available yet.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Subjects.this, Values.DATA_ERROR, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -134,7 +135,7 @@ public class Subjects extends AppCompatActivity {
             @Override
             public void onFailure(Call<SubjectResponseList> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(Subjects.this, "Sorry something went wrong.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Subjects.this, Values.SERVER_ERROR, Toast.LENGTH_SHORT).show();
             }
         });
     }

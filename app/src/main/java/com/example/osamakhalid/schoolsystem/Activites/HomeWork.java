@@ -23,7 +23,7 @@ import com.example.osamakhalid.schoolsystem.Model.Homework_Data_Model;
 import com.example.osamakhalid.schoolsystem.Model.Homework_Model;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
-import com.example.osamakhalid.schoolsystem.Model.ParentStudentData;
+import com.example.osamakhalid.schoolsystem.Model.ParentModels.ParentStudentData;
 import com.example.osamakhalid.schoolsystem.R;
 
 import java.util.ArrayList;

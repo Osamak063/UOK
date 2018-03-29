@@ -66,7 +66,7 @@ public class Alert extends AppCompatActivity {
 
         }
         String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
-        Call<HolidayResponseList> call = clientAPIs.getHolidays("english", authHeader);
+        Call<HolidayResponseList> call = clientAPIs.getHolidays(Values.LANGUAGE, authHeader);
         call.enqueue(new Callback<HolidayResponseList>() {
             @Override
             public void onResponse(Call<HolidayResponseList> call, Response<HolidayResponseList> response) {

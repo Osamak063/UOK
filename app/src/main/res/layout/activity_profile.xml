@@ -16,16 +16,24 @@
         android:textColor="#ffff"
         android:text="Teachers"
         android:textSize="20sp"
-        android:padding="5dp"
+        android:padding="3dp"
         android:gravity="center"/>
+
+    <Spinner
+        android:id="@+id/teacher_view_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/messages"
+        android:layout_marginBottom="3dp"
+        android:padding="5dp"
+        android:visibility="gone"></Spinner>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/profile_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_above="@id/copyrights_text"
-        android:layout_below="@+id/messages" />
+        android:layout_below="@+id/teacher_view_spinner" />
 
     <TextView
         android:id="@+id/copyrights_text"

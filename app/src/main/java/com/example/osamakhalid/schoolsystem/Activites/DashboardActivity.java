@@ -4,29 +4,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
-import com.example.osamakhalid.schoolsystem.ConnectionInterface.ClientAPIs;
 import com.example.osamakhalid.schoolsystem.Consts.Values;
 import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
-import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
-import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.TeacherData_Model;
-import com.example.osamakhalid.schoolsystem.Model.Teacher_Model;
 import com.example.osamakhalid.schoolsystem.R;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class DashboardActivity extends AppCompatActivity {
     private LinearLayout attendance, syllabus, results, noticeBoard, transport, messages, library, photoGallery, newsAndEvents,
@@ -132,7 +120,8 @@ public class DashboardActivity extends AppCompatActivity {
         teacherDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getTeacherData();
+              //  getTeacherData();
+                startActivity(new Intent(DashboardActivity.this,Profile.class));
 
             }
         });
@@ -212,51 +201,7 @@ public class DashboardActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void getTeacherData() {
 
-        Retrofit retrofit = RetrofitInitialize.getApiClient();
-        ClientAPIs clientAPIs = retrofit.create(ClientAPIs.class);
-        if(CommonCalls.getUserType(DashboardActivity.this).equals(Values.TYPE_PARENT)){
-            final ParentLoginResponse loginResponse = CommonCalls.getParentData(DashboardActivity.this);
-             base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
-             username = loginResponse.getUsername();
-
-        }
-
-        else if(CommonCalls.getUserType(DashboardActivity.this).equals(Values.TYPE_STUDENT)){
-            final LoginResponse loginResponse = CommonCalls.getUserData(DashboardActivity.this);
-             base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
-             username = loginResponse.getUsername();
-        }
-        String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
-        Call<Teacher_Model> call = clientAPIs.getCourseTeacherData
-                (username, authHeader);
-        call.enqueue(new Callback<Teacher_Model>() {
-            @Override
-            public void onResponse(Call<Teacher_Model> call, Response<Teacher_Model> response) {
-
-                if (response.isSuccessful()) {
-
-                    Teacher_Model teacher_model = response.body();
-                    if (teacher_model != null) {
-
-                        teacherData_models = teacher_model.getTeacherData();
-                        startActivity(new Intent(DashboardActivity.this, Profile.class));
-
-                    }
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<Teacher_Model> call, Throwable t) {
-
-                Toast.makeText(DashboardActivity.this, Values.SERVER_ERROR, Toast.LENGTH_SHORT).show();
-
-            }
-        });
-    }
 
 
 }
