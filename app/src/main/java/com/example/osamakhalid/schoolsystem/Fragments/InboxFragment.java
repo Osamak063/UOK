@@ -20,6 +20,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.osamakhalid.schoolsystem.Activites.Messages;
+import com.example.osamakhalid.schoolsystem.Activites.NewsAndEvents;
 import com.example.osamakhalid.schoolsystem.Activites.ParentTeacherChat;
 import com.example.osamakhalid.schoolsystem.Adapters.MessagesAdapter;
 import com.example.osamakhalid.schoolsystem.Adapters.Teachers_Adapter;
@@ -31,6 +32,7 @@ import com.example.osamakhalid.schoolsystem.Model.ItemClickListener;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.MessagesInboxResponse;
 import com.example.osamakhalid.schoolsystem.Model.MessagesInboxResponseList;
+import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
 import com.example.osamakhalid.schoolsystem.R;
 
 import java.util.ArrayList;
@@ -48,7 +50,6 @@ public class InboxFragment extends Fragment implements ItemClickListener {
     private Retrofit retrofit;
     private ClientAPIs clientAPIs;
     ProgressDialog progressDialog;
-    LoginResponse userData;
 
     private OnInboxFragmentInteractionListener mListener;
 
@@ -66,20 +67,28 @@ public class InboxFragment extends Fragment implements ItemClickListener {
         recyclerView = view.findViewById(R.id.messages_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
-        userData = CommonCalls.getUserData(getActivity().getBaseContext());
-        String base = userData.getUsername() + ":" + userData.getPassword();
-        String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
-        getData(authHeader);
         adapter = new MessagesAdapter(listItems, getActivity().getApplicationContext());
         recyclerView.setAdapter(adapter);
+        String base = null;
+        if (CommonCalls.getUserType(getActivity().getApplicationContext()).equals(Values.TYPE_PARENT)) {
+            ParentLoginResponse loginResponse = CommonCalls.getParentData(getActivity().getApplicationContext());
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+            String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+            getParentData(authHeader,loginResponse.getUsername());
+        } else if (CommonCalls.getUserType(getActivity().getApplicationContext()).equals(Values.TYPE_STUDENT)) {
+            LoginResponse loginResponse = CommonCalls.getUserData(getActivity().getApplicationContext());
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+            String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+            getData(authHeader,loginResponse.getUsername());
+        }
         adapter.setItemClickListener(this);
         return view;
     }
 
-    public void getData(String authHeader) {
+    public void getData(String authHeader,String username) {
         retrofit = RetrofitInitialize.getApiClient();
         clientAPIs = retrofit.create(ClientAPIs.class);
-        Call<MessagesInboxResponseList> call = clientAPIs.getMessagesInbox(userData.getUsername(), authHeader);
+        Call<MessagesInboxResponseList> call = clientAPIs.getMessagesInbox(username, authHeader);
         call.enqueue(new Callback<MessagesInboxResponseList>() {
             @Override
             public void onResponse(Call<MessagesInboxResponseList> call, Response<MessagesInboxResponseList> response) {
@@ -104,6 +113,33 @@ public class InboxFragment extends Fragment implements ItemClickListener {
         });
     }
 
+    public void getParentData(String authHeader,String username){
+        retrofit = RetrofitInitialize.getApiClient();
+        clientAPIs = retrofit.create(ClientAPIs.class);
+        Call<MessagesInboxResponseList> call = clientAPIs.getParentMessagesInbox(username, authHeader);
+        call.enqueue(new Callback<MessagesInboxResponseList>() {
+            @Override
+            public void onResponse(Call<MessagesInboxResponseList> call, Response<MessagesInboxResponseList> response) {
+                if (response.isSuccessful()) {
+                    MessagesInboxResponseList messageInboxResponseList = response.body();
+                    if (messageInboxResponseList != null && messageInboxResponseList.getMessageData() != null) {
+                        progressDialog.dismiss();
+                        listItems.addAll(messageInboxResponseList.getMessageData());
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        progressDialog.dismiss();
+                        Toast.makeText(getActivity(), "Inbox not available yet.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MessagesInboxResponseList> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(getActivity(), "Sorry something went wrong.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
     @Override
     public void onClick(View view, String messageId) {
         mListener.onFragmentInteraction(messageId);

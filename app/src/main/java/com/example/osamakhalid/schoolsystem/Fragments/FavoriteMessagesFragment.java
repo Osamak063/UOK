@@ -21,6 +21,7 @@ import com.example.osamakhalid.schoolsystem.Model.ItemClickListener;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.MessagesFavResponse;
 import com.example.osamakhalid.schoolsystem.Model.MessagesFavResponseList;
+import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
 import com.example.osamakhalid.schoolsystem.R;
 
 import java.util.ArrayList;
@@ -54,20 +55,28 @@ public class FavoriteMessagesFragment extends Fragment implements ItemClickListe
         recyclerView = view.findViewById(R.id.favmessages_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
-        userData = CommonCalls.getUserData(getActivity().getBaseContext());
-        String base = userData.getUsername() + ":" + userData.getPassword();
-        String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
-        getData(authHeader);
         adapter = new MessagesAdapter(getActivity().getApplicationContext(), "fav", listItems);
         recyclerView.setAdapter(adapter);
+        String base = null;
+        if (CommonCalls.getUserType(getActivity().getApplicationContext()).equals(Values.TYPE_PARENT)) {
+            ParentLoginResponse loginResponse = CommonCalls.getParentData(getActivity().getApplicationContext());
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+            String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+            getParentData(authHeader,loginResponse.getUsername());
+        } else if (CommonCalls.getUserType(getActivity().getApplicationContext()).equals(Values.TYPE_STUDENT)) {
+            LoginResponse loginResponse = CommonCalls.getUserData(getActivity().getApplicationContext());
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+            String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+            getData(authHeader,loginResponse.getUsername());
+        }
         adapter.setItemClickListener(this);
         return view;
     }
 
-    public void getData(String authHeader) {
+    public void getData(String authHeader,String username) {
         retrofit = RetrofitInitialize.getApiClient();
         clientAPIs = retrofit.create(ClientAPIs.class);
-        Call<MessagesFavResponseList> call = clientAPIs.getMessagesFav(userData.getUsername(), authHeader);
+        Call<MessagesFavResponseList> call = clientAPIs.getMessagesFav(username, authHeader);
         call.enqueue(new Callback<MessagesFavResponseList>() {
             @Override
             public void onResponse(Call<MessagesFavResponseList> call, Response<MessagesFavResponseList> response) {
@@ -91,6 +100,35 @@ public class FavoriteMessagesFragment extends Fragment implements ItemClickListe
             }
         });
     }
+
+    public void getParentData(String authHeader,String username) {
+        retrofit = RetrofitInitialize.getApiClient();
+        clientAPIs = retrofit.create(ClientAPIs.class);
+        Call<MessagesFavResponseList> call = clientAPIs.getParentMessagesFav(username, authHeader);
+        call.enqueue(new Callback<MessagesFavResponseList>() {
+            @Override
+            public void onResponse(Call<MessagesFavResponseList> call, Response<MessagesFavResponseList> response) {
+                if (response.isSuccessful()) {
+                    MessagesFavResponseList messageFavResponseList = response.body();
+                    if (messageFavResponseList != null && messageFavResponseList.getMessageData() != null) {
+                        progressDialog.dismiss();
+                        listItems.addAll(messageFavResponseList.getMessageData());
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        progressDialog.dismiss();
+                        Toast.makeText(getActivity(), "Favorite messages not available yet.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MessagesFavResponseList> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(getActivity(), "Sorry something went wrong.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     public interface OnFavoriteFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(String messageId);

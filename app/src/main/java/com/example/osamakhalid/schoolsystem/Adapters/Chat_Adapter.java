@@ -47,31 +47,46 @@ public class Chat_Adapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ChatDataResponse chatDataResponse = chatModels.get(position);
-        if (chatDataResponse.getEmail().equals(CommonCalls.getUserData(context).getEmail())) {
-            ((ViewHolderOne) holder).date.setText(chatDataResponse.getDateTime());
-            ((ViewHolderOne) holder).message.setText(chatDataResponse.getMessageContent());
-            Glide.with(context).load(chatDataResponse.getImage()).into(((ViewHolderOne) holder).image);
-        } else {
-            ((ViewHolderTwo) holder).date.setText(chatDataResponse.getDateTime());
-            ((ViewHolderTwo) holder).message.setText(chatDataResponse.getMessageContent());
-            Glide.with(context).load(chatDataResponse.getImage()).into(((ViewHolderTwo) holder).image);
+        if (CommonCalls.getUserType(context).equals("Student")) {
+            if (chatDataResponse.getEmail().equals(CommonCalls.getUserData(context).getEmail())) {
+                ((ViewHolderOne) holder).date.setText(chatDataResponse.getDateTime());
+                ((ViewHolderOne) holder).message.setText(chatDataResponse.getMessageContent());
+                Glide.with(context).load(chatDataResponse.getImage()).into(((ViewHolderOne) holder).image);
+            } else {
+                ((ViewHolderTwo) holder).date.setText(chatDataResponse.getDateTime());
+                ((ViewHolderTwo) holder).message.setText(chatDataResponse.getMessageContent());
+                Glide.with(context).load(chatDataResponse.getImage()).into(((ViewHolderTwo) holder).image);
+            }
+        }
+        else if (CommonCalls.getUserType(context).equals("Parent")) {
+            if (chatDataResponse.getEmail().equals(CommonCalls.getParentData(context).getEmail())) {
+                ((ViewHolderOne) holder).date.setText(chatDataResponse.getDateTime());
+                ((ViewHolderOne) holder).message.setText(chatDataResponse.getMessageContent());
+                Glide.with(context).load(chatDataResponse.getImage()).into(((ViewHolderOne) holder).image);
+            } else {
+                ((ViewHolderTwo) holder).date.setText(chatDataResponse.getDateTime());
+                ((ViewHolderTwo) holder).message.setText(chatDataResponse.getMessageContent());
+                Glide.with(context).load(chatDataResponse.getImage()).into(((ViewHolderTwo) holder).image);
+            }
         }
     }
-//
-//    @Override
-//    public void onBindViewHolder(Chat_Adapter.ViewHolder holder, int position) {
-//        final ChatDataResponse chatModel = chatModels.get(position);
-//        holder.message.setText(chatModel.getMessageContent());
-//        holder.date.setText(chatModel.getDateTime());
-//    }
 
     @Override
     public int getItemViewType(int position) {
-        if (chatModels.get(position).getEmail().equals(CommonCalls.getUserData(context).getEmail())) {
-            return 1;
-        } else {
-            return 2;
+        if (CommonCalls.getUserType(context).equals("Student")) {
+            if (chatModels.get(position).getEmail().equals(CommonCalls.getUserData(context).getEmail())) {
+                return 1;
+            } else {
+                return 2;
+            }
+        } else if (CommonCalls.getUserType(context).equals("Parent")) {
+            if (chatModels.get(position).getEmail().equals(CommonCalls.getParentData(context).getEmail())) {
+                return 1;
+            } else {
+                return 2;
+            }
         }
+        return 2;
     }
 
     @Override

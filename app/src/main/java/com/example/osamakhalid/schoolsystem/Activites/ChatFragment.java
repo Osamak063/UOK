@@ -26,6 +26,7 @@ import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
 import com.example.osamakhalid.schoolsystem.Model.ChatDataResponse;
 import com.example.osamakhalid.schoolsystem.Model.ChatResponse;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
+import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
 import com.example.osamakhalid.schoolsystem.R;
 
 import java.io.File;
@@ -83,12 +84,20 @@ public class ChatFragment extends Fragment {
         sendButton = (Button) view.findViewById(R.id.chat_send_msg);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
-        userData = CommonCalls.getUserData(getActivity().getBaseContext());
-        String base = userData.getUsername() + ":" + userData.getPassword();
-        String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
-        getData(authHeader);
         adapter = new Chat_Adapter(listItems, getActivity().getApplicationContext());
         recyclerView.setAdapter(adapter);
+        String base = null;
+        if (CommonCalls.getUserType(getActivity().getApplicationContext()).equals(Values.TYPE_PARENT)) {
+            ParentLoginResponse loginResponse = CommonCalls.getParentData(getActivity().getApplicationContext());
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+            String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+            getParentData(authHeader,loginResponse.getCreateUserID());
+        } else if (CommonCalls.getUserType(getActivity().getApplicationContext()).equals(Values.TYPE_STUDENT)) {
+            LoginResponse loginResponse = CommonCalls.getUserData(getActivity().getApplicationContext());
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+            String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+            getData(authHeader,loginResponse.getCreateUserID());
+        }
         attachmentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,10 +107,43 @@ public class ChatFragment extends Fragment {
         return view;
     }
 
-    public void getData(String authHeader) {
+    public void getData(String authHeader,String userid) {
         retrofit = RetrofitInitialize.getApiClient();
         clientAPIs = retrofit.create(ClientAPIs.class);
-        Call<ChatResponse> call = clientAPIs.getChat(messageId, userData.getCreateUserID(), authHeader);
+        Call<ChatResponse> call = clientAPIs.getChat(messageId, userid, authHeader);
+        call.enqueue(new Callback<ChatResponse>() {
+            @Override
+            public void onResponse(Call<ChatResponse> call, Response<ChatResponse> response) {
+                if (response.isSuccessful()) {
+                    ChatResponse chatResponse = response.body();
+                    if (chatResponse != null && chatResponse.getMessagesData() != null) {
+                        progressDialog.dismiss();
+                        setAttachment(chatResponse.getAttachmentName());
+                        attachmentUrl = chatResponse.getAttachmentUrl();
+                        attachmentDir = chatResponse.getAttachmentDir();
+                        listItems.addAll(chatResponse.getMessagesData());
+                        adapter.notifyDataSetChanged();
+                        recyclerView.scrollToPosition(listItems.size() - 1);
+                    } else {
+                        progressDialog.dismiss();
+                        Toast.makeText(getActivity(), "Chat not available yet.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChatResponse> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(getActivity(), "Sorry something went wrong.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void getParentData(String authHeader,String userid) {
+        retrofit = RetrofitInitialize.getApiClient();
+        clientAPIs = retrofit.create(ClientAPIs.class);
+        System.out.println("logg message id="+messageId+" user id="+userid);
+        Call<ChatResponse> call = clientAPIs.getParentChat(messageId, userid, authHeader);
         call.enqueue(new Callback<ChatResponse>() {
             @Override
             public void onResponse(Call<ChatResponse> call, Response<ChatResponse> response) {

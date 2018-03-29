@@ -21,6 +21,7 @@ import com.example.osamakhalid.schoolsystem.Model.ItemClickListener;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.MessagesSentResponse;
 import com.example.osamakhalid.schoolsystem.Model.MessagesSentResponseList;
+import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
 import com.example.osamakhalid.schoolsystem.R;
 
 import java.util.ArrayList;
@@ -55,20 +56,56 @@ public class SentMessagesFragment extends Fragment implements ItemClickListener 
         recyclerView = view.findViewById(R.id.sentMessages_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
-        userData = CommonCalls.getUserData(getActivity().getBaseContext());
-        String base = userData.getUsername() + ":" + userData.getPassword();
-        String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
-        getData(authHeader);
         adapter = new MessagesAdapter(listItems, getActivity().getApplicationContext(), "sent");
         recyclerView.setAdapter(adapter);
+        String base = null;
+        if (CommonCalls.getUserType(getActivity().getApplicationContext()).equals(Values.TYPE_PARENT)) {
+            ParentLoginResponse loginResponse = CommonCalls.getParentData(getActivity().getApplicationContext());
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+            String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+            getParentData(authHeader,loginResponse.getUsername());
+        } else if (CommonCalls.getUserType(getActivity().getApplicationContext()).equals(Values.TYPE_STUDENT)) {
+            LoginResponse loginResponse = CommonCalls.getUserData(getActivity().getApplicationContext());
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+            String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+            getData(authHeader,loginResponse.getUsername());
+        }
         adapter.setItemClickListener(this);
         return view;
     }
 
-    public void getData(String authHeader) {
+    public void getData(String authHeader,String username) {
         retrofit = RetrofitInitialize.getApiClient();
         clientAPIs = retrofit.create(ClientAPIs.class);
-        Call<MessagesSentResponseList> call = clientAPIs.getMessagesSent(userData.getUsername(), authHeader);
+        Call<MessagesSentResponseList> call = clientAPIs.getMessagesSent(username, authHeader);
+        call.enqueue(new Callback<MessagesSentResponseList>() {
+            @Override
+            public void onResponse(Call<MessagesSentResponseList> call, Response<MessagesSentResponseList> response) {
+                if (response.isSuccessful()) {
+                    MessagesSentResponseList messageSentResponseList = response.body();
+                    if (messageSentResponseList != null && messageSentResponseList.getMessageData() != null) {
+                        progressDialog.dismiss();
+                        listItems.addAll(messageSentResponseList.getMessageData());
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        progressDialog.dismiss();
+                        Toast.makeText(getActivity(), "Sent messages not available yet.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MessagesSentResponseList> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(getActivity(), "Sorry something went wrong.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void getParentData(String authHeader,String username) {
+        retrofit = RetrofitInitialize.getApiClient();
+        clientAPIs = retrofit.create(ClientAPIs.class);
+        Call<MessagesSentResponseList> call = clientAPIs.getParentMessagesSent(username, authHeader);
         call.enqueue(new Callback<MessagesSentResponseList>() {
             @Override
             public void onResponse(Call<MessagesSentResponseList> call, Response<MessagesSentResponseList> response) {
