@@ -7,10 +7,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 
-import com.bignerdranch.expandablerecyclerview.model.Parent;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
-import com.example.osamakhalid.schoolsystem.Model.ParentStudentData;
+import com.example.osamakhalid.schoolsystem.Model.ParentModels.ParentStudentData;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
