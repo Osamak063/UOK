@@ -22,12 +22,23 @@
             android:textSize="20sp"
             android:gravity="center"/>
 
+
+        <Spinner
+            android:id="@+id/leave_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:visibility="visible"
+            android:layout_below="@+id/leaves_header"
+            android:layout_marginBottom="5dp">
+
+        </Spinner>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/leaves_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/leaves_header" />
+            android:layout_below="@+id/leave_spinner" />
 
         <TextView
             android:layout_width="match_parent"

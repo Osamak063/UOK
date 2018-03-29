@@ -4,11 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/leave_activity"
     tools:context="com.example.osamakhalid.schoolsystem.Activites.Leaves">
+
 
     <fragment
         android:id="@+id/fragment_leaves_list"
         class="com.example.osamakhalid.schoolsystem.Fragments.LeavesListFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></fragment>
+        android:layout_height="match_parent"
+       >
+
+
+    </fragment>
 </RelativeLayout>

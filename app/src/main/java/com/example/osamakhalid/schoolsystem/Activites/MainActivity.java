@@ -64,22 +64,22 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     GetUserTypeResponse loginResponse = response.body();
                     if (loginResponse != null && loginResponse.getUsertype() != null) {
-                        if (loginResponse.getUsertype().equals("Parent")) {
+                        if (loginResponse.getUsertype().equals(Values.TYPE_PARENT)) {
                             loginParent();
-                        } else if (loginResponse.getUsertype().equals("Student")) {
+                        } else if (loginResponse.getUsertype().equals(Values.TYPE_STUDENT)) {
                             loginStudent();
                         }
                     }
                 } else {
                     progressDialog.dismiss();
-                    Toast.makeText(MainActivity.this, "Wrong username or password.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, Values.INVALID_USER_PASS, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<GetUserTypeResponse> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(MainActivity.this, "Sorry something went wrong.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, Values.SERVER_ERROR, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -108,14 +108,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 } else {
                     progressDialog.dismiss();
-                    Toast.makeText(MainActivity.this, "Wrong username or password.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, Values.INVALID_USER_PASS, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ParentLoginResponse> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(MainActivity.this, "Sorry something went wrong.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, Values.SERVER_ERROR, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -143,14 +143,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 } else {
                     progressDialog.dismiss();
-                    Toast.makeText(MainActivity.this, "Wrong username or password.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, Values.INVALID_USER_PASS, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(MainActivity.this, "Sorry something went wrong.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, Values.SERVER_ERROR, Toast.LENGTH_SHORT).show();
             }
         });
     }

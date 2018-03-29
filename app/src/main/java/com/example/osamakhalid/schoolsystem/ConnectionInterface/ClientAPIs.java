@@ -22,7 +22,7 @@ import com.example.osamakhalid.schoolsystem.Model.MessagesTrashResponseList;
 import com.example.osamakhalid.schoolsystem.Model.NewsAndEventsResponseList;
 import com.example.osamakhalid.schoolsystem.Model.NewsandEventDetailResponse;
 import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
-import com.example.osamakhalid.schoolsystem.Model.ParentStudentListResponse;
+import com.example.osamakhalid.schoolsystem.Model.ParentModels.ParentStudentListResponse;
 import com.example.osamakhalid.schoolsystem.Model.SubjectResponseList;
 import com.example.osamakhalid.schoolsystem.Model.SubmitLeaveResponse;
 import com.example.osamakhalid.schoolsystem.Model.SyllabusResponse_Model;
