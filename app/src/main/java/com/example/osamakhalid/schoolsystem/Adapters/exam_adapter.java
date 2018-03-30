@@ -42,11 +42,11 @@ public class exam_adapter extends RecyclerView.Adapter<exam_adapter.ViewHolder> 
 
         final ExamResult_Data e_model = listItems.get(position);
 
-        holder.subject.setText("Subject: "+e_model.getSubject());
-        holder.obt_marks.setText("Marks Obtain: "+e_model.getMarks());
-        holder.total_marks.setText("Total Marks: "+e_model.getHighestMark());
-        holder.points.setText("Points: "+e_model.getPoint());
-        holder.grade.setText("Grade: "+e_model.getGrade());
+        holder.subject.setText(e_model.getSubject());
+        holder.obt_marks.setText(e_model.getMarks());
+        holder.total_marks.setText(e_model.getHighestMark());
+        holder.points.setText(e_model.getPoint());
+        holder.grade.setText(e_model.getGrade());
 
 //        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
 //            @Override
