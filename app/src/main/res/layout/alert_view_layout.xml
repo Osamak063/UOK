@@ -18,30 +18,81 @@
             android:orientation="vertical"
             android:padding="8dp">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/x1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Title : "
+                    android:textColor="#000"
+                    android:textSize="15sp"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/notice_name"
+                    android:text=""
+                    android:textColor="#000"
+                    android:layout_toEndOf="@+id/x1"
+                    android:textSize="15sp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/x2"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="Notification : "
+                    android:textStyle="bold"
+                  android:textColor="#000"
+                      android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/notification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_toEndOf="@id/x2"
+                    android:textColor="#000"
+                    android:textSize="15sp" />
+
+                    </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <TextView
+                android:id="@+id/x3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/notice_name"
-                android:text="Title"
+                android:textSize="15sp"
+                android:textStyle="bold"
                 android:textColor="#000"
-                android:textSize="15sp"/>
-
-
-            <TextView
-                android:id="@+id/notification"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Notification"
-                android:textColor="#000"
-                android:textSize="15sp" />
+                android:text="Date : "/>
 
             <TextView
                 android:id="@+id/notice_date"
+                android:layout_toEndOf="@id/x3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:textColor="#000"
-                android:text="Date"/>
+                android:text=""/>
+
+
+        </RelativeLayout>
+
+
 
 
 

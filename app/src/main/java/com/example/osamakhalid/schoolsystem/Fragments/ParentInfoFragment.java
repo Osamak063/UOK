@@ -1,8 +1,6 @@
 package com.example.osamakhalid.schoolsystem.Fragments;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +8,6 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,7 +18,7 @@ import com.example.osamakhalid.schoolsystem.Consts.Values;
 import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
 import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.MessagesFavResponse;
-import com.example.osamakhalid.schoolsystem.Model.MessagesFavResponseList;
+import com.example.osamakhalid.schoolsystem.Model.ParentLoginResponse;
 import com.example.osamakhalid.schoolsystem.Model.UserParentInfoResponse;
 import com.example.osamakhalid.schoolsystem.R;
 
@@ -42,6 +39,7 @@ public class ParentInfoFragment extends Fragment {
     private ClientAPIs clientAPIs;
     ProgressDialog progressDialog;
     TextView user_name, user_roll_no, user_gender, user_email, user_address, user_religon, user_phone;
+    private String username;
 
 
     @Override
@@ -60,17 +58,26 @@ public class ParentInfoFragment extends Fragment {
         user_address = view.findViewById(R.id.user_address);
         user_religon = view.findViewById(R.id.user_religon);
         progressDialog = CommonCalls.createDialouge(getActivity(), "", Values.DIALOGUE_MSG);
-        userData = CommonCalls.getUserData(getActivity().getBaseContext());
-        String base = userData.getUsername() + ":" + userData.getPassword();
-        String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
-        getData(authHeader);
+         getData();
         return view;
     }
 
-    public void getData(String authHeader) {
+    public void getData() {
         retrofit = RetrofitInitialize.getApiClient();
         clientAPIs = retrofit.create(ClientAPIs.class);
-        Call<UserParentInfoResponse> call = clientAPIs.getParentInfo(userData.getUsername(), authHeader);
+        String base = null;
+        if (CommonCalls.getUserType(getActivity()).equals(Values.TYPE_PARENT)) {
+            ParentLoginResponse loginResponse = CommonCalls.getParentData(getActivity());
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+            username = loginResponse.getUsername();
+        } else if (CommonCalls.getUserType(getActivity()).equals(Values.TYPE_STUDENT)) {
+            LoginResponse loginResponse = CommonCalls.getUserData(getActivity());
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+            username = loginResponse.getUsername();
+        }
+        String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+
+        Call<UserParentInfoResponse> call = clientAPIs.getParentInfo(username, authHeader);
         call.enqueue(new Callback<UserParentInfoResponse>() {
             @Override
             public void onResponse(Call<UserParentInfoResponse> call, Response<UserParentInfoResponse> response) {

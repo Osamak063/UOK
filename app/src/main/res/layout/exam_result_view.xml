@@ -19,41 +19,119 @@
             android:orientation="vertical"
             android:padding="8dp">
 
-          <TextView
-              android:id="@+id/subject"
-              android:textColor="#000"
-              android:text="Subject : Compter"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/f1"
+                    android:textColor="#000"
+                    android:text="Subject : "
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:id="@+id/subject"
+                    android:textColor="#000"
+                    android:text=""
+                    android:layout_toEndOf="@+id/f1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+            </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/f2"
+                android:textColor="#000"
+                android:text="Highest Marks : "
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
 
             <TextView
                 android:id="@+id/sub_totalmarks"
                 android:textColor="#000"
-                android:text="Highest Marks : 10/10"
-                android:layout_width="match_parent"
+                android:text=""
+                android:layout_toEndOf="@id/f2"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+            android:id="@+id/f3"
+            android:textColor="#000"
+            android:text="Marks Obtained : "
+                android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/sub_obtmarks"
                 android:textColor="#000"
-                android:text="Marks Obtained : 10/10"
+                android:text=""
+                android:layout_toEndOf="@id/f3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/f4"
+                android:textColor="#000"
+                android:text="Points: "
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/point"
                 android:textColor="#000"
-                android:text="Points: 15/01/17"
-                android:layout_width="match_parent"
+                android:text=""
+                android:layout_toEndOf="@id/f4"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/f5"
+                android:textColor="#000"
+                android:text="Grade: "
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
 
             <TextView
                 android:id="@+id/grade"
                 android:textColor="#000"
-                android:text="Grade: A"
-                android:layout_width="match_parent"
+                android:text=""
+                android:layout_toEndOf="@id/f5"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
+        </RelativeLayout>
 
 
 

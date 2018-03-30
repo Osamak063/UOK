@@ -14,6 +14,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_marginTop="10dp"
+            android:layout_gravity="center"
             >
 
             <TextView
@@ -74,7 +75,7 @@
                     android:text="Shazia Khalid"
                     android:textSize="18dp"
                     android:layout_toEndOf="@+id/u2"
-                    android:layout_marginLeft="45dp"
+                    android:layout_marginLeft="95dp"
                     />
             </RelativeLayout>
 
@@ -155,6 +156,7 @@
                     android:layout_alignParentRight="true"
                     android:textSize="18dp"
                     android:layout_marginLeft="95dp"
+                    android:gravity="center"
                     android:layout_toEndOf="@+id/u5"
                     />
             </RelativeLayout>
@@ -182,6 +184,7 @@
                     android:textSize="18dp"
                     android:layout_alignParentRight="true"
                     android:layout_toEndOf="@+id/u6"
+                    android:gravity="center"
                     android:layout_marginLeft="78dp"
                     />
             </RelativeLayout>
