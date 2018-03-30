@@ -5,10 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.osamakhalid.schoolsystem.Model.Alert_Model;
 import com.example.osamakhalid.schoolsystem.Model.SubjectResponse;
 import com.example.osamakhalid.schoolsystem.R;
 
@@ -37,10 +35,10 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.ViewHo
     public void onBindViewHolder(SubjectsAdapter.ViewHolder holder, int position) {
 
         final SubjectResponse subjectModel = subjectModels.get(position);
-        holder.name.setText("Name: " + subjectModel.getSubjectName());
-        holder.code.setText("Code: " + subjectModel.getSubjectCode());
-        holder.author.setText("Author: " + subjectModel.getSubjectAuthor());
-        holder.teacher.setText("Teacher: " + subjectModel.getTeacher());
+        holder.name.setText(subjectModel.getSubjectName());
+        holder.code.setText( subjectModel.getSubjectCode());
+        holder.author.setText( subjectModel.getSubjectAuthor());
+        holder.teacher.setText( subjectModel.getTeacher());
     }
 
     @Override
