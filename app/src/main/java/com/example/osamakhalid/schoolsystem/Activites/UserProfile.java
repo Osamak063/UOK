@@ -1,18 +1,13 @@
 package com.example.osamakhalid.schoolsystem.Activites;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v4.app.Fragment;
 
-import com.example.osamakhalid.schoolsystem.Fragments.ParentInfoFragment;
 import com.example.osamakhalid.schoolsystem.Fragments.PersonalInfoFragment;
-import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
-import com.example.osamakhalid.schoolsystem.Model.LoginResponse;
 import com.example.osamakhalid.schoolsystem.R;
 
 public class UserProfile extends AppCompatActivity {
@@ -36,9 +31,7 @@ public class UserProfile extends AppCompatActivity {
         if (id == R.id.user_info) {
             fragment = new PersonalInfoFragment();
         }
-        if(id==R.id.parent_info){
-            fragment = new ParentInfoFragment();
-        }
+
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.personal_info_fragment, fragment);
