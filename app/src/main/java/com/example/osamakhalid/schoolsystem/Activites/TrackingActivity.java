@@ -43,12 +43,14 @@ public class TrackingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(TrackingActivity.this, DashboardActivity.class));
+                finish();
             }
         });
         physicalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(TrackingActivity.this, HomeActivityPhysicalTracking.class));
+                finish();
             }
         });
     }
