@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                     LoginResponse loginResponse = response.body();
                     if (loginResponse.getStatus() == 1) {
                         progressDialog.dismiss();
-                        Toast.makeText(MainActivity.this, "Successfully logged in..", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Successfully Logged In..", Toast.LENGTH_SHORT).show();
                         CommonCalls.saveUserData(loginResponse, MainActivity.this);
                         CommonCalls.saveUserType(loginResponse.getUsertype(), MainActivity.this);
                         Intent i = new Intent(MainActivity.this, TrackingActivity.class);
@@ -161,5 +161,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        System.exit(0);
     }
 }

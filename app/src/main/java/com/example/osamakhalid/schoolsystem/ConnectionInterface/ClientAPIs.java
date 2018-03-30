@@ -52,7 +52,7 @@ public interface ClientAPIs {
     Call<LoginResponse> loginUser(@Field("username") String userName, @Field("password") String password, @Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.EXAMRESULT_URL)
-    Call<Exam_Model> examResult(@Header("Authorization") String authHeader);
+    Call<Exam_Model> examResult(@Query("username") String username,@Query("lang") String lang,@Header("Authorization") String authHeader);
 
     @GET(ConnectionURLS.NEWS_AND_EVENTS_URL)
     Call<NewsAndEventsResponseList> getNewsAndEvents(@Header("Authorization") String authHeader);

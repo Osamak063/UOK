@@ -7,43 +7,52 @@
     android:layout_height="match_parent"
     tools:context="com.example.osamakhalid.schoolsystem.Activites.ExamResult_Category">
 
+    <Spinner
+        android:id="@+id/examcategory_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:padding="5dp"
+        android:visibility="gone"
+        android:layout_marginTop="3dp"></Spinner>
+
     <LinearLayout
         android:id="@+id/init"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
-
+        android:gravity="center"
+        android:layout_below="@+id/examcategory_spinner"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+
             android:layout_gravity="center"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
 
             <Button
                 android:id="@+id/first_term_exam"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1st-Term Exam"/>
+                android:text="1st-Term Exam" />
 
 
             <Button
                 android:id="@+id/second_term_exam"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2nd-Term Exam"/>
-
+                android:text="2nd-Term Exam" />
 
 
             <Button
                 android:id="@+id/final_exam"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Final-Term Exam"/>
-
+                android:text="Final-Term Exam" />
 
 
         </LinearLayout>
