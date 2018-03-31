@@ -38,7 +38,7 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.ViewHo
         holder.name.setText(subjectModel.getSubjectName());
         holder.code.setText( subjectModel.getSubjectCode());
         holder.author.setText( subjectModel.getSubjectAuthor());
-        holder.teacher.setText( subjectModel.getTeacher());
+       // holder.teacher.setText( subjectModel.getTeacher());
     }
 
     @Override
@@ -56,7 +56,7 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.ViewHo
             name = itemView.findViewById(R.id.subject_name);
             author = itemView.findViewById(R.id.subject_author);
             code = itemView.findViewById(R.id.subject_code);
-            teacher = itemView.findViewById(R.id.subject_teacher);
+        //    teacher = itemView.findViewById(R.id.subject_teacher);
 
 
         }

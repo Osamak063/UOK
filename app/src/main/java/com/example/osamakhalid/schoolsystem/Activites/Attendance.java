@@ -78,7 +78,7 @@ public class Attendance extends AppCompatActivity {
         calendar = Calendar.getInstance();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        if (CommonCalls.getUserType(Attendance.this).equals("Student")) {
+        if (CommonCalls.getUserType(Attendance.this).equals(Values.TYPE_STUDENT)) {
             progressDialouge = CommonCalls.createDialouge(Attendance.this, "", Values.DIALOGUE_MSG);
             childrenSpinner.setVisibility(View.GONE);
             userData = CommonCalls.getUserData(Attendance.this);
@@ -87,7 +87,7 @@ public class Attendance extends AppCompatActivity {
             authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
             index = MonthNameListItems.indexOf(monthName);
             getData(authHeader);
-        } else if (CommonCalls.getUserType(Attendance.this).equals("Parent")) {
+        } else if (CommonCalls.getUserType(Attendance.this).equals(Values.TYPE_PARENT)) {
             childrenSpinner.setVisibility(View.VISIBLE);
             ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter
                     (Attendance.this, android.R.layout.simple_spinner_item, childrenUsernames);
