@@ -11,6 +11,6 @@ import java.util.List;
  */
 
 public interface ItemClickListernerPhoto {
-    void onClick(View view, List<GalleryData_Model> galleryData_models);
+    void onClick(View view,String name, List<GalleryData_Model> galleryData_models);
 
 }

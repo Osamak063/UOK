@@ -5,24 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.osamakhalid.schoolsystem.Activites.Fees">
-
-
-    <TextView
-        android:id="@+id/examtext"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_Layout"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:text="Fees and Invoice"
-        android:textColor="#ffff"
-        android:textSize="20sp" />
+        android:layout_height="wrap_content">
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/toolbar_layout"
+            />
+
+
+    </android.support.design.widget.AppBarLayout>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/transport"
         android:padding="5dp"
-        android:layout_below="@+id/examtext"
+        android:layout_below="@+id/appbar_Layout"
         >
 
         <Spinner

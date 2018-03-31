@@ -2,7 +2,6 @@ package com.example.osamakhalid.schoolsystem.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,9 +69,9 @@ public class GalleryFolder_Adapter extends RecyclerView.Adapter<GalleryFolder_Ad
         @Override
         public void onClick(View view) {
             if (itemClickListener != null) {
-                Log.e("Onclick","Called");
+                String name = galleryResponse_models.get(getAdapterPosition()).getFolderName();
                 GalleryImage_Data galleryImage_data = galleryResponse_models.get(getAdapterPosition());
-                itemClickListener.onClick(view, galleryImage_data.getImages());
+                itemClickListener.onClick(view,name,galleryImage_data.getImages());
             }
         }
     }

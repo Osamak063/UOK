@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.support.v7.widget.Toolbar;
 
 import com.example.osamakhalid.schoolsystem.Consts.Values;
 import com.example.osamakhalid.schoolsystem.GlobalCalls.CommonCalls;
@@ -24,12 +25,27 @@ public class DashboardActivity extends AppCompatActivity {
 
     public static List<TeacherData_Model> teacherData_models;
     private  String base,username;
+    Toolbar toolbar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        //Setting up Toolbar
+        toolbar = findViewById(R.id.toolBar);
+        toolbar.setTitle("DashBoard");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(DashboardActivity.this, TrackingActivity.class));
+            }
+        });
+
+       // toolbar = findViewById(R.id.toolBar);
         attendance = findViewById(R.id.attendance);
         syllabus = findViewById(R.id.syllabus_view);
         timeTable = findViewById(R.id.timeTable);

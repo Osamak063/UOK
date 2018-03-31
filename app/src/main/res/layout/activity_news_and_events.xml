@@ -8,16 +8,19 @@
     android:id="@+id/news_and_events_layout"
     tools:context="com.example.osamakhalid.schoolsystem.Activites.NewsAndEvents">
 
-
-    <TextView
-        android:id="@+id/news_and_events"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_Layout"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:background="@color/colorPrimary"
-        android:textColor="#ffff"
-        android:text="News And Events"
-        android:textSize="20sp"
-        android:gravity="center"/>
+        android:layout_height="wrap_content">
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/toolbar_layout"
+            />
+
+
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/news_recycler_view"
@@ -25,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_above="@id/copyrights_text"
-        android:layout_below="@+id/news_and_events" />
+        android:layout_below="@+id/appbar_Layout" />
 
     <TextView
         android:id="@+id/copyrights_text"

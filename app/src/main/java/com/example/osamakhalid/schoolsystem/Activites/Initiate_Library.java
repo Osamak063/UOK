@@ -10,6 +10,7 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import com.example.osamakhalid.schoolsystem.Adapters.AllBooks_Adapter;
 import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
@@ -32,12 +33,24 @@ public class Initiate_Library extends AppCompatActivity {
     public RecyclerView recyclerView;
     public RecyclerView.Adapter adapter;
     Button issued_Button;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initiate__library);
-
+        //Setting up Toolbar
+        toolbar = findViewById(R.id.toolBar);
+        toolbar.setTitle("Library");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Initiate_Library.this, DashboardActivity.class));
+            }
+        });
         progress_dialouge = CommonCalls.createDialouge(this,"",Values.DIALOGUE_MSG);
 
         getAllBooks();

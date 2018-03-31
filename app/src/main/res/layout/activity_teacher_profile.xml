@@ -7,6 +7,20 @@
     android:layout_height="match_parent"
     tools:context="com.example.osamakhalid.schoolsystem.Activites.TeacherProfile">
 
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp">
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/toolbar_layout"
+            />
+
+
+    </android.support.design.widget.AppBarLayout>
     <TextView
         android:id="@+id/profile_view_text"
         android:layout_width="match_parent"
@@ -14,6 +28,7 @@
         android:background="@color/colorPrimary"
         android:textColor="#ffff"
         android:text="Profile"
+        android:layout_below="@+id/appbar_Layout"
         android:textSize="20sp"
         android:gravity="center"
         />

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.example.osamakhalid.schoolsystem.Adapters.MonthsAdapter;
@@ -24,12 +25,25 @@ public class Chart_Attendence extends AppCompatActivity implements ItemClickList
     public RecyclerView recyclerView;
     public MonthsAdapter adapter;
     public List<String> listItems;
+    Toolbar toolbar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chart__attendence);
+        //Setting up Toolbar
+        toolbar = findViewById(R.id.toolBar);
+        toolbar.setTitle("Attendence");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Chart_Attendence.this, DashboardActivity.class));
+            }
+        });
         listItems = new ArrayList<>();
         listItems.addAll(Arrays.asList(getResources().getStringArray(R.array.months)));
         recyclerView = findViewById(R.id.monthRecyclerView);

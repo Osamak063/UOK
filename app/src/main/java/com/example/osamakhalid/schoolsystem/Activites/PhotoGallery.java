@@ -7,6 +7,7 @@ import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Toast;
@@ -37,12 +38,25 @@ public class PhotoGallery extends AppCompatActivity implements ItemClickListerne
     GalleryFolder_Adapter adapter;
     private ProgressDialog progressDilouge;
     String studentID;
+    Toolbar toolbar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_gallery);
+        //Setting up Toolbar
+        toolbar = findViewById(R.id.toolBar);
+        toolbar.setTitle("Gallery");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(PhotoGallery.this, DashboardActivity.class));
+            }
+        });
         progressDilouge = CommonCalls.createDialouge(PhotoGallery.this,null,Values.DIALOGUE_MSG);
         getGalleryData();
     }
@@ -102,9 +116,10 @@ public class PhotoGallery extends AppCompatActivity implements ItemClickListerne
     }
 
     @Override
-    public void onClick(View view, List<GalleryData_Model> galleryData_models) {
+    public void onClick(View view,String name ,List<GalleryData_Model> galleryData_models) {
 
         Intent mIntent = new Intent(PhotoGallery.this, PhotoGalleryImages.class);
+        mIntent.putExtra("foldername",name);
         mIntent.putParcelableArrayListExtra("Data", (ArrayList<? extends Parcelable>) galleryData_models);
         startActivity(mIntent);
 

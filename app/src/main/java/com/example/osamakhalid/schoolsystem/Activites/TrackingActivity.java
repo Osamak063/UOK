@@ -7,6 +7,7 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
 import com.example.osamakhalid.schoolsystem.ConnectionInterface.ClientAPIs;
@@ -27,13 +28,17 @@ public class TrackingActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private ClientAPIs clientAPIs;
     ParentLoginResponse parentData;
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tracking);
+        toolbar = findViewById(R.id.toolBar);
+        toolbar.setTitle("S.E.E");
+        setSupportActionBar(toolbar);
         educationalButton = (Button) findViewById(R.id.educational);
         physicalButton = (Button) findViewById(R.id.physical);
-        if (CommonCalls.getUserType(TrackingActivity.this).equals("Parent")) {
+        if (CommonCalls.getUserType(TrackingActivity.this).equals(Values.TYPE_PARENT)) {
             parentData = CommonCalls.getParentData(TrackingActivity.this);
             String base = parentData.getUsername() + ":" + parentData.getPassword();
             String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
@@ -50,7 +55,7 @@ public class TrackingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(TrackingActivity.this, HomeActivityPhysicalTracking.class));
-                finish();
+               // finish();
             }
         });
     }

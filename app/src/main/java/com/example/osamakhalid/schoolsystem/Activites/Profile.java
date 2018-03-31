@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -47,10 +48,23 @@ public class Profile extends AppCompatActivity implements ItemClickListener {
     Spinner teacher_spinner;
     private List<ParentStudentData> parentStudentDataList;
     private List<String> childrenUsernames;
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        //Setting up Toolbar
+        toolbar = findViewById(R.id.toolBar);
+        toolbar.setTitle("Teachers");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Profile.this, DashboardActivity.class));
+            }
+        });
         recyclerView = findViewById(R.id.profile_recycler_view);
         progressDialog = CommonCalls.createDialouge(this, "", Values.DIALOGUE_MSG);
         teacher_list = new ArrayList<>();
@@ -60,12 +74,14 @@ public class Profile extends AppCompatActivity implements ItemClickListener {
 //        teacher_id = teacher_list.get(0).getTeacherId();
      //   if (teacher_list != null) {
         //FOR PARENT CHILD DATA
-        parentStudentDataList = CommonCalls.getChildrenOfParentList(this);
-        childrenUsernames = new ArrayList<>();
-        for (ParentStudentData data : parentStudentDataList) {
-            childrenUsernames.add(data.getName());
-        }
+
         if(CommonCalls.getUserType(this).equals(Values.TYPE_PARENT)){
+
+            parentStudentDataList = CommonCalls.getChildrenOfParentList(this);
+            childrenUsernames = new ArrayList<>();
+            for (ParentStudentData data : parentStudentDataList) {
+                childrenUsernames.add(data.getName());
+            }
 
             teacher_spinner.setVisibility(View.VISIBLE);
             ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter

@@ -1,10 +1,13 @@
 package com.example.osamakhalid.schoolsystem.Activites;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.osamakhalid.schoolsystem.Adapters.SyllabusSubject_Adapter;
@@ -21,11 +24,23 @@ public class SyllabusSubject_Activity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private ProgressDialog progressDilouge;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_syllabus_subject_);
+        toolbar = findViewById(R.id.toolBar);
+        toolbar.setTitle("Details");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SyllabusSubject_Activity.this, Syllabus_Activity.class));
+            }
+        });
         progressDilouge = CommonCalls.createDialouge(SyllabusSubject_Activity.this,null,Values.DIALOGUE_MSG);
         syllabusMultiple_subject_models = this.getIntent().getParcelableArrayListExtra("syllabus_data");
 

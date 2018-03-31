@@ -1,6 +1,7 @@
 package com.example.osamakhalid.schoolsystem.Activites;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,27 +45,41 @@ public class Library extends AppCompatActivity {
     List<ParentStudentData> parentStudentDataList;
     List<String> childrenUsernames;
     private Spinner library_spinner;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_library);
-
-        //setting up toolbar
-        Toolbar toolbar =  findViewById(R.id.toolbar);
+        //Setting up Toolbar
+        toolbar = findViewById(R.id.toolBar);
+        toolbar.setTitle("Issue Books");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Library.this, Initiate_Library.class));
+            }
+        });
+        //setting up toolbar
+//        Toolbar toolbar =  findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
         progress_dialouge = CommonCalls.createDialouge(this,"",Values.DIALOGUE_MSG);
         library_id = findViewById(R.id.library_id);
         library_fees = findViewById(R.id.library_fee);
         library_joiningdate = findViewById(R.id.library_Jdate);
         library_spinner = findViewById(R.id.library_spinner);
 
-        parentStudentDataList = CommonCalls.getChildrenOfParentList(Library.this);
-        childrenUsernames = new ArrayList<>();
-        for (ParentStudentData data : parentStudentDataList) {
-            childrenUsernames.add(data.getName());
-        }
+
         if (CommonCalls.getUserType(this).equals(Values.TYPE_PARENT)) {
+
+            parentStudentDataList = CommonCalls.getChildrenOfParentList(Library.this);
+            childrenUsernames = new ArrayList<>();
+            for (ParentStudentData data : parentStudentDataList) {
+                childrenUsernames.add(data.getName());
+            }
 
             final int offset = 0;
             library_spinner.setVisibility(View.VISIBLE);

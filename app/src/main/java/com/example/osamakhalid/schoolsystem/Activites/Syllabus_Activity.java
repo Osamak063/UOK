@@ -7,6 +7,7 @@ import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -47,22 +48,37 @@ public class Syllabus_Activity extends AppCompatActivity implements ItemClickLis
     private List<ParentStudentData> parentStudentDataList;
     private ArrayList<String> childrenUsernames;
     private String username,base;
+    Toolbar toolbar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_syllabus_);
+        //Setting up Toolbar
+        toolbar = findViewById(R.id.toolBar);
+        toolbar.setTitle("Syllabus");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Syllabus_Activity.this, DashboardActivity.class));
+            }
+        });
 
         syllabus_spinner = findViewById(R.id.syllabus___spinner);
 
-        parentStudentDataList = CommonCalls.getChildrenOfParentList(Syllabus_Activity.this);
-        childrenUsernames = new ArrayList<>();
-        for (ParentStudentData data : parentStudentDataList) {
-            childrenUsernames.add(data.getName());
-        }
 
         if(CommonCalls.getUserType(this).equals(Values.TYPE_PARENT)){
+
+            parentStudentDataList = CommonCalls.getChildrenOfParentList(Syllabus_Activity.this);
+            childrenUsernames = new ArrayList<>();
+            for (ParentStudentData data : parentStudentDataList) {
+                childrenUsernames.add(data.getName());
+            }
+
 
             syllabus_spinner.setVisibility(View.VISIBLE);
             ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter

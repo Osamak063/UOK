@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -43,24 +44,39 @@ public class ExamResult_Category extends AppCompatActivity implements View.OnCli
     private List<ParentStudentData> parentStudentDataList;
     private List<String> childrenUsernames;
     Spinner exam_spinner;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exam_result__category);
+        //Setting up Toolbar
+        toolbar = findViewById(R.id.toolBar);
+        toolbar.setTitle("Results");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ExamResult_Category.this, DashboardActivity.class));
+            }
+        });
         first_term = findViewById(R.id.first_term_exam);
         second_term = findViewById(R.id.second_term_exam);
         final_term = findViewById(R.id.final_exam);
         exam_spinner = findViewById(R.id.examcategory_spinner);
-        parentStudentDataList = CommonCalls.getChildrenOfParentList(ExamResult_Category.this);
-        childrenUsernames = new ArrayList<>();
-        for (ParentStudentData data : parentStudentDataList) {
-            childrenUsernames.add(data.getName());
-        }
+
 
         if (CommonCalls.getUserType(this).equals(Values.TYPE_PARENT)) {
-
             exam_spinner.setVisibility(View.VISIBLE);
+            parentStudentDataList = CommonCalls.getChildrenOfParentList(ExamResult_Category.this);
+            childrenUsernames = new ArrayList<>();
+            for (ParentStudentData data : parentStudentDataList) {
+                childrenUsernames.add(data.getName());
+            }
+
+
             ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter
                     (ExamResult_Category.this, android.R.layout.simple_spinner_item, childrenUsernames);
             spinnerArrayAdapter.setDropDownViewResource(android.R.layout

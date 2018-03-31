@@ -1,10 +1,13 @@
 package com.example.osamakhalid.schoolsystem.Fragments;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.osamakhalid.schoolsystem.Activites.DashboardActivity;
 import com.example.osamakhalid.schoolsystem.Adapters.LeavesAdapter;
 import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
 import com.example.osamakhalid.schoolsystem.ConnectionInterface.ClientAPIs;
@@ -47,6 +51,7 @@ public class LeavesListFragment extends Fragment {
     private List<ParentStudentData> parentStudentDataList;
     private ArrayList<String> childrenUsernames;
     private String username,userType;
+    Toolbar toolbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,18 +61,32 @@ public class LeavesListFragment extends Fragment {
             container.removeAllViews();
         }
         View view = inflater.inflate(R.layout.fragment_leaves_list2, container, false);
+        //Setting up Toolbar
+        toolbar = view.findViewById(R.id.toolBar);
+        toolbar.setTitle("Leave");
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), DashboardActivity.class));
+            }
+        });
         listItems = new ArrayList<>();
         progressDialog = CommonCalls.createDialouge(getActivity(), "", Values.DIALOGUE_MSG);
         recyclerView = view.findViewById(R.id.leaves_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         leave_spinner = view.findViewById(R.id.leave_spinner);
-        parentStudentDataList = CommonCalls.getChildrenOfParentList(getActivity());
-        childrenUsernames = new ArrayList<>();
-        for (ParentStudentData data : parentStudentDataList) {
-            childrenUsernames.add(data.getName());
-        }
+
         if (CommonCalls.getUserType(getActivity()).equals(Values.TYPE_PARENT)) {
+            parentStudentDataList = CommonCalls.getChildrenOfParentList(getActivity());
+            childrenUsernames = new ArrayList<>();
+            for (ParentStudentData data : parentStudentDataList) {
+                childrenUsernames.add(data.getName());
+            }
 
             leave_spinner.setVisibility(View.VISIBLE);
             ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter
