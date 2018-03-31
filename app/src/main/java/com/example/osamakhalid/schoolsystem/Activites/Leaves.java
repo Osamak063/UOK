@@ -33,7 +33,7 @@ public class Leaves extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // setContentView(R.layout.activity_leaves);
+      //  setContentView(R.layout.activity_leaves);
         teacherData_models = new ArrayList<>();
         teachersUsername = new ArrayList<>();
         FrameLayout frame = new FrameLayout(this);
@@ -104,23 +104,19 @@ public class Leaves extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.leaves_list) {
-            fragment = new SubmitLeaveFragment();
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.submitLeave_layout, new LeavesListFragment());
-            ft.commit();
-        } else if (id == R.id.submit_leave_menu) {
-        //    fragment = new SubmitLeaveFragment();
-//            Bundle bundle = new Bundle();
-//            bundle.putStringArrayList("usernames", teachersUsername);
-//            fragment.setArguments(bundle);
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(CONTENT_VIEW_ID, new SubmitLeaveFragment());
-            ft.commit();
-            //ft.addToBackStack(null);
-        }
-     //   if (fragment != null) {
 
-      //  }
+            fragment = new LeavesListFragment();
+            FragmentTransaction ff = getSupportFragmentManager().beginTransaction();
+            ff.replace(CONTENT_VIEW_ID, new LeavesListFragment());
+            ff.commit();
+
+        } else if (id == R.id.submit_leave_menu) {
+
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.add(CONTENT_VIEW_ID, new SubmitLeaveFragment());
+            ft.commit();
+      }
+
         return true;
     }
 }
