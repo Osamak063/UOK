@@ -1,13 +1,17 @@
 package com.example.osamakhalid.schoolsystem.Activites;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.bumptech.glide.Glide;
 import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
@@ -30,11 +34,24 @@ public class NewsandEventDetail extends AppCompatActivity {
     ImageView event_image;
     String event_id;
     private ProgressDialog progress_dialouge;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newsand_event_detail);
+        //Setting up Toolbar
+        toolbar = findViewById(R.id.toolBar);
+        toolbar.setTitle("Details");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(NewsandEventDetail.this, NewsAndEvents.class));
+            }
+        });
         progress_dialouge = CommonCalls.createDialouge(this,"",Values.DIALOGUE_MSG);
 
         event_title = findViewById(R.id.event_title);

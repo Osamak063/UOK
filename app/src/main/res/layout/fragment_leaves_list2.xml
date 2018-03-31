@@ -1,5 +1,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/leavelist_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.osamakhalid.schoolsystem.Fragments.LeavesListFragment">
@@ -12,23 +13,29 @@
         android:layout_height="match_parent"
         >
 
-        <TextView
-            android:id="@+id/leaves_header"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar_Layout"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:background="@color/colorPrimary"
-            android:textColor="#ffff"
-            android:text="Leaves"
-            android:textSize="20sp"
-            android:gravity="center"/>
+            android:layout_height="wrap_content">
+
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/toolbar_layout"
+                />
+
+
+        </android.support.design.widget.AppBarLayout>
+
+
 
 
         <Spinner
             android:id="@+id/leave_spinner"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:visibility="visible"
-            android:layout_below="@+id/leaves_header"
+            android:visibility="gone"
+            android:layout_below="@+id/appbar_Layout"
             android:layout_marginBottom="5dp">
 
         </Spinner>

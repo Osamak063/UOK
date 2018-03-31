@@ -7,6 +7,20 @@
     android:orientation="vertical"
     tools:context="com.example.osamakhalid.schoolsystem.Activites.SyllabusSubject_Activity">
 
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/toolbar_layout"
+            />
+
+
+    </android.support.design.widget.AppBarLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/subject_recyclerVIEWS"
         android:layout_width="match_parent"

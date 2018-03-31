@@ -6,9 +6,23 @@
     android:background="@drawable/background"
     tools:context="com.example.osamakhalid.schoolsystem.Activites.TrackingActivity">
 
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/toolbar_layout"
+            />
+
+
+    </android.support.design.widget.AppBarLayout>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/appbar_Layout"
         android:orientation="vertical">
 
         <ImageView

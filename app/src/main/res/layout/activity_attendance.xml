@@ -7,30 +7,34 @@
     android:layout_height="match_parent"
     tools:context="com.example.osamakhalid.schoolsystem.Activites.Attendance">
 
-
-    <TextView
-        android:id="@+id/attendance_header"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/dashboard_appbar"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:background="@color/colorPrimary"
-        android:textColor="#ffff"
-        android:text="Attendance"
-        android:textSize="20sp"
-        android:gravity="center"/>
+        android:layout_height="wrap_content">
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/toolbar_layout"
+            />
+
+    </android.support.design.widget.AppBarLayout>
+
+
     <Spinner
         android:layout_marginTop="5dp"
         android:id="@+id/attendance_children_spinner"
-        android:layout_below="@id/attendance_header"
+        android:layout_below="@id/dashboard_appbar"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginBottom="5dp"
         ></Spinner>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/attendance_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_above="@id/copyrights_text"
         android:layout_below="@+id/attendance_children_spinner" />
 
     <TextView

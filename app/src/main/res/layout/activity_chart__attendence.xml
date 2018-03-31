@@ -7,11 +7,25 @@
     android:layout_height="match_parent"
     tools:context="com.example.osamakhalid.schoolsystem.Activites.Chart_Attendence">
 
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/toolbar_layout"
+            />
+
+
+    </android.support.design.widget.AppBarLayout>
     <LinearLayout
         android:id="@+id/monthView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_below="@+id/appbar_Layout">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/monthRecyclerView"

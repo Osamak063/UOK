@@ -1,6 +1,7 @@
 package com.example.osamakhalid.schoolsystem.Activites;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import com.example.osamakhalid.schoolsystem.Adapters.FeesAdapter;
 import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
@@ -51,11 +53,24 @@ public class Fees extends AppCompatActivity {
     List<ParentStudentData> parentStudentDataList;
     List<String> childrenUsernames;
     private Spinner Fees_Spinner;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fees);
+        //Setting up Toolbar
+        toolbar = findViewById(R.id.toolBar);
+        toolbar.setTitle("Fees & Invoice");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Fees.this, DashboardActivity.class));
+            }
+        });
         listItems = new ArrayList<>();
         manager = new LinearLayoutManager(this);
         recyclerView = (RecyclerView) findViewById(R.id.fees_and_invoice_recycler_view);
@@ -65,16 +80,18 @@ public class Fees extends AppCompatActivity {
         //   userData = CommonCalls.getUserData(Fees.this);
         //  String base = userData.getUsername() + ":" + userData.getPassword();
         Fees_Spinner = findViewById(R.id.Fees_spinner);
-        parentStudentDataList = CommonCalls.getChildrenOfParentList(Fees.this);
-        childrenUsernames = new ArrayList<>();
-        for (ParentStudentData data : parentStudentDataList) {
-            childrenUsernames.add(data.getName());
-        }
+
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(manager);
 // For Parent APIs
         if (CommonCalls.getUserType(this).equals(Values.TYPE_PARENT)) {
+
+            parentStudentDataList = CommonCalls.getChildrenOfParentList(Fees.this);
+            childrenUsernames = new ArrayList<>();
+            for (ParentStudentData data : parentStudentDataList) {
+                childrenUsernames.add(data.getName());
+            }
 
             final int offset = 0;
             Fees_Spinner.setVisibility(View.VISIBLE);

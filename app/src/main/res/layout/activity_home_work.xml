@@ -7,12 +7,26 @@
     android:layout_height="match_parent"
     tools:context="com.example.osamakhalid.schoolsystem.Activites.HomeWork">
 
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/toolbar_layout"
+            />
+
+
+    </android.support.design.widget.AppBarLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="3dp"
-        android:id="@+id/hlineview">
+        android:id="@+id/hlineview"
+        android:layout_below="@+id/appbar_Layout">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,42 +54,42 @@
             android:orientation="vertical">
 
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-
-                <Spinner
-                    android:id="@+id/day_spinner"
+                <TextView
+                    android:id="@+id/calender_date"
                     android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_weight="1"></Spinner>
+                    android:layout_height="wrap_content"
+                    android:text="yyyy-mm-dd"
+                    android:textSize="@dimen/date_text_size"
+                    android:textStyle="bold"
+                    android:gravity="end"
+                    android:layout_margin="10dp"
+                    />
 
-                <Spinner
-                    android:id="@+id/month_spinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_weight="1"></Spinner>
+                <ImageView
+                    android:id="@+id/image_button_calender_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/calender_icon"
+                    />
 
-                <Spinner
-                    android:id="@+id/year__spinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_weight="1"></Spinner>
-
-
-            </LinearLayout>
+            </RelativeLayout>
 
             <Button
                 android:id="@+id/checkHomeWork"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:layout_gravity="right"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorPrimary"
                 android:text="Check"
-                android:textColor="#000"
+                android:textAllCaps="false"
+                android:textColor="@color/cardview_light_background"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -91,6 +105,5 @@
 
 
     </LinearLayout>
-
 
 </RelativeLayout>

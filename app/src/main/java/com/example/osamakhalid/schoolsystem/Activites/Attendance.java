@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import com.example.osamakhalid.schoolsystem.Adapters.Attendance_Adapter;
 import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
@@ -56,17 +57,26 @@ public class Attendance extends AppCompatActivity {
     List<String> childrenUsernames;
     String spinnerValue;
     String authHeader;
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendance);
+        //Setting up Toolbar
+        toolbar = findViewById(R.id.toolBar);
+        toolbar.setTitle("Attendence");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Attendance.this, Chart_Attendence.class));
+            }
+        });
         listItems = new ArrayList<>();
         MonthNameListItems = new ArrayList<>();
-        parentStudentDataList = CommonCalls.getChildrenOfParentList(Attendance.this);
-        childrenUsernames= new ArrayList<>();
-        for (ParentStudentData data : parentStudentDataList) {
-            childrenUsernames.add(data.getName());
-        }
+
         MonthNameListItems.addAll(Arrays.asList(getResources().getStringArray(R.array.months)));
         Intent i = getIntent();
         if (i != null) {
@@ -74,20 +84,24 @@ public class Attendance extends AppCompatActivity {
         }
         recyclerView = findViewById(R.id.attendance_recycler_view);
         childrenSpinner = findViewById(R.id.attendance_children_spinner);
-        heading = findViewById(R.id.attendance_header);
+      //  heading = findViewById(R.id.attendance_header);
         calendar = Calendar.getInstance();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        if (CommonCalls.getUserType(Attendance.this).equals("Student")) {
+        if (CommonCalls.getUserType(Attendance.this).equals(Values.TYPE_STUDENT)) {
             progressDialouge = CommonCalls.createDialouge(Attendance.this, "", Values.DIALOGUE_MSG);
             childrenSpinner.setVisibility(View.GONE);
             userData = CommonCalls.getUserData(Attendance.this);
-            base = userData.getUsername() + ":" + userData.getPassword();
+           // base = userData.getUsername() + ":" + userData.getPassword();
             spinnerValue = "";
-            authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
             index = MonthNameListItems.indexOf(monthName);
-            getData(authHeader);
-        } else if (CommonCalls.getUserType(Attendance.this).equals("Parent")) {
+            getData();
+        } else if (CommonCalls.getUserType(Attendance.this).equals(Values.TYPE_PARENT)) {
+            parentStudentDataList = CommonCalls.getChildrenOfParentList(Attendance.this);
+            childrenUsernames= new ArrayList<>();
+            for (ParentStudentData data : parentStudentDataList) {
+                childrenUsernames.add(data.getName());
+            }
             childrenSpinner.setVisibility(View.VISIBLE);
             ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter
                     (Attendance.this, android.R.layout.simple_spinner_item, childrenUsernames);
@@ -121,11 +135,21 @@ public class Attendance extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
-    public void getData(String authHeader) {
+    public void getData() {
         retrofit = RetrofitInitialize.getApiClient();
         clientAPIs = retrofit.create(ClientAPIs.class);
+        if (CommonCalls.getUserType(Attendance.this).equals(Values.TYPE_PARENT)) {
+            ParentLoginResponse loginResponse = CommonCalls.getParentData(Attendance.this);
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+        } else if (CommonCalls.getUserType(Attendance.this).equals(Values.TYPE_STUDENT)) {
+            LoginResponse loginResponse = CommonCalls.getUserData(Attendance.this);
+            base = loginResponse.getUsername() + ":" + loginResponse.getPassword();
+
+        }
+        authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+
         int year = calendar.get(Calendar.YEAR);
-        heading.setText("Attendance - " + year);
+      //  heading.setText("Attendance - " + year);
         String monthyear;
         if (index > 9) {
             monthyear = (index + 1) + "-" + year;
@@ -168,7 +192,7 @@ public class Attendance extends AppCompatActivity {
         retrofit = RetrofitInitialize.getApiClient();
         clientAPIs = retrofit.create(ClientAPIs.class);
         int year = calendar.get(Calendar.YEAR);
-        heading.setText("Attendance - " + year);
+//        heading.setText("Attendance - " + year);
         String monthyear;
         if (index > 9) {
             monthyear = (index + 1) + "-" + year;
@@ -188,15 +212,26 @@ public class Attendance extends AppCompatActivity {
                             listItems.addAll(attendanceResponseList.getData().getAttendance());
                             adapter.notifyDataSetChanged();
                         }
+                        else {
+                            progressDialouge.dismiss();
+                            listItems.clear();
+                            adapter.notifyDataSetChanged();
+                            Toast.makeText(Attendance.this, Values.DATA_ERROR, Toast.LENGTH_SHORT).show();
+                        }
 
 
+                    } else {
+                        progressDialouge.dismiss();
+                        listItems.clear();
+                        adapter.notifyDataSetChanged();
+                        Toast.makeText(Attendance.this, Values.DATA_ERROR, Toast.LENGTH_SHORT).show();
                     }
 
                 } else {
                     progressDialouge.dismiss();
                     listItems.clear();
                     adapter.notifyDataSetChanged();
-                    Toast.makeText(Attendance.this, Values.DATA_ERROR, Toast.LENGTH_SHORT).show();
+                //    Toast.makeText(Attendance.this, Values.DATA_ERROR, Toast.LENGTH_SHORT).show();
                 }
 
             }

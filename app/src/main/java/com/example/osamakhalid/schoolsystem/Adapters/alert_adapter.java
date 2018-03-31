@@ -46,7 +46,11 @@ public class alert_adapter extends RecyclerView.Adapter<alert_adapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return alertModel.size();
+        if(alertModel.size()>0){
+            return alertModel.size();
+
+        }
+        return 0;
     }
 
 

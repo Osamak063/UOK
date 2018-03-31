@@ -6,22 +6,25 @@
     android:layout_height="match_parent"
     tools:context="com.example.osamakhalid.schoolsystem.Activites.Alert">
 
-    <TextView
-        android:id="@+id/examtext"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/dashboard_appbar"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:background="@color/colorPrimary"
-        android:textColor="#ffff"
-        android:text="Alert"
-        android:textSize="20sp"
-        android:gravity="center"/>
+        android:layout_height="wrap_content">
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/toolbar_layout"
+            />
+
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/alert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/examtext" />
+        android:layout_below="@+id/dashboard_appbar" />
 
     <TextView
         android:layout_width="match_parent"

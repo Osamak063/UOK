@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -42,11 +42,24 @@ public class NewsAndEvents extends AppCompatActivity implements ItemClickListene
     private Retrofit retrofit;
     private ClientAPIs clientAPIs;
     ProgressDialog progressDialog;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_and_events);
+        //Setting up Toolbar
+        toolbar = findViewById(R.id.toolBar);
+        toolbar.setTitle("News & Event");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(NewsAndEvents.this, DashboardActivity.class));
+            }
+        });
         listItems = new ArrayList<>();
         progressDialog = CommonCalls.createDialouge(this,"", Values.DIALOGUE_MSG);
         recyclerView = findViewById(R.id.news_recycler_view);

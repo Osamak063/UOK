@@ -7,23 +7,25 @@
     android:layout_height="match_parent"
     tools:context="com.example.osamakhalid.schoolsystem.Activites.Profile">
 
-
-    <TextView
-        android:id="@+id/messages"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_Layout"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:background="@color/colorPrimary"
-        android:textColor="#ffff"
-        android:text="Teachers"
-        android:textSize="20sp"
-        android:padding="3dp"
-        android:gravity="center"/>
+        android:layout_height="wrap_content">
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/toolbar_layout"
+            />
+
+
+    </android.support.design.widget.AppBarLayout>
 
     <Spinner
         android:id="@+id/teacher_view_spinner"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_below="@id/messages"
+        android:layout_below="@id/appbar_Layout"
         android:layout_marginBottom="3dp"
         android:padding="5dp"
         android:visibility="gone"></Spinner>

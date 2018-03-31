@@ -1,6 +1,7 @@
 package com.example.osamakhalid.schoolsystem.Activites;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import com.example.osamakhalid.schoolsystem.Adapters.ExamScheduleAdapter;
 import com.example.osamakhalid.schoolsystem.BaseConnection.RetrofitInitialize;
@@ -43,23 +45,38 @@ public class ExamSchedule extends AppCompatActivity {
     private List<ParentStudentData> parentStudentDataList;
     private ArrayList<String> childrenUsernames;
     private Spinner exam_spinner;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exam_schedule);
+        //Setting up Toolbar
+        toolbar = findViewById(R.id.toolBar);
+        toolbar.setTitle("Exam Scehdule");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ExamSchedule.this, DashboardActivity.class));
+            }
+        });
         recyclerView = findViewById(R.id.exam_schedule_recycler_view);
         exam_spinner = findViewById(R.id.examSchdule_spinner);
         listItems = new ArrayList<>();
         progressDialog = CommonCalls.createDialouge(this, "", Values.DIALOGUE_MSG);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        parentStudentDataList = CommonCalls.getChildrenOfParentList(ExamSchedule.this);
-        childrenUsernames = new ArrayList<>();
-        for (ParentStudentData data : parentStudentDataList) {
-            childrenUsernames.add(data.getName());
-        }
+
         if (CommonCalls.getUserType(this).equals(Values.TYPE_PARENT)) {
+
+            parentStudentDataList = CommonCalls.getChildrenOfParentList(ExamSchedule.this);
+            childrenUsernames = new ArrayList<>();
+            for (ParentStudentData data : parentStudentDataList) {
+                childrenUsernames.add(data.getName());
+            }
 
             exam_spinner.setVisibility(View.VISIBLE);
             ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter
@@ -72,6 +89,7 @@ public class ExamSchedule extends AppCompatActivity {
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     username = parentStudentDataList.get(i).getUsername();
                     if ((username!= null)){
+                        listItems.clear();
                         getData();
                     }
                 }
@@ -83,6 +101,7 @@ public class ExamSchedule extends AppCompatActivity {
             });
 
         }else if(CommonCalls.getUserType(ExamSchedule.this).equals(Values.TYPE_STUDENT)) {
+            listItems.clear();
             getData();
         }
         adapter = new ExamScheduleAdapter(listItems, getApplicationContext());
@@ -115,6 +134,7 @@ public class ExamSchedule extends AppCompatActivity {
                         adapter.notifyDataSetChanged();
                     } else {
                         progressDialog.dismiss();
+                        adapter.notifyDataSetChanged();
                         Toast.makeText(ExamSchedule.this, Values.DATA_ERROR, Toast.LENGTH_SHORT).show();
                     }
                 }
